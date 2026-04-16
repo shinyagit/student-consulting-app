@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Teacher\StoreTeacherRequest;
 use App\Http\Requests\Teacher\UpdateTeacherRequest;
 use App\Models\Teacher;
-use Illuminate\Http\Request;
 
 class TeacherController extends Controller
 {
@@ -15,7 +14,7 @@ class TeacherController extends Controller
 
         $teachers = Teacher::query()
             ->withCount('students')
-            ->orderBy('name')
+            ->orderBy('teacher_code')
             ->paginate(20);
 
         return view('teachers.index', compact('teachers'));
@@ -35,27 +34,27 @@ class TeacherController extends Controller
         $validated = $request->validated();
 
         $teacher = Teacher::create([
+            'teacher_code' => $validated['teacher_code'],
             'name' => $validated['name'],
             'department' => $validated['department'] ?? null,
             'school_year' => $validated['school_year'] ?? null,
             'age' => $validated['age'] ?? null,
-            'email' => $validated['email'] ?? null,
             'status' => $validated['status'],
             'note' => $validated['note'] ?? null,
         ]);
 
-        $subjects = array_values(array_filter(
-            $validated['available_subjects'] ?? [],
-            fn ($v) => filled($v)
-        ));
+        $subjects = $this->normalizeSubjects($validated['available_subjects'] ?? []);
 
-        if (!empty($subjects)) {
+        if (! empty($subjects)) {
             $teacher->teacherSubjects()->createMany(
-                collect($subjects)->map(fn ($subject) => ['subject' => $subject])->all()
+                collect($subjects)
+                    ->map(fn ($subject) => ['subject' => $subject])
+                    ->all()
             );
         }
 
-        return redirect()->route('teachers.show', $teacher)
+        return redirect()
+            ->route('teachers.show', $teacher)
             ->with('success', '講師を登録しました。');
     }
 
@@ -87,29 +86,40 @@ class TeacherController extends Controller
         $validated = $request->validated();
 
         $teacher->update([
+            'teacher_code' => $validated['teacher_code'],
             'name' => $validated['name'],
             'department' => $validated['department'] ?? null,
             'school_year' => $validated['school_year'] ?? null,
             'age' => $validated['age'] ?? null,
-            'email' => $validated['email'] ?? null,
             'status' => $validated['status'],
             'note' => $validated['note'] ?? null,
         ]);
 
-        $subjects = array_values(array_filter(
-            $validated['available_subjects'] ?? [],
-            fn ($v) => filled($v)
-        ));
+        $subjects = $this->normalizeSubjects($validated['available_subjects'] ?? []);
 
         $teacher->teacherSubjects()->delete();
 
-        if (!empty($subjects)) {
+        if (! empty($subjects)) {
             $teacher->teacherSubjects()->createMany(
-                collect($subjects)->map(fn ($subject) => ['subject' => $subject])->all()
+                collect($subjects)
+                    ->map(fn ($subject) => ['subject' => $subject])
+                    ->all()
             );
         }
 
-        return redirect()->route('teachers.show', $teacher)
+        return redirect()
+            ->route('teachers.show', $teacher)
             ->with('success', '講師情報を更新しました。');
+    }
+
+    private function normalizeSubjects(array $subjects): array
+    {
+        return collect($subjects)
+            ->filter(fn ($value) => filled($value))
+            ->map(fn ($value) => trim($value))
+            ->filter(fn ($value) => $value !== '')
+            ->unique()
+            ->values()
+            ->all();
     }
 }

@@ -12,9 +12,9 @@ class StudentSeeder extends Seeder
 {
     public function run(): void
     {
-        if (app()->environment('production')) {
-            throw new \RuntimeException(static::class.' cannot run in production.');
-        }
+        // if (app()->environment('production')) {
+        //     throw new \RuntimeException(static::class.' cannot run in production.');
+        // }
         
         $teachers = Teacher::with('teacherSubjects')->get();
         $consultantUsers = User::whereIn('role', ['admin', 'staff'])

@@ -1,5 +1,5 @@
 @php
-    $subjectOptions = \App\Support\SubjectOptions::LIST;
+    $subjectOptions = \App\Constants\SubjectOptions::LIST;
 
     $selectedSubjects = old(
         'available_subjects',
@@ -10,6 +10,22 @@
 <div class="teacher-form">
     <div class="teacher-form__grid">
         <div class="form-field">
+            <label for="teacher_code" class="form-label">講師コード</label>
+            <input
+                type="text"
+                name="teacher_code"
+                id="teacher_code"
+                class="form-input"
+                value="{{ old('teacher_code', $teacher->teacher_code ?? '') }}"
+                @if(isset($teacher)) readonly @endif
+                required
+            >
+            @error('teacher_code')
+                <p class="form-error">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div class="form-field">
             <label for="name" class="form-label">講師名</label>
             <input
                 type="text"
@@ -19,6 +35,9 @@
                 value="{{ old('name', $teacher->name ?? '') }}"
                 required
             >
+            @error('name')
+                <p class="form-error">{{ $message }}</p>
+            @enderror
         </div>
 
         <div class="form-field">
@@ -30,6 +49,9 @@
                 class="form-input"
                 value="{{ old('department', $teacher->department ?? '') }}"
             >
+            @error('department')
+                <p class="form-error">{{ $message }}</p>
+            @enderror
         </div>
 
         <div class="form-field">
@@ -41,6 +63,9 @@
                 class="form-input"
                 value="{{ old('school_year', $teacher->school_year ?? '') }}"
             >
+            @error('school_year')
+                <p class="form-error">{{ $message }}</p>
+            @enderror
         </div>
 
         <div class="form-field">
@@ -54,17 +79,9 @@
                 min="18"
                 max="99"
             >
-        </div>
-
-        <div class="form-field">
-            <label for="email" class="form-label">メールアドレス</label>
-            <input
-                type="email"
-                name="email"
-                id="email"
-                class="form-input"
-                value="{{ old('email', $teacher->email ?? '') }}"
-            >
+            @error('age')
+                <p class="form-error">{{ $message }}</p>
+            @enderror
         </div>
 
         <div class="form-field">
@@ -73,6 +90,9 @@
                 <option value="active" @selected(old('status', $teacher->status ?? 'active') === 'active')>在籍中</option>
                 <option value="inactive" @selected(old('status', $teacher->status ?? '') === 'inactive')>停止中</option>
             </select>
+            @error('status')
+                <p class="form-error">{{ $message }}</p>
+            @enderror
         </div>
     </div>
 
@@ -96,6 +116,12 @@
                 </label>
             @endforeach
         </div>
+        @error('available_subjects')
+            <p class="form-error">{{ $message }}</p>
+        @enderror
+        @error('available_subjects.*')
+            <p class="form-error">{{ $message }}</p>
+        @enderror
     </div>
 
     <div class="teacher-form__section">
@@ -107,6 +133,9 @@
                 rows="4"
                 class="form-input"
             >{{ old('note', $teacher->note ?? '') }}</textarea>
+            @error('note')
+                <p class="form-error">{{ $message }}</p>
+            @enderror
         </div>
     </div>
 </div>

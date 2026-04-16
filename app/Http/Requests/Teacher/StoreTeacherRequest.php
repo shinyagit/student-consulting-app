@@ -16,11 +16,11 @@ class StoreTeacherRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'teacher_code' => ['required', 'string', 'max:50', 'unique:teachers,teacher_code'],
             'name' => ['required', 'string', 'max:255'],
             'department' => ['nullable', 'string', 'max:255'],
             'school_year' => ['nullable', 'string', 'max:50'],
             'age' => ['nullable', 'integer', 'min:18', 'max:99'],
-            'email' => ['nullable', 'email', 'max:255'],
             'status' => ['required', Rule::in(['active', 'inactive'])],
             'note' => ['nullable', 'string'],
 
@@ -32,11 +32,11 @@ class StoreTeacherRequest extends FormRequest
     public function attributes(): array
     {
         return [
+            'teacher_code' => '講師コード',
             'name' => '講師名',
             'department' => '所属学部学科',
             'school_year' => '学年',
             'age' => '年齢',
-            'email' => 'メールアドレス',
             'status' => 'ステータス',
             'note' => '備考',
             'available_subjects' => '担当可能科目',

@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Teacher;
 
-use App\Support\SubjectOptions;
+use App\Constants\SubjectOptions;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -20,7 +20,6 @@ class UpdateTeacherRequest extends FormRequest
             'department' => ['nullable', 'string', 'max:255'],
             'school_year' => ['nullable', 'string', 'max:50'],
             'age' => ['nullable', 'integer', 'min:18', 'max:99'],
-            'email' => ['nullable', 'email', 'max:255'],
             'status' => ['required', Rule::in(['active', 'inactive'])],
             'note' => ['nullable', 'string'],
 
@@ -36,10 +35,10 @@ class UpdateTeacherRequest extends FormRequest
             'department' => '所属学部学科',
             'school_year' => '学年',
             'age' => '年齢',
-            'email' => 'メールアドレス',
             'status' => 'ステータス',
             'note' => '備考',
             'available_subjects' => '担当可能科目',
+            'available_subjects.*' => '担当可能科目',
         ];
     }
 }
