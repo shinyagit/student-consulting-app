@@ -8,15 +8,19 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table('teachers', function (Blueprint $table) {
-            $table->string('teacher_code')->unique()->after('id');
-        });
+        if (! Schema::hasColumn('teachers', 'teacher_code')) {
+            Schema::table('teachers', function (Blueprint $table) {
+                $table->string('teacher_code')->unique()->after('id');
+            });
+        }
     }
 
     public function down(): void
     {
-        Schema::table('teachers', function (Blueprint $table) {
-            $table->dropColumn('teacher_code');
-        });
+        if (Schema::hasColumn('teachers', 'teacher_code')) {
+            Schema::table('teachers', function (Blueprint $table) {
+                $table->dropColumn('teacher_code');
+            });
+        }
     }
 };
