@@ -69,7 +69,7 @@
                     </table>
                 </div>
 
-                <div class="teachers-pagination">
+                <div class="pagination-nav">
                     {{ $teachers->links() }}
                 </div>
             </section>

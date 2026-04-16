@@ -78,3 +78,79 @@
     padding-left: 20px;
   }
 }
+
+/* Pagination wrapper */
+.pagination-nav {
+    display: flex;
+    justify-content: center;
+    margin-top: 24px;
+}
+
+/* Laravel pagination list */
+.pagination-nav nav > div:first-child {
+    display: none;
+}
+
+.pagination-nav nav > div:last-child {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.pagination-nav nav .relative.z-0 {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+/* pagination links */
+.pagination-nav nav a,
+.pagination-nav nav span {
+    min-width: 36px;
+    height: 36px;
+    padding: 0 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    font-size: 14px;
+    line-height: 1;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+/* critical: prevent giant arrows */
+.pagination-nav nav svg {
+    width: 16px !important;
+    height: 16px !important;
+    max-width: 16px !important;
+    max-height: 16px !important;
+    display: block;
+}
+
+/* if global CSS touches paths */
+.pagination-nav nav svg path {
+    transform: none !important;
+}
+
+/* optional visual tuning */
+.pagination-nav nav a {
+    border: 1px solid #d8dbe4;
+    background: #fff;
+    color: #334155;
+}
+
+.pagination-nav nav span[aria-current="page"],
+.pagination-nav nav .bg-white.border-indigo-500 {
+    border: 1px solid #7c3aed;
+    color: #7c3aed;
+    font-weight: 700;
+}
+
+.pagination-nav nav span.text-gray-500,
+.pagination-nav nav span[aria-disabled="true"] {
+    color: #94a3b8;
+    border: 1px solid #e5e7eb;
+    background: #f8fafc;
+}
