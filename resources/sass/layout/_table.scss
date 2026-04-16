@@ -1,0 +1,14 @@
+table {
+  width: 100%;
+}
+
+th, td {
+  text-align: center;
+  padding: 8px 12px;
+  word-break: keep-all;
+  white-space: nowrap;
+}
+
+.table-wrap {
+  overflow-x: scroll;
+}

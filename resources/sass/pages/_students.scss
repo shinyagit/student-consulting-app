@@ -1,0 +1,402 @@
+@use '../abstracts/variables' as v;
+
+.students-page {
+  display: grid;
+  gap: 24px;
+}
+
+.page-eyebrow {
+  margin: 0 0 6px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: v.$color-text-muted;
+}
+
+.students-filter {
+  padding: 18px 20px;
+  border-radius: v.$radius-md;
+  background: v.$color-surface;
+  box-shadow: v.$shadow-sm;
+}
+
+.students-panel {
+  border-radius: v.$radius-md;
+  background: v.$color-surface;
+  box-shadow: v.$shadow-sm;
+  overflow: hidden;
+}
+
+.students-table {
+  width: 100%;
+
+  thead th {
+    background: v.$color-surface-soft;
+    color: v.$color-text-muted;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  tbody td {
+    background: v.$color-surface;
+    color: v.$color-text;
+    vertical-align: middle;
+  }
+
+  tbody tr:hover td {
+    background: #fafbfe;
+  }
+
+  &__name {
+    font-weight: 700;
+    color: v.$color-text;
+  }
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+
+  &--active {
+    background: #edf7f5;
+    color: #5f8d84;
+  }
+
+  &--leave {
+    background: #fff7e8;
+    color: #b1843d;
+  }
+
+  &--graduated {
+    background: #eef2fb;
+    color: #6d7fb1;
+  }
+
+  &--withdrawn {
+    background: #f8eef2;
+    color: #a06a79;
+  }
+}
+
+.school-badge {
+  display: inline-flex;
+  align-items: center;
+  max-width: 240px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: v.$color-primary-soft;
+  color: v.$color-primary;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.school-more {
+  display: inline-block;
+  margin-left: 6px;
+  color: v.$color-text-muted;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.record-count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: v.$color-accent-soft;
+  color: #6f5b98;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.students-pagination {
+  padding: 20px;
+  border-top: 1px solid v.$color-border-soft;
+  background: #fcfcfe;
+}
+
+.empty-state {
+  padding: 28px 20px;
+  border-radius: v.$radius-md;
+  background: v.$color-surface;
+  box-shadow: v.$shadow-sm;
+  color: v.$color-text-muted;
+}
+
+@media (max-width: 900px) {
+  .students-filter {
+    padding: 16px;
+  }
+
+  .students-pagination {
+    padding: 16px;
+  }
+
+  .school-badge {
+    max-width: 180px;
+  }
+}
+
+
+
+.students-page,
+.student-detail-page {
+  display: grid;
+  gap: 16px;
+}
+
+.student-detail-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 16px;
+}
+
+.detail-card {
+  border-radius: v.$radius-md;
+  background: v.$color-surface;
+  box-shadow: v.$shadow-sm;
+  padding: 22px;
+}
+
+.detail-card__header {
+  margin-bottom: 16px;
+}
+
+.detail-card__title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: v.$color-text;
+}
+
+.page-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.detail-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px 20px;
+  margin-bottom: 20px;
+}
+
+.detail-info-item__label,
+.detail-block__label,
+.record-section__label {
+  margin: 0 0 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: v.$color-text-muted;
+}
+
+.detail-info-item__value {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: v.$color-text;
+}
+
+.detail-block + .detail-block {
+  margin-top: 18px;
+}
+
+.note-box,
+.record-section__box,
+.subject-card__body {
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #fcfcfe;
+  color: v.$color-text;
+}
+
+.chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: v.$color-secondary-soft;
+  color: #5f8d84;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.school-list {
+  display: grid;
+  gap: 8px;
+}
+
+.school-list__item {
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: v.$color-primary-soft;
+  color: v.$color-primary;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.teacher-list {
+  display: grid;
+  gap: 10px;
+}
+
+.teacher-list__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #fafbfe;
+}
+
+.teacher-list__name {
+  font-weight: 600;
+  color: v.$color-text;
+}
+
+.form-help {
+  font-size: 10px;
+}
+
+.teacher-list__role {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: v.$color-accent-soft;
+  color: #6f5b98;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.record-list {
+  display: grid;
+  gap: 18px;
+}
+
+.record-card {
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: v.$shadow-sm;
+  overflow: hidden;
+}
+
+.record-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 16px;
+  padding: 18px 20px;
+  background: v.$color-surface-soft;
+  border-bottom: 1px solid v.$color-border-soft;
+}
+
+.record-card__date {
+  margin: 0 0 4px;
+  font-size: 14px;
+  font-weight: 700;
+  color: v.$color-text;
+}
+
+.record-card__teacher {
+  margin: 0;
+  font-size: 13px;
+  color: v.$color-text-muted;
+}
+
+.record-card__score {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 84px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: v.$color-primary-soft;
+  color: v.$color-primary;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.record-card__body {
+  display: grid;
+  gap: 16px;
+  padding: 20px;
+}
+
+.subject-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.subject-card {
+  border: 1px solid v.$color-border-soft;
+  border-radius: 12px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.subject-card__title {
+  margin: 0;
+  padding: 10px 12px;
+  background: #f8f9fd;
+  border-bottom: 1px solid v.$color-border-soft;
+  font-size: 13px;
+  font-weight: 700;
+  color: v.$color-text;
+}
+
+.record-card__actions {
+  display: flex;
+  gap: 10px;
+  padding: 0 20px 20px;
+}
+
+.detail-pagination {
+  margin-top: 24px;
+}
+
+.empty-state {
+  padding: 22px;
+  border-radius: 14px;
+  background: #fafbfd;
+  color: v.$color-text-muted;
+}
+
+.link-button--soft {
+  background: v.$color-secondary-soft;
+  color: #5f8d84;
+}
+
+@media (max-width: 900px) {
+  .student-detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .record-card__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

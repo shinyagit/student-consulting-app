@@ -1,0 +1,148 @@
+@extends('layouts.app')
+
+@section('title', '生徒一覧')
+
+@section('content')
+    <section class="students-page">
+        <div class="page-header">
+            <div>
+                <p class="page-eyebrow">Students</p>
+                <h1 class="page-title">生徒一覧</h1>
+            </div>
+
+            @can('create', \App\Models\Student::class)
+                <a href="{{ route('students.create') }}" class="link-button">生徒を登録する</a>
+            @endcan
+        </div>
+
+        <!-- <form method="GET" action="{{ route('students.index') }}" class="filter-form students-filter">
+            <div class="form-field">
+                <label for="keyword" class="form-label">生徒氏名</label>
+                <input type="text" name="keyword" id="keyword" class="form-input" value="{{ request('keyword') }}">
+            </div>
+
+            <div class="form-field">
+                <label for="grade" class="form-label">学年</label>
+                <input type="text" name="grade" id="grade" class="form-input" value="{{ request('grade') }}">
+            </div>
+
+            <div class="form-field">
+                <label for="status" class="form-label">ステータス</label>
+                <select name="status" id="status" class="form-input">
+                    <option value="">すべて</option>
+                    <option value="active" @selected(request('status') === 'active')>在籍中</option>
+                    <option value="leave" @selected(request('status') === 'leave')>休会</option>
+                    <option value="graduated" @selected(request('status') === 'graduated')>卒業</option>
+                    <option value="withdrawn" @selected(request('status') === 'withdrawn')>退塾</option>
+                </select>
+            </div>
+
+            <div class="form-field">
+                <label for="course_type" class="form-label">文系理系</label>
+                <select name="course_type" id="course_type" class="form-input">
+                    <option value="">すべて</option>
+                    <option value="liberal_arts" @selected(request('course_type') === 'liberal_arts')>文系</option>
+                    <option value="science" @selected(request('course_type') === 'science')>理系</option>
+                    <option value="undecided" @selected(request('course_type') === 'undecided')>未定</option>
+                </select>
+            </div>
+
+            <div class="filter-form__actions">
+                <button type="submit" class="button button--primary">検索</button>
+            </div>
+        </form> -->
+
+        @if ($students->isEmpty())
+            <div class="empty-state">
+                <p>該当する生徒はいません。</p>
+            </div>
+        @else
+            <section class="students-panel">
+                <div class="table-wrap">
+                    <table class="base-table students-table">
+                        <thead>
+                            <tr>
+                                <th>生徒氏名</th>
+                                <th>学年</th>
+                                <th>学校名</th>
+                                <th>ステータス</th>
+                                <th>文系理系</th>
+                                <th>志望校</th>
+                                <th>コンサル担当</th>
+                                <th>学習記録数</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($students as $student)
+                                @php
+                                    $schools = array_values(array_filter($student->desired_schools ?? [], fn ($v) => filled($v)));
+                                @endphp
+
+                                <tr>
+                                    <td class="students-table__name">{{ $student->name }}</td>
+                                    <td>{{ $student->grade ?: '-' }}</td>
+                                    <td>{{ $student->school_name ?: '-' }}</td>
+                                    <td>
+                                        @switch($student->status)
+                                            @case('active')
+                                                <span class="status-badge status-badge--active">在籍中</span>
+                                                @break
+                                            @case('leave')
+                                                <span class="status-badge status-badge--leave">休会</span>
+                                                @break
+                                            @case('graduated')
+                                                <span class="status-badge status-badge--graduated">卒業</span>
+                                                @break
+                                            @case('withdrawn')
+                                                <span class="status-badge status-badge--withdrawn">退塾</span>
+                                                @break
+                                            @default
+                                                <span class="text-muted">{{ $student->status }}</span>
+                                        @endswitch
+                                    </td>
+                                    <td>
+                                        @switch($student->course_type)
+                                            @case('liberal_arts')
+                                                文系
+                                                @break
+                                            @case('science')
+                                                理系
+                                                @break
+                                            @case('undecided')
+                                                未定
+                                                @break
+                                            @default
+                                                <span class="text-muted">未設定</span>
+                                        @endswitch
+                                    </td>
+                                    <td>
+                                        @if (!empty($schools))
+                                            <span class="school-badge">{{ $schools[0] }}</span>
+                                            @if (count($schools) > 1)
+                                                <span class="school-more">＋{{ count($schools) - 1 }}</span>
+                                            @endif
+                                        @else
+                                            <span class="text-muted">未設定</span>
+                                        @endif
+                                    </td>
+                                    <td>{{ $student->consultant?->name ?? '未設定' }}</td>
+                                    <td>
+                                        <span class="record-count-badge">{{ $student->guidance_records_count }}</span>
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('students.show', $student) }}" class="link-button">詳細</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="students-pagination">
+                    {{ $students->links() }}
+                </div>
+            </section>
+        @endif
+    </section>
+@endsection
