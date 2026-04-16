@@ -95,13 +95,13 @@ jobs:
 
             rm -rf .git .github node_modules tests docker
 
-            php artisan config:clear
-            php artisan route:clear
-            php artisan view:clear
-            php artisan migrate --force
-            php artisan config:cache
-            php artisan route:cache
-            php artisan view:cache
+            /usr/bin/php8.3 artisan config:clear
+            /usr/bin/php8.3 artisan route:clear
+            /usr/bin/php8.3 artisan view:clear
+            /usr/bin/php8.3 artisan migrate --force
+            /usr/bin/php8.3 artisan config:cache
+            /usr/bin/php8.3 artisan route:cache
+            /usr/bin/php8.3 artisan view:cache
 
       - name: Sync public files to public path
         uses: appleboy/ssh-action@master
