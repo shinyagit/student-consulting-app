@@ -1,0 +1,123 @@
+name: Deploy to Xserver Rental Server
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: xserver-production-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, intl, pdo_mysql
+          tools: composer:v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install PHP dependencies
+        run: composer install --no-dev --optimize-autoloader --no-interaction
+
+      - name: Build frontend assets
+        run: |
+          npm ci
+          npm run build
+
+      - name: Start ssh-agent and add key
+        shell: bash
+        run: |
+          eval "$(ssh-agent -s)"
+          echo "${{ secrets.XSERVER_SSH_KEY }}" | tr -d '\r' | ssh-add -
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          echo "${{ secrets.KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Upload Laravel app
+        shell: bash
+        run: |
+          rsync -az --delete \
+            --exclude ".git" \
+            --exclude ".github" \
+            --exclude "node_modules" \
+            --exclude ".env" \
+            --exclude "storage" \
+            -e "ssh -p ${{ secrets.XSERVER_PORT }}" \
+            ./ "${{ secrets.XSERVER_USER }}@${{ secrets.XSERVER_HOST }}:${{ secrets.XSERVER_DEPLOY_PATH }}/current/"
+
+      - name: Finalize deploy on server
+        shell: bash
+        env:
+          APP_ENV_FILE: ${{ secrets.APP_ENV_FILE }}
+        run: |
+          ssh -p "${{ secrets.XSERVER_PORT }}" "${{ secrets.XSERVER_USER }}@${{ secrets.XSERVER_HOST }}" "
+            set -e
+
+            cd '${{ secrets.XSERVER_DEPLOY_PATH }}'
+
+            mkdir -p shared/storage
+            mkdir -p shared/storage/logs
+            mkdir -p shared/storage/framework
+            mkdir -p shared/storage/app/public
+            mkdir -p current
+
+            if [ ! -f shared/.env ]; then
+              printf '%s\n' \"$APP_ENV_FILE\" > shared/.env
+            fi
+
+            rm -f current/.env
+            ln -sfn '$(pwd)/shared/.env' current/.env
+
+            rm -rf current/storage
+            ln -sfn '$(pwd)/shared/storage' current/storage
+
+            cd current
+
+            php artisan config:clear
+            php artisan route:clear
+            php artisan view:clear
+            php artisan migrate --force
+            php artisan config:cache
+            php artisan route:cache
+            php artisan view:cache
+          "
+
+      - name: Validate and sync public directory
+        shell: bash
+        run: |
+          ssh -p "${{ secrets.XSERVER_PORT }}" "${{ secrets.XSERVER_USER }}@${{ secrets.XSERVER_HOST }}" "
+            set -e
+
+            TARGET='${{ secrets.XSERVER_PUBLIC_PATH }}'
+            PARENT=\$(dirname \"\$TARGET\")
+
+            if [ ! -d \"\$PARENT\" ]; then
+              echo 'Parent directory does not exist: '"\$PARENT"
+              exit 1
+            fi
+
+            mkdir -p \"\$TARGET\"
+
+            rsync -az --delete \
+              '${{ secrets.XSERVER_DEPLOY_PATH }}/current/public/' \
+              \"\$TARGET/\"
+          "
