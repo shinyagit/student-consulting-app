@@ -52,19 +52,6 @@ jobs:
           echo "${{ secrets.KNOWN_HOSTS }}" > ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
 
-      - name: Debug SSH connection
-        shell: bash
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.KNOWN_HOSTS }}" > ~/.ssh/known_hosts
-          chmod 644 ~/.ssh/known_hosts
-
-          echo "===== known_hosts ====="
-          cat ~/.ssh/known_hosts
-
-          echo "===== ssh test ====="
-          ssh -vvv -p "${{ secrets.XSERVER_PORT }}" "${{ secrets.XSERVER_USER }}@${{ secrets.XSERVER_HOST }}" "echo connected"
-      
       - name: Upload Laravel app
         shell: bash
         run: |
