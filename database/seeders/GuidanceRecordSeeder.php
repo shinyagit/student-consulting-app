@@ -11,6 +11,10 @@ class GuidanceRecordSeeder extends Seeder
 {
     public function run(): void
     {
+        if (app()->environment('production')) {
+            throw new \RuntimeException(static::class.' cannot run in production.');
+        }
+        
         $adminUser = User::where('role', 'admin')->first();
 
         if (! $adminUser) {
