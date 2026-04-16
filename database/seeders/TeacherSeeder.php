@@ -10,17 +10,17 @@ class TeacherSeeder extends Seeder
     public function run(): void
     {
         // if (app()->environment('production')) {
-        //     throw new \RuntimeException(static::class.' cannot run in production.');
+        //     throw new \RuntimeException(static::class . ' cannot run in production.');
         // }
 
         $teachers = [
             [
                 'teacher' => [
-                    'name' => '田中 一郎',
+                    'teacher_code' => 'T001',
+                    'name' => '田中一郎',
                     'department' => '広島大学工学部第一類',
-                    'school_year' => '3年',
-                    'age' => 21,
-                    'email' => 'tanaka@example.com',
+                    'school_year' => '1年',
+                    'age' => 20,
                     'status' => 'active',
                     'note' => '理系科目担当',
                 ],
@@ -28,11 +28,11 @@ class TeacherSeeder extends Seeder
             ],
             [
                 'teacher' => [
-                    'name' => '大西 翔',
+                    'teacher_code' => 'T002',
+                    'name' => '大西翔',
                     'department' => '広島大学法学部',
-                    'school_year' => '2年',
+                    'school_year' => '1年',
                     'age' => 20,
-                    'email' => 'onishi@example.com',
                     'status' => 'active',
                     'note' => '英語と基礎数学を担当',
                 ],
@@ -40,11 +40,11 @@ class TeacherSeeder extends Seeder
             ],
             [
                 'teacher' => [
-                    'name' => '夏 健弘',
+                    'teacher_code' => 'T003',
+                    'name' => '夏健弘',
                     'department' => '広島大学文学部',
-                    'school_year' => '4年',
-                    'age' => 22,
-                    'email' => 'natsu@example.com',
+                    'school_year' => '1年',
+                    'age' => 20,
                     'status' => 'active',
                     'note' => '文系科目担当',
                 ],
@@ -52,11 +52,11 @@ class TeacherSeeder extends Seeder
             ],
             [
                 'teacher' => [
-                    'name' => '森上 拓也',
+                    'teacher_code' => 'T004',
+                    'name' => '森上拓也',
                     'department' => '広島大学総合科学部',
-                    'school_year' => '3年',
-                    'age' => 21,
-                    'email' => 'morigami@example.com',
+                    'school_year' => '1年',
+                    'age' => 20,
                     'status' => 'active',
                     'note' => '情報と理科基礎担当',
                 ],
@@ -65,13 +65,32 @@ class TeacherSeeder extends Seeder
         ];
 
         foreach ($teachers as $row) {
-            $teacher = Teacher::create($row['teacher']);
+            $teacherData = $row['teacher'];
 
-            $teacher->teacherSubjects()->createMany(
-                collect($row['subjects'])
-                    ->map(fn ($subject) => ['subject' => $subject])
-                    ->all()
+            $teacherData['name'] = preg_replace('/[\p{Z}\s]+/u', '', $teacherData['name']);
+            $teacherData['department'] = filled($teacherData['department'] ?? null)
+                ? preg_replace('/[\p{Z}\s]+/u', '', $teacherData['department'])
+                : null;
+
+            $teacher = Teacher::updateOrCreate(
+                ['teacher_code' => $teacherData['teacher_code']],
+                $teacherData
             );
+
+            $teacher->teacherSubjects()->delete();
+
+            if (! empty($row['subjects'])) {
+                $teacher->teacherSubjects()->createMany(
+                    collect($row['subjects'])
+                        ->filter(fn ($subject) => filled($subject))
+                        ->map(fn ($subject) => trim($subject))
+                        ->filter(fn ($subject) => $subject !== '')
+                        ->unique()
+                        ->values()
+                        ->map(fn ($subject) => ['subject' => $subject])
+                        ->all()
+                );
+            }
         }
     }
 }
