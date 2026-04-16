@@ -42,11 +42,15 @@ jobs:
           npm ci
           npm run build
 
-      - name: Start ssh-agent and add key
-        shell: bash
+      # --- 修正ポイント1: ssh-agent アクションを使用して鍵をグローバルに有効化 ---
+      - name: Install SSH Key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.XSERVER_SSH_KEY }}
+
+      # --- 修正ポイント2: known_hosts の設定のみを行う ---
+      - name: Setup known_hosts
         run: |
-          eval "$(ssh-agent -s)"
-          echo "${{ secrets.XSERVER_SSH_KEY }}" | tr -d '\r' | ssh-add -
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
           echo "${{ secrets.KNOWN_HOSTS }}" > ~/.ssh/known_hosts
@@ -71,10 +75,8 @@ jobs:
         run: |
           ssh -p "${{ secrets.XSERVER_PORT }}" "${{ secrets.XSERVER_USER }}@${{ secrets.XSERVER_HOST }}" "
             set -e
-
             cd '${{ secrets.XSERVER_DEPLOY_PATH }}'
 
-            mkdir -p shared/storage
             mkdir -p shared/storage/logs
             mkdir -p shared/storage/framework
             mkdir -p shared/storage/app/public
@@ -84,14 +86,13 @@ jobs:
               printf '%s\n' \"$APP_ENV_FILE\" > shared/.env
             fi
 
-            rm -f current/.env
-            ln -sfn '$(pwd)/shared/.env' current/.env
-
-            rm -rf current/storage
-            ln -sfn '$(pwd)/shared/storage' current/storage
+            # シンボリックリンク作成時は絶対パスを確実に指定
+            DEPLOY_PATH='${{ secrets.XSERVER_DEPLOY_PATH }}'
+            ln -sfn \"\$DEPLOY_PATH/shared/.env\" \"\$DEPLOY_PATH/current/.env\"
+            rm -rf \"\$DEPLOY_PATH/current/storage\"
+            ln -sfn \"\$DEPLOY_PATH/shared/storage\" \"\$DEPLOY_PATH/current/storage\"
 
             cd current
-
             php artisan config:clear
             php artisan route:clear
             php artisan view:clear
@@ -106,18 +107,14 @@ jobs:
         run: |
           ssh -p "${{ secrets.XSERVER_PORT }}" "${{ secrets.XSERVER_USER }}@${{ secrets.XSERVER_HOST }}" "
             set -e
-
             TARGET='${{ secrets.XSERVER_PUBLIC_PATH }}'
             PARENT=\$(dirname \"\$TARGET\")
 
             if [ ! -d \"\$PARENT\" ]; then
-              echo 'Parent directory does not exist: '"\$PARENT"
+              echo 'Parent directory does not exist: '\"\$PARENT\"
               exit 1
             fi
 
             mkdir -p \"\$TARGET\"
-
-            rsync -az --delete \
-              '${{ secrets.XSERVER_DEPLOY_PATH }}/current/public/' \
-              \"\$TARGET/\"
+            rsync -az --delete '${{ secrets.XSERVER_DEPLOY_PATH }}/current/public/' \"\$TARGET/\"
           "
