@@ -10,8 +10,8 @@ class AdminUserSeeder extends Seeder
 {
     public function run(): void
     {
-        $email = env('INITIAL_ADMIN_EMAIL');
-        $password = env('INITIAL_ADMIN_PASSWORD');
+        $email = config('admin.initial_email');
+        $password = config('admin.initial_password');
 
         if (! $email || ! $password) {
             throw new \RuntimeException('INITIAL_ADMIN_EMAIL or INITIAL_ADMIN_PASSWORD is not set.');
