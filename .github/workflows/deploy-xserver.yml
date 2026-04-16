@@ -19,7 +19,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4  # fix: v5は存在しない
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -29,7 +29,7 @@ jobs:
           tools: composer:v2
 
       - name: Setup Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v4  # fix: v6は存在しない
         with:
           node-version: '20'
           cache: 'npm'
@@ -42,22 +42,33 @@ jobs:
           npm ci
           npm run build
 
-      # --- 修正ポイント1: ssh-agent アクションを使用して鍵をグローバルに有効化 ---
-      - name: Install SSH Key
+      # fix: webfactory/ssh-agent を使うことで SSH_AUTH_SOCK の引き継ぎ問題を解消
+      - name: Setup SSH
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.XSERVER_SSH_KEY }}
 
-      # --- 修正ポイント2: known_hosts の設定のみを行う ---
-      - name: Setup known_hosts
+      - name: Add known hosts
         run: |
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
           echo "${{ secrets.KNOWN_HOSTS }}" > ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
 
+      # fix: rsync より前にリモートのディレクトリ構造を作成する
+      - name: Prepare remote directories
+        run: |
+          ssh -p "${{ secrets.XSERVER_PORT }}" "${{ secrets.XSERVER_USER }}@${{ secrets.XSERVER_HOST }}" bash << EOF
+            set -e
+            mkdir -p "${{ secrets.XSERVER_DEPLOY_PATH }}/current"
+            mkdir -p "${{ secrets.XSERVER_DEPLOY_PATH }}/shared/storage/logs"
+            mkdir -p "${{ secrets.XSERVER_DEPLOY_PATH }}/shared/storage/framework/cache"
+            mkdir -p "${{ secrets.XSERVER_DEPLOY_PATH }}/shared/storage/framework/sessions"
+            mkdir -p "${{ secrets.XSERVER_DEPLOY_PATH }}/shared/storage/framework/views"
+            mkdir -p "${{ secrets.XSERVER_DEPLOY_PATH }}/shared/storage/app/public"
+          EOF
+
       - name: Upload Laravel app
-        shell: bash
         run: |
           rsync -az --delete \
             --exclude ".git" \
@@ -68,31 +79,38 @@ jobs:
             -e "ssh -p ${{ secrets.XSERVER_PORT }}" \
             ./ "${{ secrets.XSERVER_USER }}@${{ secrets.XSERVER_HOST }}:${{ secrets.XSERVER_DEPLOY_PATH }}/current/"
 
-      - name: Finalize deploy on server
-        shell: bash
-        env:
-          APP_ENV_FILE: ${{ secrets.APP_ENV_FILE }}
+      # fix: SCPでの転送を Finalize より前に実行する
+      - name: Upload .env to server
         run: |
-          ssh -p "${{ secrets.XSERVER_PORT }}" "${{ secrets.XSERVER_USER }}@${{ secrets.XSERVER_HOST }}" "
+          printf '%s' "${{ secrets.APP_ENV_FILE }}" > /tmp/app_env_file
+          scp -P "${{ secrets.XSERVER_PORT }}" /tmp/app_env_file \
+            "${{ secrets.XSERVER_USER }}@${{ secrets.XSERVER_HOST }}:/tmp/app_env_uploaded"
+          rm /tmp/app_env_file
+
+      - name: Finalize deploy on server
+        run: |
+          ssh -p "${{ secrets.XSERVER_PORT }}" "${{ secrets.XSERVER_USER }}@${{ secrets.XSERVER_HOST }}" bash << EOF
             set -e
-            cd '${{ secrets.XSERVER_DEPLOY_PATH }}'
+            DEPLOY_PATH="${{ secrets.XSERVER_DEPLOY_PATH }}"
 
-            mkdir -p shared/storage/logs
-            mkdir -p shared/storage/framework
-            mkdir -p shared/storage/app/public
-            mkdir -p current
-
-            if [ ! -f shared/.env ]; then
-              printf '%s\n' \"$APP_ENV_FILE\" > shared/.env
+            # .envがなければSCPで転送済みのファイルを配置
+            if [ ! -f "\$DEPLOY_PATH/shared/.env" ]; then
+              cp /tmp/app_env_uploaded "\$DEPLOY_PATH/shared/.env"
+              chmod 600 "\$DEPLOY_PATH/shared/.env"
             fi
+            rm -f /tmp/app_env_uploaded
 
-            # シンボリックリンク作成時は絶対パスを確実に指定
-            DEPLOY_PATH='${{ secrets.XSERVER_DEPLOY_PATH }}'
-            ln -sfn \"\$DEPLOY_PATH/shared/.env\" \"\$DEPLOY_PATH/current/.env\"
-            rm -rf \"\$DEPLOY_PATH/current/storage\"
-            ln -sfn \"\$DEPLOY_PATH/shared/storage\" \"\$DEPLOY_PATH/current/storage\"
+            # fix: ダブルクォートで囲み \$(pwd) が正しく展開されるようにする
+            DEPLOY_ABS="\$(cd "\$DEPLOY_PATH" && pwd)"
 
-            cd current
+            rm -f "\$DEPLOY_PATH/current/.env"
+            ln -sfn "\$DEPLOY_ABS/shared/.env" "\$DEPLOY_PATH/current/.env"
+
+            rm -rf "\$DEPLOY_PATH/current/storage"
+            ln -sfn "\$DEPLOY_ABS/shared/storage" "\$DEPLOY_PATH/current/storage"
+
+            cd "\$DEPLOY_PATH/current"
+
             php artisan config:clear
             php artisan route:clear
             php artisan view:clear
@@ -100,21 +118,23 @@ jobs:
             php artisan config:cache
             php artisan route:cache
             php artisan view:cache
-          "
+          EOF
 
       - name: Validate and sync public directory
-        shell: bash
         run: |
-          ssh -p "${{ secrets.XSERVER_PORT }}" "${{ secrets.XSERVER_USER }}@${{ secrets.XSERVER_HOST }}" "
+          ssh -p "${{ secrets.XSERVER_PORT }}" "${{ secrets.XSERVER_USER }}@${{ secrets.XSERVER_HOST }}" bash << EOF
             set -e
-            TARGET='${{ secrets.XSERVER_PUBLIC_PATH }}'
-            PARENT=\$(dirname \"\$TARGET\")
+            TARGET="${{ secrets.XSERVER_PUBLIC_PATH }}"
+            PARENT="\$(dirname "\$TARGET")"
 
-            if [ ! -d \"\$PARENT\" ]; then
-              echo 'Parent directory does not exist: '\"\$PARENT\"
+            if [ ! -d "\$PARENT" ]; then
+              echo "Parent directory does not exist: \$PARENT"
               exit 1
             fi
 
-            mkdir -p \"\$TARGET\"
-            rsync -az --delete '${{ secrets.XSERVER_DEPLOY_PATH }}/current/public/' \"\$TARGET/\"
-          "
+            mkdir -p "\$TARGET"
+
+            rsync -az --delete \
+              "${{ secrets.XSERVER_DEPLOY_PATH }}/current/public/" \
+              "\$TARGET/"
+          EOF
