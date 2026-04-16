@@ -1,4 +1,4 @@
-name: Deploy to Xserver Rental Server
+name: Deploy to Xserver
 
 on:
   push:
@@ -20,6 +20,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+        with:
+          ref: main
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -28,7 +30,7 @@ jobs:
           extensions: mbstring, intl, pdo_mysql
           tools: composer:v2
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
           node-version: '20'
@@ -42,52 +44,33 @@ jobs:
           npm ci
           npm run build
 
-      - name: Prepare SSH key and known_hosts
-        shell: bash
-        run: |
-          mkdir -p ~/.ssh
-          chmod 700 ~/.ssh
-
-          printf '%s' "${{ secrets.XSERVER_SSH_KEY_B64 }}" | base64 --decode > ~/.ssh/xserver_key
-          chmod 600 ~/.ssh/xserver_key
-
-          ssh-keyscan -p "${{ secrets.XSERVER_PORT }}" -H "${{ secrets.XSERVER_HOST }}" > ~/.ssh/known_hosts
-          chmod 644 ~/.ssh/known_hosts
-
-      - name: Validate private key format
-        shell: bash
-        run: |
-          head -n 1 ~/.ssh/xserver_key
-          tail -n 1 ~/.ssh/xserver_key
-          ssh-keygen -y -f ~/.ssh/xserver_key > /dev/null
-
-      - name: Test SSH login
-        shell: bash
-        run: |
-          ssh -i ~/.ssh/xserver_key -p "${{ secrets.XSERVER_PORT }}" "${{ secrets.XSERVER_USER }}@${{ secrets.XSERVER_HOST }}" "echo connected"
-
-      - name: Upload Laravel app
-        shell: bash
-        run: |
-          rsync -az --delete \
-            --exclude ".git" \
-            --exclude ".github" \
-            --exclude "node_modules" \
-            --exclude ".env" \
-            --exclude "storage" \
-            -e "ssh -i ~/.ssh/xserver_key -p ${{ secrets.XSERVER_PORT }}" \
-            ./ "${{ secrets.XSERVER_USER }}@${{ secrets.XSERVER_HOST }}:${{ secrets.XSERVER_DEPLOY_PATH }}/current/"
+      - name: Upload app files to server
+        uses: appleboy/scp-action@v1
+        with:
+          host: ${{ secrets.XSERVER_HOST }}
+          username: ${{ secrets.XSERVER_USER }}
+          key: ${{ secrets.XSERVER_SSH_KEY }}
+          port: ${{ secrets.XSERVER_PORT }}
+          source: "./*"
+          target: "${{ secrets.XSERVER_DEPLOY_PATH }}/current"
+          overwrite: true
+          strip_components: 0
+          rm: false
 
       - name: Finalize deploy on server
-        shell: bash
+        uses: appleboy/ssh-action@master
         env:
           APP_ENV_FILE: ${{ secrets.APP_ENV_FILE }}
-        run: |
-          ssh -i ~/.ssh/xserver_key -p "${{ secrets.XSERVER_PORT }}" "${{ secrets.XSERVER_USER }}@${{ secrets.XSERVER_HOST }}" "
+        with:
+          host: ${{ secrets.XSERVER_HOST }}
+          username: ${{ secrets.XSERVER_USER }}
+          key: ${{ secrets.XSERVER_SSH_KEY }}
+          port: ${{ secrets.XSERVER_PORT }}
+          envs: APP_ENV_FILE
+          script: |
             set -e
 
-            mkdir -p '${{ secrets.XSERVER_DEPLOY_PATH }}'
-            cd '${{ secrets.XSERVER_DEPLOY_PATH }}'
+            cd "${{ secrets.XSERVER_DEPLOY_PATH }}"
 
             mkdir -p shared
             mkdir -p shared/storage
@@ -100,15 +83,17 @@ jobs:
             mkdir -p shared/storage/app/public
             mkdir -p current
 
-            printf '%s\n' \"$APP_ENV_FILE\" > shared/.env
+            printf '%s\n' "$APP_ENV_FILE" > shared/.env
 
             rm -f current/.env
-            ln -sfn '$(pwd)/shared/.env' current/.env
+            ln -sfn "$(pwd)/shared/.env" current/.env
 
             rm -rf current/storage
-            ln -sfn '$(pwd)/shared/storage' current/storage
+            ln -sfn "$(pwd)/shared/storage" current/storage
 
             cd current
+
+            rm -rf .git .github node_modules tests docker
 
             php artisan config:clear
             php artisan route:clear
@@ -117,25 +102,27 @@ jobs:
             php artisan config:cache
             php artisan route:cache
             php artisan view:cache
-          "
 
-      - name: Validate and sync public directory
-        shell: bash
-        run: |
-          ssh -i ~/.ssh/xserver_key -p "${{ secrets.XSERVER_PORT }}" "${{ secrets.XSERVER_USER }}@${{ secrets.XSERVER_HOST }}" "
+      - name: Sync public files to public path
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.XSERVER_HOST }}
+          username: ${{ secrets.XSERVER_USER }}
+          key: ${{ secrets.XSERVER_SSH_KEY }}
+          port: ${{ secrets.XSERVER_PORT }}
+          script: |
             set -e
 
-            TARGET='${{ secrets.XSERVER_PUBLIC_PATH }}'
-            PARENT=\$(dirname \"\$TARGET\")
+            TARGET="${{ secrets.XSERVER_PUBLIC_PATH }}"
+            PARENT="$(dirname "$TARGET")"
 
-            if [ ! -d \"\$PARENT\" ]; then
-              echo 'Parent directory does not exist: '"\$PARENT"
+            if [ ! -d "$PARENT" ]; then
+              echo "Parent directory does not exist: $PARENT"
               exit 1
             fi
 
-            mkdir -p \"\$TARGET\"
+            mkdir -p "$TARGET"
 
             rsync -az --delete \
-              '${{ secrets.XSERVER_DEPLOY_PATH }}/current/public/' \
-              \"\$TARGET/\"
-          "
+              "${{ secrets.XSERVER_DEPLOY_PATH }}/current/public/" \
+              "$TARGET/"
