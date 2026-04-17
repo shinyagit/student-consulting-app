@@ -1,18 +1,9 @@
 @use '../abstracts/variables' as v;
 
-.students-page {
-  display: grid;
-  gap: 24px;
-}
-
-.page-eyebrow {
-  margin: 0 0 6px;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: v.$color-text-muted;
-}
+// .students-page {
+//   display: grid;
+//   gap: 24px;
+// }
 
 .students-filter {
   padding: 18px 20px;
@@ -26,33 +17,6 @@
   background: v.$color-surface;
   box-shadow: v.$shadow-sm;
   overflow: hidden;
-}
-
-.students-table {
-  width: 100%;
-
-  thead th {
-    background: v.$color-surface-soft;
-    color: v.$color-text-muted;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-  }
-
-  tbody td {
-    background: v.$color-surface;
-    color: v.$color-text;
-    vertical-align: middle;
-  }
-
-  tbody tr:hover td {
-    background: #fafbfe;
-  }
-
-  &__name {
-    font-weight: 700;
-    color: v.$color-text;
-  }
 }
 
 .status-badge {
@@ -107,19 +71,6 @@
   font-weight: 700;
 }
 
-.record-count-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 36px;
-  padding: 4px 10px;
-  border-radius: 999px;
-  background: v.$color-accent-soft;
-  color: #6f5b98;
-  font-size: 13px;
-  font-weight: 700;
-}
-
 .students-pagination {
   padding: 20px;
   border-top: 1px solid v.$color-border-soft;
@@ -149,8 +100,6 @@
 }
 
 
-
-.students-page,
 .student-detail-page {
   display: grid;
   gap: 16px;

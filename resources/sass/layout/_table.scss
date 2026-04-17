@@ -1,14 +1,59 @@
-table {
-  width: 100%;
-}
-
-th, td {
-  text-align: center;
-  padding: 8px 12px;
-  word-break: keep-all;
-  white-space: nowrap;
-}
+@use "../abstracts/variables" as v;
 
 .table-wrap {
-  overflow-x: scroll;
+  overflow-y: scroll;
+}
+
+.base-table {
+  width: 100%;
+
+  th, td {
+    word-break: keep-all;
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  th {
+    background: v.$color-surface-soft;
+    color: v.$color-text-muted;
+    font-size: v.$fontsize-sm;
+    font-weight: bold;
+    letter-spacing: 0.02em;
+    padding: calc(v.$spacing-unit * 3);
+  }
+
+  td {
+    font-size: v.$fontsize-md;
+    padding: calc(v.$spacing-unit * 2);
+  }
+
+  tbody tr:hover td {
+    background: #fafbfe;
+  }
+}
+
+.table-actions {
+  display: flex;
+  gap: calc(v.$spacing-unit * 2);
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+}
+
+.table-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(v.$spacing-unit * 2) calc(v.$spacing-unit * 3);
+  // margin: 0 auto;
+  border-radius: v.$radius-md;
+  background: v.$color-accent-soft;
+  color: #6f5b98;
+  font-size: v.$fontsize-md;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background: #ede5fa;
+  }
 }

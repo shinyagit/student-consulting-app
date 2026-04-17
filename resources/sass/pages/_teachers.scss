@@ -1,52 +1,11 @@
 @use '../abstracts/variables' as v;
 
-.teachers-page {
-  display: grid;
-  gap: 24px;
-}
-
 .teachers-panel {
   border: 1px solid v.$color-border-soft;
   border-radius: v.$radius-sm;
   background: v.$color-surface;
   box-shadow: v.$shadow-sm;
   overflow: hidden;
-}
-
-.teachers-table {
-  width: 100%;
-
-  thead th {
-    background: v.$color-surface-soft;
-    color: v.$color-text-muted;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    white-space: nowrap;
-  }
-
-  tbody td {
-    background: v.$color-surface;
-    color: v.$color-text;
-    vertical-align: middle;
-    white-space: nowrap;
-  }
-
-  tbody tr:hover td {
-    background: #fafbfe;
-  }
-
-  &__name {
-    font-weight: 700;
-    color: v.$color-text;
-  }
-
-  &__actions {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    flex-wrap: nowrap;
-  }
 }
 
 .teachers-pagination {

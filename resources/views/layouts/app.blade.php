@@ -9,6 +9,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=LINE+Seed+JP&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+2:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
+
 
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
@@ -18,7 +20,7 @@
             <div class="app-header__inner">
                 <div class="app-brand">
                     <a href="{{ route('dashboard') }}" class="app-brand__logo">
-                        広大研 自習コンサルティング
+                        自習コンサルティング
                     </a>
                 </div>
 

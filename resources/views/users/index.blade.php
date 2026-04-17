@@ -6,19 +6,21 @@
     <section class="teachers-page">
         <div class="page-header">
             <div>
-                <h1 class="page-title">ユーザー一覧</h1>
-                <p class="page-description">アプリにログインできる利用者を管理します。</p>
+                <p class="page-eyebrow">Users</p>
+                <h1 class="page-title">管理者・スタッフ一覧</h1>
+                <p class="page-subtitle">コンサルティング担当を一覧で確認できます。</p>
             </div>
-
-            <a href="{{ route('users.create') }}" class="link-button">ユーザーを登録する</a>
         </div>
+
+        <a href="{{ route('users.create') }}" class="link-button">ユーザーを登録する</a>
+        
 
         @if ($users->isEmpty())
             <div class="empty-state">
                 <p>ユーザーはまだ登録されていません。</p>
             </div>
         @else
-            <section class="teachers-panel">
+            <section class="teachers-panel table-panel">
                 <div class="table-wrap">
                     <table class="base-table teachers-table">
                         <thead>
@@ -37,7 +39,7 @@
                                     <td>{{ $user->role }}</td>
                                     <td>
                                         <div class="teachers-table__actions">
-                                            <a href="{{ route('users.edit', $user) }}" class="link-button link-button--soft">編集</a>
+                                            <a href="{{ route('users.edit', $user) }}" class="link-button">編集</a>
                                         </div>
                                     </td>
                                 </tr>
@@ -46,7 +48,7 @@
                     </table>
                 </div>
 
-                <div class="teachers-pagination">
+                <div class="pagination-nav">
                     {{ $users->links() }}
                 </div>
             </section>

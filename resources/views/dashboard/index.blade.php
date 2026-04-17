@@ -3,30 +3,39 @@
 @section('title', 'ダッシュボード')
 
 @section('content')
-    <section class="dashboard">
-        <div class="dashboard__header">
-            <h1 class="dashboard__title">ダッシュボード</h1>
-            <p class="dashboard__subtitle">生徒・講師・学習記録の状況を一覧で確認できます。</p>
+    <section class="dashboard dashboard-page">
+        <div class="page-header">
+            <div>
+                <p class="page-eyebrow">Dashboard</p>
+                <h1 class="page-title">ダッシュボード</h1>
+                <p class="page-subtitle">生徒・講師・学習記録の状況を一覧で確認できます。</p>
+            </div>
         </div>
+
+        <!-- <p class="text-default">これはUI確認用のダミー文章です。2026/04/17 15:30、version2.1.0、TeacherCode=T040、StudentNo=A-204、mode=preview といった英数字を含みつつ、ひらがな、カタカナ、漢字を自然に混在させています。表示崩れ、文字間、禁則処理、折り返し位置、ボタン横の余白、フォーム下の説明文の見え方などをチェックする目的で作成したサンプルテキストです。</p>
+        <p class="text-sm">これはUI確認用のダミー文章です。2026/04/17 15:30、version2.1.0、TeacherCode=T040、StudentNo=A-204、mode=preview といった英数字を含みつつ、ひらがな、カタカナ、漢字を自然に混在させています。表示崩れ、文字間、禁則処理、折り返し位置、ボタン横の余白、フォーム下の説明文の見え方などをチェックする目的で作成したサンプルテキストです。</p>
+        <p class="text-md">これはUI確認用のダミー文章です。2026/04/17 15:30、version2.1.0、TeacherCode=T040、StudentNo=A-204、mode=preview といった英数字を含みつつ、ひらがな、カタカナ、漢字を自然に混在させています。表示崩れ、文字間、禁則処理、折り返し位置、ボタン横の余白、フォーム下の説明文の見え方などをチェックする目的で作成したサンプルテキストです。</p>
+        <p class="text-lg">これはUI確認用のダミー文章です。2026/04/17 15:30、version2.1.0、TeacherCode=T040、StudentNo=A-204、mode=preview といった英数字を含みつつ、ひらがな、カタカナ、漢字を自然に混在させています。表示崩れ、文字間、禁則処理、折り返し位置、ボタン横の余白、フォーム下の説明文の見え方などをチェックする目的で作成したサンプルテキストです。</p>
+        <p class="text-hg">これはUI確認用のダミー文章です。2026/04/17 15:30、version2.1.0、TeacherCode=T040、StudentNo=A-204、mode=preview といった英数字を含みつつ、ひらがな、カタカナ、漢字を自然に混在させています。表示崩れ、文字間、禁則処理、折り返し位置、ボタン横の余白、フォーム下の説明文の見え方などをチェックする目的で作成したサンプルテキストです。</p> -->
 
         <div class="dashboard-stats">
             <div class="stat-card stat-card--students">
-                <p class="stat-card__label">生徒数</p>
-                <p class="stat-card__value">{{ $studentCount }}</p>
+                <p class="stat-card-label">生徒数</p>
+                <p class="stat-card-value">{{ $studentCount }}</p>
             </div>
 
             <div class="stat-card stat-card--teachers">
-                <p class="stat-card__label">講師数</p>
-                <p class="stat-card__value">{{ $teacherCount }}</p>
+                <p class="stat-card-label">講師数</p>
+                <p class="stat-card-value">{{ $teacherCount }}</p>
             </div>
 
             <div class="stat-card stat-card--records">
-                <p class="stat-card__label">学習記録数</p>
-                <p class="stat-card__value">{{ $recordCount }}</p>
+                <p class="stat-card-label">学習記録数</p>
+                <p class="stat-card-value">{{ $recordCount }}</p>
             </div>
         </div>
 
-        <section class="dashboard-panel">
+        <section class="dashboard-panel table-panel">
             <div class="dashboard-panel__header">
                 <h2 class="dashboard-panel__title">最近の記録</h2>
             </div>
@@ -74,14 +83,14 @@
                                             -
                                         @endif
                                     </td>
-                                    <td class="dashboard-table__name">{{ $student->name ?? '-' }}</td>
+                                    <td class="pannel-table-name">{{ $student->name ?? '-' }}</td>
                                     <td>{{ $student->school_name ?? '-' }}</td>
                                     <td>{{ $student->grade ?? '-' }}</td>
                                     <td>
                                         @if (!empty($schools))
                                             {{ $schools[0] }}
                                             @if (count($schools) > 1)
-                                                <span class="dashboard-table__more">＋{{ count($schools) - 1 }}</span>
+                                                <span class="school-more-badge">＋{{ count($schools) - 1 }}</span>
                                             @endif
                                         @else
                                             <span class="text-muted">未設定</span>
@@ -98,7 +107,7 @@
                                     @auth
                                         @if(auth()->user()->role === 'admin')
                                             <td>
-                                                <a href="{{ route('students.show', $student) }}" class="button">詳細</a>
+                                                <a href="{{ route('students.show', $student) }}" class="table-button">詳細</a>
                                             </td>
                                         @endif
                                     @endauth
