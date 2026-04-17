@@ -11,27 +11,29 @@
 }
 
 .page-eyebrow {
-  margin: 0 0 6px;
-  font-size: 12px;
-  font-weight: 700;
+  margin: 0;
+  font-size: v.$fontsize-sm;
+  font-weight: bold;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: v.$color-text-muted;
 }
 
 .page-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: end;
-  gap: 16px;
+  margin-bottom: calc(v.$spacing-unit * 6);
 }
 
 .page-title {
-  margin: 0;
+  margin: 0 0 calc(v.$spacing-unit * 1);
   font-family: v.$MPlus2;
-  font-size: 30px;
-  font-weight: 700;
+  font-size: v.$fontsize-hg;
+  font-weight: bold;
   color: v.$color-text;
+}
+
+.page-subtitle {
+  color: v.$color-text-muted;
+  font-size: v.$fontsize-md;
 }
 
 .text-muted {
@@ -76,6 +78,24 @@
   &__list {
     margin: 0;
     padding-left: 20px;
+  }
+}
+
+.link-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(v.$spacing-unit * 2) calc(v.$spacing-unit * 3);
+  margin-bottom: calc(v.$spacing-unit * 3);
+  border-radius: v.$radius-md;
+  background: v.$color-accent-soft;
+  color: #6f5b98;
+  font-size: v.$fontsize-sm;
+  font-weight: bold;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    background: #ede5fa;
   }
 }
 

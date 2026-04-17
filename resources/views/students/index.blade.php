@@ -8,12 +8,13 @@
             <div>
                 <p class="page-eyebrow">Students</p>
                 <h1 class="page-title">生徒一覧</h1>
+                <p class="page-subtitle">受講生徒を一覧で確認できます。</p>
             </div>
-
-            @can('create', \App\Models\Student::class)
-                <a href="{{ route('students.create') }}" class="link-button">生徒を登録する</a>
-            @endcan
         </div>
+
+        @can('create', \App\Models\Student::class)
+            <a href="{{ route('students.create') }}" class="link-button">生徒を登録する</a>
+        @endcan
 
         <!-- <form method="GET" action="{{ route('students.index') }}" class="filter-form students-filter">
             <div class="form-field">
@@ -57,7 +58,7 @@
                 <p>該当する生徒はいません。</p>
             </div>
         @else
-            <section class="students-panel">
+            <section class="students-panel table-panel">
                 <div class="table-wrap">
                     <table class="base-table students-table">
                         <thead>
@@ -80,7 +81,7 @@
                                 @endphp
 
                                 <tr>
-                                    <td class="students-table__name">{{ $student->name }}</td>
+                                    <td class="pannel-table-name">{{ $student->name }}</td>
                                     <td>{{ $student->grade ?: '-' }}</td>
                                     <td>{{ $student->school_name ?: '-' }}</td>
                                     <td>
@@ -118,9 +119,9 @@
                                     </td>
                                     <td>
                                         @if (!empty($schools))
-                                            <span class="school-badge">{{ $schools[0] }}</span>
+                                            <span>{{ $schools[0] }}</span>
                                             @if (count($schools) > 1)
-                                                <span class="school-more">＋{{ count($schools) - 1 }}</span>
+                                                <span class="school-more-badge">＋{{ count($schools) - 1 }}</span>
                                             @endif
                                         @else
                                             <span class="text-muted">未設定</span>
@@ -131,7 +132,12 @@
                                         <span class="record-count-badge">{{ $student->guidance_records_count }}</span>
                                     </td>
                                     <td>
-                                        <a href="{{ route('students.show', $student) }}" class="link-button">詳細</a>
+                                        <div class="table-actions">
+                                            <a href="{{ route('students.show', $student) }}" class="table-button">詳細</a>
+                                            @can('update', $student)
+                                                <a href="{{ route('students.edit', $student) }}" class="table-button">編集</a>
+                                            @endcan
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
@@ -139,7 +145,7 @@
                     </table>
                 </div>
 
-                <div class="students-pagination">
+                <div class="pagination-nav">
                     {{ $students->links() }}
                 </div>
             </section>
