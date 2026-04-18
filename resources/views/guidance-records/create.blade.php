@@ -40,7 +40,7 @@
             @include('guidance-records._form', ['student' => $student])
 
             <div class="form-actions-row">
-                <button type="submit" class="button button--primary">登録する</button>
+                <button type="submit" class="link-button link-button-register">登録する</button>
             </div>
         </form>
     </section>

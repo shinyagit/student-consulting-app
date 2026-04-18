@@ -111,7 +111,7 @@
 
         <div class="ui-form-grid">
             <div class="ui-form-field ui-form-field--full">
-                <label class="form-label">担当可能科目</label>
+                <!-- <label class="form-label">担当可能科目</label> -->
                 <div class="ui-selection-panel">
                     <div class="ui-checkbox-grid">
                         @foreach ($subjectOptions as $subject)
@@ -146,7 +146,7 @@
 
         <div class="ui-form-grid">
             <div class="ui-form-field ui-form-field--full">
-                <label for="note" class="form-label">備考</label>
+                <!-- <label for="note" class="form-label">備考</label> -->
                 <textarea
                     name="note"
                     id="note"

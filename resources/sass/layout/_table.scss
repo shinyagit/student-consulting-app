@@ -57,35 +57,67 @@
   &-detail {
     background-color: v.$color-primary-soft;
     color: v.$color-primary-text;
-    border: 2px solid v.$color-primary-text;
+    border: 2px solid v.$color-primary;
   }
 
   &-edit {
     background-color: v.$color-secondary-soft;
     color: v.$color-secondary-text;
-    border: 2px solid v.$color-secondary-text;
+    border: 2px solid v.$color-secondary;
   }
 
   &-register {
     background-color: v.$color-yellow-soft;
     color: v.$color-yellow-text;
-    border: 2px solid v.$color-yellow-text;
+    border: 2px solid v.$color-yellow;
   }
 
   &-accent {
     background-color: v.$color-yellow-soft;
     color: v.$color-yellow-text;
-    border: 2px solid v.$color-yellow-text;
+    border: 2px solid v.$color-yellow;
   }
 
   &-danger {
     background-color: v.$color-danger-soft;
     color: v.$color-danger-text;
-    border: 2px solid v.$color-danger-text;
+    border: 2px solid v.$color-danger;
   }
 
   &:hover {
     opacity: 0.8;
+  }
+}
+
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+
+  &--active {
+    background: #edf7f5;
+    color: #5f8d84;
+  }
+
+  &--leave {
+    background: #fff7e8;
+    color: #b1843d;
+  }
+
+  &--graduated {
+    background: #eef2fb;
+    color: #6d7fb1;
+  }
+
+  &--withdrawn {
+    background: #f8eef2;
+    color: #a06a79;
   }
 }
 

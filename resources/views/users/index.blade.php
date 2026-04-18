@@ -20,9 +20,9 @@
                 <p>ユーザーはまだ登録されていません。</p>
             </div>
         @else
-            <section class="teachers-panel table-panel">
+            <section class=" table-panel">
                 <div class="table-wrap">
-                    <table class="base-table teachers-table">
+                    <table class="base-table">
                         <thead>
                             <tr>
                                 <th>氏名</th>
@@ -34,7 +34,7 @@
                         <tbody>
                             @foreach ($users as $user)
                                 <tr>
-                                    <td class="teachers-table__name">{{ $user->name }}</td>
+                                    <td class="panel-table-name">{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->role }}</td>
                                     <td>
