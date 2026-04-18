@@ -10,12 +10,85 @@
                 <h1 class="page-title">講師一覧</h1>
                 <p class="page-subtitle">指導講師を一覧で確認できます。</p>
             </div>
-        </div>
 
             @can('create', \App\Models\Teacher::class)
                 <a href="{{ route('teachers.create') }}" class="link-button link-button-register">講師を登録する</a>
             @endcan
-        
+        </div>
+
+        <form method="GET" action="{{ route('teachers.index') }}" class="ui-form ui-filter-form teachers-filter">
+            <section class="ui-form-section ui-filter-form__section">
+                <div class="ui-form-section-header">
+                    <p class="ui-form-section-eyebrow">Teacher Filters</p>
+                    <h2 class="ui-form-section-title">絞り込み</h2>
+                </div>
+
+                <div class="ui-form-grid">
+                    <div class="ui-form-field">
+                        <label for="keyword" class="form-label">講師名</label>
+                        <input
+                            type="text"
+                            name="keyword"
+                            id="keyword"
+                            class="form-input"
+                            value="{{ request('keyword') }}"
+                            placeholder="講師名で検索"
+                        >
+                    </div>
+
+                    <div class="ui-form-field">
+                        <label for="status" class="form-label">ステータス</label>
+                        <div class="form-select-wrap">
+                            <select name="status" id="status" class="form-input">
+                                <option value="">すべて</option>
+                                <option value="active" @selected(request('status') === 'active')>在籍中</option>
+                                <option value="inactive" @selected(request('status') === 'inactive')>停止中</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="ui-form-field">
+                        <label for="department" class="form-label">所属学部学科</label>
+                        <input
+                            type="text"
+                            name="department"
+                            id="department"
+                            class="form-input"
+                            value="{{ request('department') }}"
+                            placeholder="所属で検索"
+                        >
+                    </div>
+
+                    <div class="ui-form-field">
+                        <label for="subject" class="form-label">担当可能科目</label>
+                        <div class="form-select-wrap">
+                            <select name="subject" id="subject" class="form-input">
+                                <option value="">すべて</option>
+                                @foreach (\App\Constants\SubjectOptions::LIST as $subject)
+                                    <option value="{{ $subject }}" @selected(request('subject') === $subject)>
+                                        {{ $subject }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions-row ui-filter-form-actions">
+                    <button type="submit" class="link-button link-button-primary">検索</button>
+
+                    @if (
+                        request()->filled('keyword') ||
+                        request()->filled('status') ||
+                        request()->filled('department') ||
+                        request()->filled('subject')
+                    )
+                        <a href="{{ route('teachers.index') }}" class="link-button link-button-cancel">リセット</a>
+                    @endif
+                </div>
+            </section>
+        </form>
+
 
         @if ($teachers->isEmpty())
             <div class="empty-state">
@@ -72,7 +145,7 @@
                 </div>
 
                 <div class="pagination-nav">
-                    {{ $teachers->links() }}
+                    {{ $teachers->links('vendor.pagination.custom') }}
                 </div>
             </section>
         @endif

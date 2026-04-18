@@ -54,7 +54,7 @@
                     </div>
                 </section>
 
-                <div class="form-actions-row auth-form__actions">
+                <div class="form-actions-row auth-form-actions">
                     <button type="submit" class="auth-button auth-button-login">ログイン</button>
                 </div>
             </form>

@@ -10,7 +10,7 @@
                 <h1 class="page-title">生徒詳細</h1>
             </div>
 
-            <div class="page-header__actions">
+            <div class="page-header-actions">
                 <!-- @can('view', $student)
                     <a href="{{ route('guidance-records.create', ['student_id' => $student->id]) }}" class="button">
                         記録を追加
@@ -173,7 +173,7 @@
                     <h1 class="page-title">学習記録</h1>
                 </div>
 
-                <div class="page-header__actions">
+                <div class="page-header-actions">
                     @can('view', $student)
                         <a href="{{ route('guidance-records.create', ['student_id' => $student->id]) }}" class="table-button table-button-register">
                             記録を追加
@@ -225,7 +225,7 @@
                                     </p>
                                 </div>
 
-                                <div class="ui-record-card__actions">
+                                <div class="ui-record-card-actions">
                                     <a href="{{ route('guidance-records.edit', $record) }}" class="table-button table-button-edit">編集</a>
                                     <a href="{{ route('guidance-records.pdf', $record) }}" target="_blank" class="table-button table-button-accent">
                                         PDF出力
