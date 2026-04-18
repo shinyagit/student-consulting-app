@@ -17,7 +17,7 @@
         </div>
 
 
-        <form method="GET" action="{{ route('students.index') }}" class="ui-form ui-filter-form students-filter">
+        <!-- <form method="GET" action="{{ route('students.index') }}" class="ui-form ui-filter-form students-filter">
             <section class="ui-form-section ui-filter-form__section">
                 <div class="ui-form-section-header">
                     <p class="ui-form-section-eyebrow">Student Filters</p>
@@ -85,7 +85,7 @@
                     @endif
                 </div>
             </section>
-        </form>
+        </form> -->
 
         @if ($students->isEmpty())
             <div class="empty-state">
@@ -115,7 +115,7 @@
                                 @endphp
 
                                 <tr>
-                                    <td class="panel-table-name">{{ $student->name }}</td>
+                                    <td class="panel-table-name student-name"><a href="{{ route('students.show', $student) }}">{{ $student->name }}</a></td>
                                     <td>{{ $student->grade ?: '-' }}</td>
                                     <td>{{ $student->school_name ?: '-' }}</td>
                                     <td>

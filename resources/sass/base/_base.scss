@@ -7,3 +7,7 @@ body {
   line-height: 1.4;
   font-size: v.$fontsize-default;
 }
+
+section.section-wrapper {
+  margin-bottom: calc(v.$spacing-unit * 10);
+}
