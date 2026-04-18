@@ -236,12 +236,12 @@
                             <div class="ui-record-card__body">
                                 <div class="ui-record-grid">
                                     <section class="ui-record-block">
-                                        <h4 class="ui-record-block__title">成長点</h4>
+                                        <h4 class="ui-record-block__title">◎ 成長点</h4>
                                         <div class="ui-record-block__content">{!! nl2br(e($record->growth_point ?: '未入力')) !!}</div>
                                     </section>
 
                                     <section class="ui-record-block">
-                                        <h4 class="ui-record-block__title">課題点</h4>
+                                        <h4 class="ui-record-block__title">△ 課題点</h4>
                                         <div class="ui-record-block__content">{!! nl2br(e($record->challenge_point ?: '未入力')) !!}</div>
                                     </section>
                                 </div>

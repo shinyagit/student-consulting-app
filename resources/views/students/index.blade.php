@@ -115,7 +115,7 @@
                                 @endphp
 
                                 <tr>
-                                    <td class="pannel-table-name">{{ $student->name }}</td>
+                                    <td class="panel-table-name">{{ $student->name }}</td>
                                     <td>{{ $student->grade ?: '-' }}</td>
                                     <td>{{ $student->school_name ?: '-' }}</td>
                                     <td>

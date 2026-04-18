@@ -22,10 +22,10 @@
             </div>
 
             <div class="ui-detail-list">
-                <div class="ui-detail-list-row">
+                <!-- <div class="ui-detail-list-row">
                     <div class="ui-detail-list__label">講師コード</div>
                     <div class="ui-detail-list-value">{{ $teacher->teacher_code ?: '未設定' }}</div>
-                </div>
+                </div> -->
 
                 <div class="ui-detail-list-row">
                     <div class="ui-detail-list__label">講師名</div>
@@ -33,19 +33,19 @@
                 </div>
 
                 <div class="ui-detail-list-row">
-                    <div class="ui-detail-list__label">所属学部学科</div>
-                    <div class="ui-detail-list-value">{{ $teacher->department ?: '未設定' }}</div>
+                    <div class="ui-detail-list__label">所属学部学科 / 学年</div>
+                    <div class="ui-detail-list-value">{{ $teacher->department ?: '未設定' }} / {{ $teacher->school_year ?: '未設定' }}</div>
                 </div>
 
-                <div class="ui-detail-list-row">
+                <!-- <div class="ui-detail-list-row">
                     <div class="ui-detail-list__label">学年</div>
                     <div class="ui-detail-list-value">{{ $teacher->school_year ?: '未設定' }}</div>
-                </div>
+                </div> -->
 
-                <div class="ui-detail-list-row">
+                <!-- <div class="ui-detail-list-row">
                     <div class="ui-detail-list__label">年齢</div>
                     <div class="ui-detail-list-value">{{ $teacher->age ?: '未設定' }}</div>
-                </div>
+                </div> -->
 
                 <div class="ui-detail-list-row">
                     <div class="ui-detail-list__label">ステータス</div>
@@ -134,7 +134,7 @@
                                         @endswitch
                                     </td>
                                     <td>
-                                        <a href="{{ route('students.show', $student) }}">詳細</a>
+                                        <a href="{{ route('students.show', $student) }}" class="table-button table-button-detail">詳細</a>
                                     </td>
                                 </tr>
                             @endforeach

@@ -6,7 +6,7 @@
   border-radius: v.$radius-lg;
   background: #fff;
   box-shadow: 0 10px 30px rgba(70, 83, 90, 0.05);
-  margin-bottom: calc(v.$spacing-unit * 4);
+  margin-bottom: calc(v.$spacing-unit * 2);
 }
 
 .ui-detail-section-header {
@@ -163,6 +163,7 @@
   gap: 18px;
   padding: 20px 24px;
   background: v.$color-primary-soft;
+  border-top: 8px solid v.$color-primary;
 }
 
 .ui-record-card__header-main {
