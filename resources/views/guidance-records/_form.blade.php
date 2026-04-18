@@ -40,13 +40,13 @@
             </div>
 
             <div class="ui-form-field">
-                <label for="next_plan_date" class="form-label">次回実施日</label>
+                <label for="next_plan_date" class="form-label">次回実施日時</label>
                 <input
-                    type="date"
+                    type="datetime-local"
                     name="next_plan_date"
                     id="next_plan_date"
                     class="form-input"
-                    value="{{ old('next_plan_date', isset($record) && $record->next_plan_date ? $record->next_plan_date->format('Y-m-d') : '') }}"
+                    value="{{ old('next_plan_date', isset($record) && $record->next_plan_date ? $record->next_plan_date->format('Y-m-d\TH:i') : '') }}"
                 >
                 @error('next_plan_date')
                     <p class="form-error">{{ $message }}</p>

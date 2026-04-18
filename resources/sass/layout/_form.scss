@@ -68,7 +68,7 @@
   align-items: center;
   gap: 8px;
   padding: 4px;
-  border-radius: v.$radius-roud;
+  border-radius: v.$radius-round;
   border: 2px solid v.$color-secondary;
   background: #fff;
   font-size: v.$fontsize-md;
@@ -161,7 +161,7 @@
   min-height: 40px;
   padding: calc(v.$spacing-unit * 1) calc(v.$spacing-unit * 3);
   border: 2px solid rgba(123, 143, 199, 0.16);
-  border-radius: v.$radius-roud;
+  border-radius: v.$radius-round;
   background: #fff;
   color: v.$color-text;
   transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;

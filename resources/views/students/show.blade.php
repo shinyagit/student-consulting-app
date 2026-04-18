@@ -188,7 +188,7 @@
                 </div>
             </div>
 
-            @if ($records->isEmpty())
+            <!-- @if ($records->isEmpty())
                 <p class="text-muted">学習記録はまだありません。</p>
             @else
                 @php
@@ -310,7 +310,142 @@
                 <div class="pagination-wrap">
                     {{ $records->links() }}
                 </div>
-            @endif
+            @endif -->
+
+            @if ($records->isEmpty())
+    <p class="text-muted">学習記録はまだありません。</p>
+@else
+    @php
+        $week = ['(日)', '(月)', '(火)', '(水)', '(木)', '(金)', '(土)'];
+    @endphp
+
+    <div class="ui-record-list">
+        @foreach ($records as $record)
+            @php
+                $consultDate = $record->consulted_at?->format('Y/m/d');
+                $consultDayIndex = $record->consulted_at?->dayOfWeek;
+                $consultDay = !is_null($consultDayIndex) ? $week[$consultDayIndex] : '';
+                $consultTime = $record->consulted_at?->format('H:i');
+
+                $nextDate = $record->next_plan_date?->format('Y/m/d');
+                $nextDayIndex = $record->next_plan_date?->dayOfWeek;
+                $nextDay = !is_null($nextDayIndex) ? $week[$nextDayIndex] : '';
+                $nextTime = $record->next_plan_date?->format('H:i');
+            @endphp
+
+            <details class="ui-record-card">
+                <summary class="ui-record-card__summary">
+                    <div class="ui-record-card__header-main">
+                        <h3 class="ui-record-card__title">
+                            実施日：
+                            @if ($record->consulted_at)
+                                {{ $consultDate }} {{ $consultDay }} {{ $consultTime }}
+                            @else
+                                実施日未設定
+                            @endif
+                        </h3>
+                        <p class="ui-record-card__meta">
+                            記録者: {{ $record->user->name ?? '未設定' }}
+                        </p>
+                    </div>
+
+                    <div class="ui-record-card__summary-side">
+                        <div class="ui-record-meta ui-record-meta--compact">
+                            <div class="ui-record-meta__item">
+                                <span class="ui-record-meta__label">自己評価</span>
+                                <span class="ui-record-meta__value">
+                                    @if(!is_null($record->self_score))
+                                        {{ $record->self_score }} / 100
+                                    @else
+                                        未入力
+                                    @endif
+                                </span>
+                            </div>
+
+                            <div class="ui-record-meta__item">
+                                <span class="ui-record-meta__label">次回実施日</span>
+                                <span class="ui-record-meta__value">
+                                    @if ($record->next_plan_date)
+                                        {{ $nextDate }} {{ $nextDay }} {{ $nextTime }}
+                                    @else
+                                        未設定
+                                    @endif
+                                </span>
+                            </div>
+                        </div>
+
+                        <span class="ui-record-card__toggle-indicator" aria-hidden="true"></span>
+                    </div>
+                </summary>
+
+                <div class="ui-record-card__body">
+                    <div class="ui-record-card-actions">
+                        <a href="{{ route('guidance-records.edit', $record) }}" class="table-button table-button-edit">編集</a>
+                        <a href="{{ route('guidance-records.pdf', $record) }}" target="_blank" class="table-button table-button-accent">
+                            PDF出力
+                        </a>
+                    </div>
+
+                    <p class="ui-record-title">今回の学習の振り返り</p>
+
+                    <div class="ui-record-grid">
+                        <section class="ui-record-block">
+                            <h4 class="ui-record-block__title">◎ 成長点</h4>
+                            <div class="ui-record-block__content">{!! nl2br(e($record->growth_point ?: '未入力')) !!}</div>
+                        </section>
+
+                        <section class="ui-record-block">
+                            <h4 class="ui-record-block__title">△ 課題点</h4>
+                            <div class="ui-record-block__content">{!! nl2br(e($record->challenge_point ?: '未入力')) !!}</div>
+                        </section>
+                    </div>
+
+                    <section class="ui-record-block">
+                        <h4 class="ui-record-block__title">NOTE</h4>
+                        <div class="ui-record-block__content">{!! nl2br(e($record->note ?: '未入力')) !!}</div>
+                    </section>
+
+                    
+
+                    <div class="ui-record-subject-list">
+
+                    <p class="ui-record-title">次回に向けた計画</p>
+
+                        @if ($record->subject1_name || $record->subject1_detail)
+                            <section class="ui-record-block ui-record-block--subject">
+                                <h4 class="ui-record-block__title">科目① {{ $record->subject1_name ?: '未設定' }}</h4>
+                                <div class="ui-record-block__content">{!! nl2br(e($record->subject1_detail ?: '未入力')) !!}</div>
+                            </section>
+                        @endif
+
+                        @if ($record->subject2_name || $record->subject2_detail)
+                            <section class="ui-record-block ui-record-block--subject">
+                                <h4 class="ui-record-block__title">科目② {{ $record->subject2_name ?: '未設定' }}</h4>
+                                <div class="ui-record-block__content">{!! nl2br(e($record->subject2_detail ?: '未入力')) !!}</div>
+                            </section>
+                        @endif
+
+                        @if ($record->subject3_name || $record->subject3_detail)
+                            <section class="ui-record-block ui-record-block--subject">
+                                <h4 class="ui-record-block__title">科目③ {{ $record->subject3_name ?: '未設定' }}</h4>
+                                <div class="ui-record-block__content">{!! nl2br(e($record->subject3_detail ?: '未入力')) !!}</div>
+                            </section>
+                        @endif
+                    </div>
+
+                    <section class="ui-record-block">
+                        <h4 class="ui-record-block__title">その他</h4>
+                        <div class="ui-record-block__content">{!! nl2br(e($record->other_plan ?: '未入力')) !!}</div>
+                    </section>
+                </div>
+            </details>
+        @endforeach
+    </div>
+
+    <div class="pagination-wrap">
+        {{ $records->links() }}
+    </div>
+@endif
         </section>
     </section>
 @endsection
