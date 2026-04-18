@@ -148,7 +148,7 @@
 }
 
 .ui-record-card {
-  border-radius: v.$radius-lg;
+  border-radius: v.$radius-round v.$radius-sm v.$radius-md v.$radius-md;
   background: #fff;
   overflow: hidden;
   box-shadow: v.$shadow-sm;
@@ -210,6 +210,14 @@
   background: #fcfdff;
 }
 
+.ui-record-title {
+  font-size: v.$fontsize-lg;
+  color: v.$color-text;
+  font-weight: bold;
+  padding-left: 0.5em;
+  border-left: 4px solid v.$color-primary;
+}
+
 .ui-record-block--subject {
   background: #fff;
 }
@@ -242,7 +250,7 @@
   padding: 14px 16px;
   border-radius: v.$radius-sm;
   background: #f7f8fb;
-  border: 1px solid rgba(123, 143, 199, 0.08);
+  // border: 1px solid rgba(123, 143, 199, 0.08);
 }
 
 .ui-record-meta__label {
@@ -287,5 +295,130 @@
 
   .ui-record-card__title {
     font-size: 1.08rem;
+  }
+}
+
+
+// 学習記録表示変更
+
+.ui-record-card {
+  border: 1px solid rgba(123, 143, 199, 0.12);
+  border-radius: v.$radius-md v.$radius-md v.$radius-sm v.$radius-sm;
+  background: #fff;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(70, 83, 90, 0.05);
+}
+
+.ui-record-card__summary {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 18px;
+  padding: 10px 12px;
+  cursor: pointer;
+  border-top: 8px solid v.$color-primary;
+  background-color: v.$color-primary-soft;
+}
+
+.ui-record-card__summary::-webkit-details-marker {
+  display: none;
+}
+
+.ui-record-card__summary:hover {
+  opacity: 0.8;
+}
+
+.ui-record-card__summary-side {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.ui-record-card__toggle-indicator {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+}
+
+.ui-record-card__toggle-indicator::before,
+.ui-record-card__toggle-indicator::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 2px;
+  border-radius: 999px;
+  background: v.$color-text;
+  transform-origin: center;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.ui-record-card__toggle-indicator::before {
+  transform: translate(-50%, -50%) rotate(0deg);
+}
+
+.ui-record-card__toggle-indicator::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.ui-record-card[open] .ui-record-card__toggle-indicator::after {
+  opacity: 0;
+  transform: translate(-50%, -50%) rotate(90deg) scaleX(0);
+}
+
+.ui-record-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 22px 24px 24px;
+}
+
+.ui-record-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.ui-record-meta--compact {
+  display: flex;
+  gap: 10px;
+}
+
+.ui-record-meta--compact .ui-record-meta__item {
+  min-width: 140px;
+  padding: 10px 12px;
+}
+
+@media (max-width: 768px) {
+  .ui-record-card {
+    border-radius: 16px;
+  }
+
+  .ui-record-card__summary {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 18px;
+  }
+
+  .ui-record-card__summary-side {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ui-record-meta--compact {
+    flex-direction: column;
+  }
+
+  .ui-record-card__body {
+    padding: 18px;
+    gap: 16px;
+  }
+
+  .ui-record-card-actions {
+    justify-content: stretch;
   }
 }
