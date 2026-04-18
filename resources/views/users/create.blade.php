@@ -17,7 +17,7 @@
             @include('users._form')
 
             <div class="form-actions">
-                <button type="submit" class="button">登録する</button>
+                <button type="submit" class="confirm-button confirm-button-register">登録する</button>
             </div>
         </form>
     </section>

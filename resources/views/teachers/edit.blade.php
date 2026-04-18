@@ -18,7 +18,7 @@
             @include('teachers._form', ['teacher' => $teacher])
 
             <div class="form-actions-row">
-                <button type="submit" class="button button--primary">更新する</button>
+                <button type="submit" class="confirm-button confirm-button-register">更新する</button>
             </div>
         </form>
     </section>

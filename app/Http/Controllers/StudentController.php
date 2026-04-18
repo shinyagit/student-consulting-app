@@ -149,6 +149,14 @@ class StudentController extends Controller
 
     private function normalizeStudentInput(array $validated): array
     {
+        $validated['club_activity'] = filled($validated['club_activity'] ?? null)
+            ? trim($validated['club_activity'])
+            : null;
+
+        $validated['club_retirement_timing'] = filled($validated['club_retirement_timing'] ?? null)
+            ? trim($validated['club_retirement_timing'])
+            : null;
+
         $validated['desired_schools'] = array_values(
             array_filter($validated['desired_schools'] ?? [], fn ($v) => filled($v))
         );

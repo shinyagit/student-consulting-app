@@ -78,7 +78,7 @@ class TeacherSeeder extends Seeder
                 'teacher' => [
                     'teacher_code' => 'T005',
                     'name' => '池田さん',
-                    'department' => null,
+                    'department' => '広島大学経済学部経済学科',
                     'school_year' => '1年',
                     'age' => 20,
                     'status' => 'active',
@@ -109,7 +109,7 @@ class TeacherSeeder extends Seeder
                 'teacher' => [
                     'teacher_code' => 'T007',
                     'name' => '髙垣翔生',
-                    'department' => '広島大学工学部第３類',
+                    'department' => '広島大学工学部第3類',
                     'school_year' => '1年',
                     'age' => 20,
                     'status' => 'active',
@@ -124,7 +124,7 @@ class TeacherSeeder extends Seeder
                 'teacher' => [
                     'teacher_code' => 'T008',
                     'name' => '柏木優仁',
-                    'department' => '広島大学医学科',
+                    'department' => '広島大学医学部医学科',
                     'school_year' => '1年',
                     'age' => 20,
                     'status' => 'active',
@@ -154,7 +154,7 @@ class TeacherSeeder extends Seeder
                 'teacher' => [
                     'teacher_code' => 'T010',
                     'name' => '原田晃誠',
-                    'department' => '広島大学医学科',
+                    'department' => '広島大学医学部医学科',
                     'school_year' => '1年',
                     'age' => 20,
                     'status' => 'active',
@@ -214,7 +214,7 @@ class TeacherSeeder extends Seeder
                 'teacher' => [
                     'teacher_code' => 'T014',
                     'name' => '木村優希',
-                    'department' => '広島大学医学科',
+                    'department' => '広島大学医学部医学科',
                     'school_year' => '1年',
                     'age' => 20,
                     'status' => 'active',
@@ -244,7 +244,7 @@ class TeacherSeeder extends Seeder
                 'teacher' => [
                     'teacher_code' => 'T016',
                     'name' => '塩田海渡',
-                    'department' => '広島大学薬学科',
+                    'department' => '広島大学薬学部薬学科',
                     'school_year' => '1年',
                     'age' => 20,
                     'status' => 'active',
@@ -289,7 +289,7 @@ class TeacherSeeder extends Seeder
                 'teacher' => [
                     'teacher_code' => 'T019',
                     'name' => '在津凌馬',
-                    'department' => '広島大学経済学部',
+                    'department' => '広島大学経済学部経済学科',
                     'school_year' => '1年',
                     'age' => 20,
                     'status' => 'active',
@@ -334,7 +334,7 @@ class TeacherSeeder extends Seeder
                 'teacher' => [
                     'teacher_code' => 'T022',
                     'name' => '大西翔',
-                    'department' => '広島大学法学部',
+                    'department' => '広島大学法学部法学科',
                     'school_year' => '1年',
                     'age' => 20,
                     'status' => 'active',
@@ -364,7 +364,7 @@ class TeacherSeeder extends Seeder
                 'teacher' => [
                     'teacher_code' => 'T024',
                     'name' => '高島沙良',
-                    'department' => '広島大学法学科',
+                    'department' => '広島大学法学部法学科',
                     'school_year' => '1年',
                     'age' => 20,
                     'status' => 'active',
@@ -374,22 +374,6 @@ class TeacherSeeder extends Seeder
                     ),
                 ],
                 'subjects' => ['英語', '国語', '世界史', '地理'],
-            ],
-            [
-                'teacher' => [
-                    'teacher_code' => 'T025',
-                    'name' => '谷岡',
-                    'department' => null,
-                    'school_year' => '1年',
-                    'age' => 20,
-                    'status' => 'active',
-                    'note' => $this->buildNote(
-                        '未登録',
-                        '秋山、藤井',
-                        '学部学科・担当可能科目・出講可能曜日が未登録'
-                    ),
-                ],
-                'subjects' => [],
             ],
             [
                 'teacher' => [
@@ -500,7 +484,7 @@ class TeacherSeeder extends Seeder
                 'teacher' => [
                     'teacher_code' => 'T033',
                     'name' => '石井夏乃',
-                    'department' => '広島大学法学科',
+                    'department' => '広島大学法学部法学科',
                     'school_year' => '1年',
                     'age' => 20,
                     'status' => 'active',

@@ -7,31 +7,3 @@ body {
   line-height: 1.4;
   font-size: v.$fontsize-default;
 }
-
-
-input:not([type='checkbox']):not([type='radio']),
-textarea,
-select {
-  width: 100%;
-  border: 1px solid v.$color-border;
-  border-radius: v.$radius-md;
-  background: v.$color-surface;
-  padding: 8px 12px;
-  color: v.$color-text;
-}
-
-
-button,
-.button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid v.$color-border;
-  border-radius: v.$radius-md;
-  background: v.$color-surface;
-  padding: 8px 12px;
-  font-size: 13px;
-  font-weight: bold;
-  color: v.$color-text;
-  cursor: pointer;
-}

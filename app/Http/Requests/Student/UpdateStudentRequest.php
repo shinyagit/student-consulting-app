@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Student;
 
 use App\Constants\SubjectOptions;
+use App\Constants\GradeOptions;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -19,7 +20,9 @@ class UpdateStudentRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'name_kana' => ['nullable', 'string', 'max:255'],
             'school_name' => ['nullable', 'string', 'max:255'],
-            'grade' => ['nullable', 'string', 'max:50'],
+            'grade' => ['required', 'string', Rule::in(GradeOptions::LIST)],
+            'club_activity' => ['nullable', 'string', 'max:255'],
+            'club_retirement_timing' => ['nullable', 'string', 'max:255'],
             'status' => ['required', Rule::in(['active', 'leave', 'graduated', 'withdrawn'])],
             'course_type' => ['nullable', Rule::in(['liberal_arts', 'science', 'undecided'])],
 
@@ -47,6 +50,8 @@ class UpdateStudentRequest extends FormRequest
             'name_kana' => '生徒氏名ふりがな',
             'school_name' => '学校名',
             'grade' => '学年',
+            'club_activity' => '部活',
+            'club_retirement_timing' => '部活引退時期',
             'status' => 'ステータス',
             'course_type' => '文系理系',
             'exam_subjects' => '受験科目',

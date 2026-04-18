@@ -1,58 +1,50 @@
-@use '../abstracts/variables' as v;
+// @use '../abstracts/variables' as v;
 
-.teachers-panel {
-  border: 1px solid v.$color-border-soft;
-  border-radius: v.$radius-sm;
-  background: v.$color-surface;
-  box-shadow: v.$shadow-sm;
-  overflow: hidden;
-}
+// .teachers-pagination {
+//   padding: 20px;
+//   border-top: 1px solid v.$color-border-soft;
+//   background: #fcfcfe;
+// }
 
-.teachers-pagination {
-  padding: 20px;
-  border-top: 1px solid v.$color-border-soft;
-  background: #fcfcfe;
-}
+// @media (max-width: 900px) {
+//   .teachers-pagination {
+//     padding: 16px;
+//   }
+// }
 
-@media (max-width: 900px) {
-  .teachers-pagination {
-    padding: 16px;
-  }
-}
+// .teacher-form {
+//   display: grid;
+//   gap: 24px;
+// }
 
-.teacher-form {
-  display: grid;
-  gap: 24px;
-}
+// .teacher-form__grid,
+// .teacher-form__section {
+//   padding: 20px;
+//   border: 1px solid v.$color-border-soft;
+//   border-radius: v.$radius-sm;
+//   background: v.$color-surface;
+//   box-shadow: v.$shadow-sm;
+// }
 
-.teacher-form__grid,
-.teacher-form__section {
-  padding: 20px;
-  border: 1px solid v.$color-border-soft;
-  border-radius: v.$radius-sm;
-  background: v.$color-surface;
-  box-shadow: v.$shadow-sm;
-}
+// .teacher-form__grid {
+//   display: grid;
+//   grid-template-columns: repeat(2, minmax(0, 1fr));
+//   gap: 16px 20px;
+// }
 
-.teacher-form__grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px 20px;
-}
+// .teacher-edit-form {
+//   display: grid;
+//   gap: 24px;
+// }
 
-.teacher-edit-form {
-  display: grid;
-  gap: 24px;
-}
+// .form-actions-row {
+//   display: flex;
+//   gap: 12px;
+//   justify-content: flex-start;
+// }
 
-.form-actions-row {
-  display: flex;
-  gap: 12px;
-  justify-content: flex-start;
-}
-
-@media (max-width: 900px) {
-  .teacher-form__grid {
-    grid-template-columns: 1fr;
-  }
-}
+// @media (max-width: 900px) {
+//   .teacher-form__grid {
+//     grid-template-columns: 1fr;
+//   }
+// }

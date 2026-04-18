@@ -11,6 +11,8 @@ class Student extends Model
         'name_kana',
         'school_name',
         'grade',
+        'club_activity',
+        'club_retirement_timing',
         'status',
         'course_type',
         'exam_subjects',

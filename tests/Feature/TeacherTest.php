@@ -40,11 +40,11 @@ class TeacherTest extends TestCase
         ]);
 
         $teacher = Teacher::create([
+            'teacher_code' => 'T001',
             'name' => '田中 一郎',
             'department' => '広島大学教育学部',
-            'school_year' => '3年',
-            'age' => 21,
-            'email' => 'tanaka@example.com',
+            'school_year' => '1年',
+            'age' => 20,
             'status' => 'active',
         ]);
 
@@ -61,11 +61,11 @@ class TeacherTest extends TestCase
         ]);
 
         $teacher = Teacher::create([
+            'teacher_code' => 'T001',
             'name' => '田中 一郎',
             'department' => '広島大学教育学部',
-            'school_year' => '3年',
-            'age' => 21,
-            'email' => 'tanaka@example.com',
+            'school_year' => '1年',
+            'age' => 20,
             'status' => 'active',
         ]);
 

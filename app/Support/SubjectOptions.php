@@ -7,6 +7,8 @@ class SubjectOptions
     public const LIST = [
         '英語',
         '国語',
+        '現代文',
+        '古文漢文',
         '数学IA',
         '数学IIBC',
         '数学III',
@@ -26,5 +28,8 @@ class SubjectOptions
         '情報',
         '小論文',
         '面接',
+        '英検準1級対策',
+        '英検準2級対策',
+        '総合型選抜',
     ];
 }

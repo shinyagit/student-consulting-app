@@ -7,8 +7,10 @@
 @use 'layout/header';
 @use 'layout/container';
 @use 'layout/table';
+@use 'layout/form';
 
 @use 'pages/auth';
 @use 'pages/dashboard';
 @use 'pages/students';
 @use 'pages/teachers';
+@use 'pages/detail';

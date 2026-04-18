@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Student;
 use App\Models\Teacher;
+use App\Models\TeacherSubject;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -55,7 +56,9 @@ class StudentTest extends TestCase
             'name' => '山田 太郎',
             'name_kana' => 'ヤマダ タロウ',
             'school_name' => '広島第一高校',
-            'grade' => '高1',
+            'grade' => '高校1年生',
+            'club_activity' => 'サッカー部',
+            'club_retirement_timing' => '高校3年生の5月',
             'status' => 'active',
         ]);
 
@@ -75,7 +78,9 @@ class StudentTest extends TestCase
             'name' => '山田 太郎',
             'name_kana' => 'ヤマダ タロウ',
             'school_name' => '広島第一高校',
-            'grade' => '高1',
+            'grade' => '高校1年生',
+            'club_activity' => 'サッカー部',
+            'club_retirement_timing' => '高校3年生の5月',
             'status' => 'active',
             'consultant_user_id' => $user->id,
         ]);
@@ -100,7 +105,9 @@ class StudentTest extends TestCase
             'name' => '山田 太郎',
             'name_kana' => 'ヤマダ タロウ',
             'school_name' => '広島第一高校',
-            'grade' => '高1',
+            'grade' => '高校1年生',
+            'club_activity' => 'サッカー部',
+            'club_retirement_timing' => '高校3年生の5月',
             'status' => 'active',
             'consultant_user_id' => $otherUser->id,
         ]);
@@ -117,19 +124,31 @@ class StudentTest extends TestCase
         ]);
 
         $teacher = Teacher::create([
+            'teacher_code' => 'T001',
             'name' => '田中 一郎',
             'department' => '広島大学教育学部',
-            'school_year' => '3年',
-            'age' => 21,
-            'email' => 'tanaka@example.com',
+            'school_year' => '1年',
+            'age' => 20,
             'status' => 'active',
+        ]);
+
+        TeacherSubject::create([
+            'teacher_id' => $teacher->id,
+            'subject' => '英語',
+        ]);
+
+        TeacherSubject::create([
+            'teacher_id' => $teacher->id,
+            'subject' => '現代文',
         ]);
 
         $student = Student::create([
             'name' => '山田 太郎',
             'name_kana' => 'ヤマダ タロウ',
             'school_name' => '広島第一高校',
-            'grade' => '高1',
+            'grade' => '高校1年生',
+            'club_activity' => 'サッカー部',
+            'club_retirement_timing' => '高校3年生の5月',
             'status' => 'active',
             'course_type' => 'science',
             'exam_subjects' => ['英語', '数学IA'],
@@ -141,16 +160,18 @@ class StudentTest extends TestCase
             'name' => '山田 花子',
             'name_kana' => 'ヤマダ ハナコ',
             'school_name' => '広島第二高校',
-            'grade' => '高2',
+            'grade' => '高校2年生',
+            'club_activity' => '吹奏楽部',
+            'club_retirement_timing' => '高校3年生の4月',
             'status' => 'leave',
             'course_type' => 'liberal_arts',
-            'exam_subjects' => ['英語', '国語'],
+            'exam_subjects' => ['英語', '現代文'],
             'desired_schools' => ['広島大学', '岡山大学'],
             'note' => '休会中',
             'teacher_assignments' => [
                 [
                     'teacher_id' => $teacher->id,
-                    'subjects' => ['英語', '国語'],
+                    'subjects' => ['英語', '現代文'],
                 ],
             ],
         ]);
@@ -160,6 +181,9 @@ class StudentTest extends TestCase
         $this->assertDatabaseHas('students', [
             'id' => $student->id,
             'name' => '山田 花子',
+            'grade' => '高校2年生',
+            'club_activity' => '吹奏楽部',
+            'club_retirement_timing' => '高校3年生の4月',
             'status' => 'leave',
             'course_type' => 'liberal_arts',
         ]);
@@ -178,7 +202,7 @@ class StudentTest extends TestCase
         $this->assertDatabaseHas('student_teacher_subjects', [
             'student_id' => $student->id,
             'teacher_id' => $teacher->id,
-            'subject' => '国語',
+            'subject' => '現代文',
         ]);
     }
 }

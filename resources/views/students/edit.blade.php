@@ -3,7 +3,12 @@
 @section('title', '生徒編集')
 
 @section('content')
-    <h1>生徒編集</h1>
+    <div class="page-header">
+        <div>
+            <p class="page-eyebrow">Student Info Setting</p>
+            <h1 class="page-title">生徒情報編集</h1>
+        </div>
+    </div>
 
     <form method="POST" action="{{ route('students.update', $student) }}">
         @csrf
@@ -11,8 +16,8 @@
 
         @include('students._form', ['student' => $student])
 
-        <div style="margin-top: 24px;">
-            <button type="submit">更新する</button>
+        <div>
+            <button type="submit" class="confirm-button confirm-button-register">更新する</button>
         </div>
     </form>
 @endsection
