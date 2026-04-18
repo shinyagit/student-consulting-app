@@ -47,16 +47,10 @@
 
         .review-box {
             position: relative;
-            min-height: 150px;
-            padding: 28px 8px 8px;
+            height: 180px;
+            padding: 8px;
             border: 2px solid #333;
             margin-bottom: 5px;
-        }
-
-        .review-box span {
-            position: absolute;
-            top: 4px;
-            left: 8px;
         }
 
         .self-review {
@@ -64,22 +58,30 @@
             font-weight: bold;
         }
 
+        .note-box {
+            position: relative;
+            height: 240px;
+            padding: 8px;
+            border: 2px solid #333;
+            margin-bottom: 5px;
+        }
+
         .logo-box {
             position: absolute;
             bottom: 70px;
             left: 0;
-            height: 50px;
+            height: 40px;
             text-align: center;
         }
 
         .logo-box img {
-            width: 100px;
+            width: 100%;
             height: auto;
         }
 
         .box {
             border: 2px solid #333;
-            min-height: 60px;
+            min-height: 40px;
             padding: 8px;
         }
 
@@ -95,7 +97,7 @@
             padding: 8px;
             vertical-align: top;
             text-align: left;
-            height: 120px;
+            height: 240px;
             line-height: 1.6em;
         }
 
@@ -135,7 +137,7 @@
             @endif
         </p>
         <p class="name"><strong>生徒名：</strong>{{ $record->student->name ?? '未設定' }}</p>
-        <p class="name"><strong>記録者：</strong>{{ $record->user->name ?? '未設定' }}</p>
+        <!-- <p class="name"><strong>記録者：</strong>{{ $record->user->name ?? '未設定' }}</p> -->
     </div>
 
     <div class="section">
@@ -163,7 +165,7 @@
         </p>
 
         <p><strong>NOTE</strong></p>
-        <div class="review-box">
+        <div class="note-box">
             <p>{{ $record->note ?: '未入力' }}</p>
         </div>
     </div>

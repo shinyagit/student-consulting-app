@@ -13,7 +13,7 @@
         </div>
 
         @can('create', \App\Models\Student::class)
-            <a href="{{ route('students.create') }}" class="link-button">生徒を登録する</a>
+            <a href="{{ route('students.create') }}" class="link-button link-button-register">生徒を登録する</a>
         @endcan
 
         <!-- <form method="GET" action="{{ route('students.index') }}" class="filter-form students-filter">
@@ -133,9 +133,9 @@
                                     </td>
                                     <td>
                                         <div class="table-actions">
-                                            <a href="{{ route('students.show', $student) }}" class="table-button">詳細</a>
+                                            <a href="{{ route('students.show', $student) }}" class="table-button table-button-detail">詳細</a>
                                             @can('update', $student)
-                                                <a href="{{ route('students.edit', $student) }}" class="table-button">編集</a>
+                                                <a href="{{ route('students.edit', $student) }}" class="table-button table-button-edit">編集</a>
                                             @endcan
                                         </div>
                                     </td>

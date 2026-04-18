@@ -17,7 +17,7 @@
             @include('teachers._form')
 
             <div class="form-actions-row">
-                <button type="submit" class="button button--primary">登録する</button>
+                <button type="submit" class="confirm-button confirm-button-register">登録する</button>
             </div>
         </form>
     </section>

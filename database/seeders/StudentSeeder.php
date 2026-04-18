@@ -12,11 +12,12 @@ class StudentSeeder extends Seeder
 {
     public function run(): void
     {
-        // if (app()->environment('production')) {
-        //     throw new \RuntimeException(static::class.' cannot run in production.');
-        // }
-        
-        $teachers = Teacher::with('teacherSubjects')->get();
+        if (app()->environment('production')) {
+            throw new \RuntimeException(static::class . ' cannot run in production.');
+        }
+
+        $teachers = Teacher::with('teacherSubjects')->orderBy('teacher_code')->get();
+
         $consultantUsers = User::whereIn('role', ['admin', 'staff'])
             ->orderBy('id')
             ->get();
@@ -27,7 +28,9 @@ class StudentSeeder extends Seeder
                     'name' => '山田 太郎',
                     'name_kana' => 'ヤマダ タロウ',
                     'school_name' => '広島第一高校',
-                    'grade' => '高1',
+                    'grade' => '高校1年生',
+                    'club_activity' => 'サッカー部',
+                    'club_retirement_timing' => '高校3年生の5月',
                     'status' => 'active',
                     'course_type' => 'science',
                     'exam_subjects' => ['英語', '数学IA', '数学IIBC', '化学', '物理', '情報'],
@@ -37,11 +40,11 @@ class StudentSeeder extends Seeder
                 'assignments' => [
                     [
                         'teacher_index' => 0,
-                        'subjects' => ['数学IA', '数学IIBC', '物理'],
+                        'subjects' => ['英語'],
                     ],
                     [
                         'teacher_index' => 1,
-                        'subjects' => ['英語'],
+                        'subjects' => ['数学IA', '数学IIBC', '化学'],
                     ],
                 ],
             ],
@@ -50,7 +53,9 @@ class StudentSeeder extends Seeder
                     'name' => '中村 陸',
                     'name_kana' => 'ナカムラ リク',
                     'school_name' => '広島西高校',
-                    'grade' => '高2',
+                    'grade' => '高校2年生',
+                    'club_activity' => 'バスケットボール部',
+                    'club_retirement_timing' => '高校3年生の6月',
                     'status' => 'leave',
                     'course_type' => 'science',
                     'exam_subjects' => ['英語', '数学IA', '数学IIBC', '数学III', '化学', '物理'],
@@ -59,8 +64,8 @@ class StudentSeeder extends Seeder
                 ],
                 'assignments' => [
                     [
-                        'teacher_index' => 0,
-                        'subjects' => ['数学III', '物理'],
+                        'teacher_index' => 2,
+                        'subjects' => ['数学IA', '数学IIBC', '数学III', '英語', '物理', '化学'],
                     ],
                 ],
             ],
@@ -69,17 +74,19 @@ class StudentSeeder extends Seeder
                     'name' => '佐藤 花',
                     'name_kana' => 'サトウ ハナ',
                     'school_name' => '広島中央高校',
-                    'grade' => '高3',
+                    'grade' => '高校3年生',
+                    'club_activity' => '吹奏楽部',
+                    'club_retirement_timing' => '高校3年生の4月',
                     'status' => 'active',
                     'course_type' => 'liberal_arts',
-                    'exam_subjects' => ['英語', '国語', '日本史', '小論文', '面接'],
+                    'exam_subjects' => ['英語', '現代文', '古文漢文', '日本史', '小論文', '面接'],
                     'desired_schools' => ['広島大学法学部', '岡山大学法学部'],
                     'note' => '記述と小論文を強化中。',
                 ],
                 'assignments' => [
                     [
-                        'teacher_index' => 2,
-                        'subjects' => ['英語', '国語', '小論文'],
+                        'teacher_index' => 21,
+                        'subjects' => ['英語', '現代文', '古文漢文', '日本史', '小論文', '面接'],
                     ],
                 ],
             ],
@@ -88,21 +95,23 @@ class StudentSeeder extends Seeder
                     'name' => '松本 翔',
                     'name_kana' => 'マツモト ショウ',
                     'school_name' => '安古市高校',
-                    'grade' => '高2',
+                    'grade' => '高校2年生',
+                    'club_activity' => 'テニス部',
+                    'club_retirement_timing' => '高校3年生の5月',
                     'status' => 'active',
                     'course_type' => 'liberal_arts',
-                    'exam_subjects' => ['英語', '国語', '世界史', '政治経済', '情報'],
+                    'exam_subjects' => ['英語', '現代文', '古文漢文', '世界史', '政治経済', '情報'],
                     'desired_schools' => ['広島大学経済学部', '神戸大学経済学部'],
                     'note' => '社会2科目の整理が必要。',
                 ],
                 'assignments' => [
                     [
-                        'teacher_index' => 2,
+                        'teacher_index' => 21,
                         'subjects' => ['英語', '世界史', '政治経済'],
                     ],
                     [
-                        'teacher_index' => 3,
-                        'subjects' => ['情報'],
+                        'teacher_index' => 19,
+                        'subjects' => ['数学IA', '数学IIBC'],
                     ],
                 ],
             ],
@@ -111,17 +120,19 @@ class StudentSeeder extends Seeder
                     'name' => '井上 葵',
                     'name_kana' => 'イノウエ アオイ',
                     'school_name' => '舟入高校',
-                    'grade' => '高1',
+                    'grade' => '高校1年生',
+                    'club_activity' => '未所属',
+                    'club_retirement_timing' => '未定',
                     'status' => 'active',
                     'course_type' => 'undecided',
-                    'exam_subjects' => ['英語', '国語', '数学IA', '数学IIBC', '化学基礎', '物理基礎'],
+                    'exam_subjects' => ['英語', '現代文', '数学IA', '数学IIBC', '化学基礎', '物理基礎'],
                     'desired_schools' => ['広島大学総合科学部'],
                     'note' => '文理未定。定期的に進路面談を実施。',
                 ],
                 'assignments' => [
                     [
-                        'teacher_index' => 1,
-                        'subjects' => ['英語', '数学IA'],
+                        'teacher_index' => 8,
+                        'subjects' => ['数学IA', '数学IIBC', '英語'],
                     ],
                 ],
             ],

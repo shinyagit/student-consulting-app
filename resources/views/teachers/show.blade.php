@@ -15,63 +15,71 @@
             @endcan
         </div>
 
-        <section class="detail-card">
-            <h2 class="section-title">基本情報</h2>
+        <section class="ui-detail-section detail-card">
+            <div class="ui-detail-section-header">
+                <p class="ui-detail-section-eyebrow">Teacher Profile</p>
+                <h2 class="ui-detail-section-title">基本情報</h2>
+            </div>
 
-            <div class="detail-list">
-                <div class="detail-list__row">
-                    <div class="detail-list__label">講師名</div>
-                    <div class="detail-list__value">{{ $teacher->name }}</div>
+            <div class="ui-detail-list">
+                <div class="ui-detail-list-row">
+                    <div class="ui-detail-list__label">講師コード</div>
+                    <div class="ui-detail-list-value">{{ $teacher->teacher_code ?: '未設定' }}</div>
                 </div>
 
-                <div class="detail-list__row">
-                    <div class="detail-list__label">所属学部学科</div>
-                    <div class="detail-list__value">{{ $teacher->department ?: '未設定' }}</div>
+                <div class="ui-detail-list-row">
+                    <div class="ui-detail-list__label">講師名</div>
+                    <div class="ui-detail-list-value">{{ $teacher->name }}</div>
                 </div>
 
-                <div class="detail-list__row">
-                    <div class="detail-list__label">学年</div>
-                    <div class="detail-list__value">{{ $teacher->school_year ?: '未設定' }}</div>
+                <div class="ui-detail-list-row">
+                    <div class="ui-detail-list__label">所属学部学科</div>
+                    <div class="ui-detail-list-value">{{ $teacher->department ?: '未設定' }}</div>
                 </div>
 
-                <div class="detail-list__row">
-                    <div class="detail-list__label">年齢</div>
-                    <div class="detail-list__value">{{ $teacher->age ?: '未設定' }}</div>
+                <div class="ui-detail-list-row">
+                    <div class="ui-detail-list__label">学年</div>
+                    <div class="ui-detail-list-value">{{ $teacher->school_year ?: '未設定' }}</div>
                 </div>
 
-                <div class="detail-list__row">
-                    <div class="detail-list__label">メール</div>
-                    <div class="detail-list__value">{{ $teacher->email ?: '未設定' }}</div>
+                <div class="ui-detail-list-row">
+                    <div class="ui-detail-list__label">年齢</div>
+                    <div class="ui-detail-list-value">{{ $teacher->age ?: '未設定' }}</div>
                 </div>
 
-                <div class="detail-list__row">
-                    <div class="detail-list__label">ステータス</div>
-                    <div class="detail-list__value">
+                <div class="ui-detail-list-row">
+                    <div class="ui-detail-list__label">ステータス</div>
+                    <div class="ui-detail-list-value">
                         @switch($teacher->status)
                             @case('active')
-                                在籍中
+                                <span class="ui-status-chip ui-status-chip--primary">在籍中</span>
                                 @break
                             @case('inactive')
-                                停止中
+                                <span class="ui-status-chip ui-status-chip--muted">停止中</span>
                                 @break
                             @default
-                                {{ $teacher->status }}
+                                {{ $teacher->status ?: '未設定' }}
                         @endswitch
                     </div>
                 </div>
 
-                <div class="detail-list__row">
-                    <div class="detail-list__label">備考</div>
-                    <div class="detail-list__value">{{ $teacher->note ?: '未設定' }}</div>
+                <div class="ui-detail-list-row">
+                    <div class="ui-detail-list__label">備考</div>
+                    <div class="ui-detail-list-value">
+                        {!! nl2br(e($teacher->note ?: '未設定')) !!}
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section class="detail-card">
-            <h2 class="section-title">担当可能科目</h2>
+        <section class="ui-detail-section detail-card">
+            <div class="ui-detail-section-header">
+                <p class="ui-detail-section-eyebrow">Available Subjects</p>
+                <h2 class="ui-detail-section-title">担当可能科目</h2>
+            </div>
 
             @if ($teacher->teacherSubjects->isEmpty())
-                <p>担当可能科目は未設定です。</p>
+                <p class="text-muted">担当可能科目は未設定です。</p>
             @else
                 <div class="chip-list">
                     @foreach ($teacher->teacherSubjects as $teacherSubject)
@@ -81,11 +89,14 @@
             @endif
         </section>
 
-        <section class="detail-card">
-            <h2 class="section-title">担当生徒</h2>
+        <section class="ui-detail-section detail-card">
+            <div class="ui-detail-section-header">
+                <p class="ui-detail-section-eyebrow">Assigned Students</p>
+                <h2 class="ui-detail-section-title">担当生徒</h2>
+            </div>
 
             @if ($teacher->students->isEmpty())
-                <p>担当生徒はまだ登録されていません。</p>
+                <p class="text-muted">担当生徒はまだ登録されていません。</p>
             @else
                 <div class="table-wrap">
                     <table class="base-table" style="width: 100%;">
@@ -107,19 +118,19 @@
                                     <td>
                                         @switch($student->status)
                                             @case('active')
-                                                在籍中
+                                                <span class="ui-status-chip ui-status-chip--primary">在籍中</span>
                                                 @break
                                             @case('leave')
-                                                休会
+                                                <span class="ui-status-chip ui-status-chip--accent">休会</span>
                                                 @break
                                             @case('graduated')
-                                                卒業
+                                                <span class="ui-status-chip ui-status-chip--secondary">卒業</span>
                                                 @break
                                             @case('withdrawn')
-                                                退塾
+                                                <span class="ui-status-chip ui-status-chip--muted">退塾</span>
                                                 @break
                                             @default
-                                                {{ $student->status }}
+                                                {{ $student->status ?: '未設定' }}
                                         @endswitch
                                     </td>
                                     <td>

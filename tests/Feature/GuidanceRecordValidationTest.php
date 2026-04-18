@@ -22,13 +22,16 @@ class GuidanceRecordValidationTest extends TestCase
             'name' => '山田 太郎',
             'name_kana' => 'ヤマダ タロウ',
             'school_name' => '広島第一高校',
-            'grade' => '高1',
+            'grade' => '高校1年生',
             'status' => 'active',
         ]);
 
         $teacher = Teacher::create([
+            'teacher_code' => 'T001',
             'name' => '田中 一郎',
-            'email' => 'tanaka@example.com',
+            'department' => null,
+            'school_year' => '1年',
+            'age' => 20,
             'status' => 'active',
         ]);
 
@@ -52,20 +55,23 @@ class GuidanceRecordValidationTest extends TestCase
             'name' => '山田 太郎',
             'name_kana' => 'ヤマダ タロウ',
             'school_name' => '広島第一高校',
-            'grade' => '高1',
+            'grade' => '高校1年生',
             'status' => 'active',
         ]);
 
         $teacher = Teacher::create([
+            'teacher_code' => 'T002',
             'name' => '田中 一郎',
-            'email' => 'tanaka@example.com',
+            'department' => null,
+            'school_year' => '1年',
+            'age' => 20,
             'status' => 'active',
         ]);
 
         $response = $this->actingAs($user)->post(route('guidance-records.store'), [
             'student_id' => $student->id,
             'teacher_id' => $teacher->id,
-            'consulted_at' => now()->format('Y-m-d H:i:s'),
+            'consulted_at' => now()->format('Y-m-d\TH:i'),
             'self_score' => 101,
         ]);
 

@@ -11,15 +11,34 @@
             </div>
         </div>
 
-        <div class="detail-card">
-            <p><strong>生徒名:</strong> {{ $student->name }}</p>
-            <p><strong>学校名:</strong> {{ $student->school_name }}</p>
-            <p><strong>学年:</strong> {{ $student->grade }}</p>
-        </div>
+        <section class="ui-detail-section detail-card">
+            <div class="ui-detail-section-header">
+                <p class="ui-detail-section-eyebrow">Student Information</p>
+                <h2 class="ui-detail-section-title">対象生徒</h2>
+            </div>
+
+            <div class="ui-detail-list">
+                <div class="ui-detail-list-row">
+                    <div class="ui-detail-list__label">生徒名</div>
+                    <div class="ui-detail-list-value">{{ $student->name }}</div>
+                </div>
+
+                <div class="ui-detail-list-row">
+                    <div class="ui-detail-list__label">学校名</div>
+                    <div class="ui-detail-list-value">{{ $student->school_name ?: '未設定' }}</div>
+                </div>
+
+                <div class="ui-detail-list-row">
+                    <div class="ui-detail-list__label">学年</div>
+                    <div class="ui-detail-list-value">{{ $student->grade ?: '未設定' }}</div>
+                </div>
+            </div>
+        </section>
 
         <form method="POST" action="{{ route('guidance-records.store') }}" class="guidance-edit-form">
             @csrf
             @include('guidance-records._form', ['student' => $student])
+
             <div class="form-actions-row">
                 <button type="submit" class="button button--primary">登録する</button>
             </div>

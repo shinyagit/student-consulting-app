@@ -13,7 +13,7 @@
         </div>
 
             @can('create', \App\Models\Teacher::class)
-                <a href="{{ route('teachers.create') }}" class="link-button">講師を登録する</a>
+                <a href="{{ route('teachers.create') }}" class="link-button link-button-register">講師を登録する</a>
             @endcan
         
 
@@ -58,10 +58,10 @@
                                     </td>
                                     <td>
                                         <div class="table-actions">
-                                            <a href="{{ route('teachers.show', $teacher) }}" class="table-button">詳細</a>
+                                            <a href="{{ route('teachers.show', $teacher) }}" class="table-button table-button-detail">詳細</a>
 
                                             @can('update', $teacher)
-                                                <a href="{{ route('teachers.edit', $teacher) }}" class="table-button">編集</a>
+                                                <a href="{{ route('teachers.edit', $teacher) }}" class="table-button table-button-edit">編集</a>
                                             @endcan
                                         </div>
                                     </td>

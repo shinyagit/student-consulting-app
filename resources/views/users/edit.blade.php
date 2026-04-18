@@ -18,7 +18,7 @@
             @include('users._form', ['user' => $user])
 
             <div class="form-actions">
-                <button type="submit" class="button">更新する</button>
+                <button type="submit" class="confirm-button confirm-button-register">更新する</button>
             </div>
         </form>
     </section>

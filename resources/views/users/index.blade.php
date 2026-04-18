@@ -12,7 +12,7 @@
             </div>
         </div>
 
-        <a href="{{ route('users.create') }}" class="link-button">ユーザーを登録する</a>
+        <a href="{{ route('users.create') }}" class="link-button link-button-register">ユーザーを登録する</a>
         
 
         @if ($users->isEmpty())
@@ -39,7 +39,7 @@
                                     <td>{{ $user->role }}</td>
                                     <td>
                                         <div class="teachers-table__actions">
-                                            <a href="{{ route('users.edit', $user) }}" class="link-button">編集</a>
+                                            <a href="{{ route('users.edit', $user) }}" class="table-button table-button-edit">編集</a>
                                         </div>
                                     </td>
                                 </tr>

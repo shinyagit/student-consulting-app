@@ -20,7 +20,7 @@
 }
 
 .page-header {
-  margin-bottom: calc(v.$spacing-unit * 6);
+  margin-bottom: calc(v.$spacing-unit * 2);
 }
 
 .page-title {
@@ -81,6 +81,23 @@
   }
 }
 
+.table-panel {
+  background: v.$color-surface;
+  border-radius: v.$radius-md;
+  box-shadow: v.$shadow-sm;
+  padding: 20px;
+
+  &-header {
+    margin-bottom: 14px;
+  }
+
+  &-title {
+    font-size: v.$fontsize-lg;
+    font-weight: bold;
+    color: v.$color-text;
+  }
+}
+
 .link-button {
   display: inline-flex;
   align-items: center;
@@ -88,14 +105,24 @@
   padding: calc(v.$spacing-unit * 2) calc(v.$spacing-unit * 3);
   margin-bottom: calc(v.$spacing-unit * 3);
   border-radius: v.$radius-md;
-  background: v.$color-accent-soft;
-  color: #6f5b98;
-  font-size: v.$fontsize-sm;
+  font-size: v.$fontsize-md;
   font-weight: bold;
   transition: background-color 0.2s ease, transform 0.2s ease;
 
+  &-register {
+    background-color: v.$color-yellow-soft;
+    color: v.$color-yellow-text;
+    border: 2px solid v.$color-yellow-text;
+  }
+
+  &-edit {
+    background-color: v.$color-secondary-soft;
+    color: v.$color-secondary-text;
+    border: 2px solid v.$color-secondary-text;
+  }
+
   &:hover {
-    background: #ede5fa;
+    opacity: 0.8;
   }
 }
 

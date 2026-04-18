@@ -1,0 +1,321 @@
+@use '../abstracts/variables' as v;
+
+.ui-form {
+  display: flex;
+  flex-direction: column;
+  // gap: 12px;
+}
+
+.ui-form-section {
+  padding: 24px;
+  border: 1px solid rgba(123, 143, 199, 0.12);
+  border-radius: v.$radius-md;
+  background: #fff;
+  box-shadow: 0 10px 30px rgba(70, 83, 90, 0.05);
+  margin-bottom: 20px;
+}
+
+.ui-form-section-header {
+  margin-bottom: 18px;
+}
+
+.ui-form-section-eyebrow {
+  margin: 0;
+  font-size: v.$fontsize-sm;
+  font-weight: bold;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: v.$color-primary;
+}
+
+.ui-form-section-title {
+  margin: 0;
+  font-size: v.$fontsize-lg;
+  font-weight: 800;
+  color: v.$color-text;
+}
+
+.ui-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 20px;
+}
+
+.ui-form-field--full {
+  grid-column: 1 / -1;
+}
+
+.form-help {
+  padding-left: 12px;
+  font-size: v.$fontsize-sm;
+  color: v.$color-muted;
+}
+
+.ui-selection-panel {
+  border-radius: v.$radius-sm;
+  background: #fcfdff;
+}
+
+.ui-checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 10px;
+}
+
+.ui-checkbox-tile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px;
+  border-radius: v.$radius-roud;
+  border: 2px solid v.$color-secondary;
+  background: #fff;
+  font-size: v.$fontsize-md;
+  color: v.$color-secondary-text;
+  letter-spacing: 0.08em;
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ui-checkbox-tile input[type='checkbox'] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ui-checkbox-tile span {
+  display: block;
+  width: 100%;
+  text-align: center;
+  // color: v.$color-secondary-text;
+}
+
+.ui-checkbox-tile:hover {
+  border-color: v.$color-secondary;
+  background: v.$color-secondary-soft;
+}
+
+.ui-checkbox-tile:has(input[type='checkbox']:checked) {
+  border-color: v.$color-secondary;
+  background: v.$color-secondary;
+  color: #fff;
+  font-weight: semi-bold;
+}
+
+.ui-checkbox-tile:has(input[type='checkbox']:focus-visible) {
+  box-shadow: 0 0 0 4px v.$color-secondary;
+}
+
+.ui-stack-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.ui-stack-list-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+}
+
+.ui-item-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-bottom: 16px;
+}
+
+.ui-item-card {
+  padding: 18px;
+  border: 2px solid v.$color-secondary;
+  border-radius: v.$radius-md;
+  background: linear-gradient(180deg, #ffffff 0%, #fbfcfe 100%);
+}
+
+.ui-item-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.ui-item-card-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: v.$color-text;
+}
+
+.form-label {
+  margin-bottom: 8px;
+  display: inline-block;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: v.$color-text;
+}
+
+.form-input {
+  width: 100%;
+  min-height: 40px;
+  padding: calc(v.$spacing-unit * 1) calc(v.$spacing-unit * 3);
+  border: 2px solid rgba(123, 143, 199, 0.16);
+  border-radius: v.$radius-roud;
+  background: #fff;
+  color: v.$color-text;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+select.form-input {
+  font-size: v.$fontsize-default;
+}
+
+
+
+.form-input:focus {
+  outline: none;
+  border: 2px solid v.$color-secondary;
+  box-shadow: 0 0 0 4px v.$color-secondary-soft;
+}
+
+textarea.form-input {
+  min-height: 120px;
+  resize: vertical;
+  border-radius: v.$radius-sm;
+}
+
+.form-error {
+  margin-top: 6px;
+  font-size: 0.85rem;
+  color: v.$color-error-text;
+}
+
+.confirm-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(v.$spacing-unit * 2) calc(v.$spacing-unit * 3);
+  margin-bottom: calc(v.$spacing-unit * 3);
+  border-radius: v.$radius-md;
+  font-size: v.$fontsize-md;
+  font-weight: bold;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+
+  &-register {
+    background-color: v.$color-yellow-soft;
+    color: v.$color-yellow-text;
+    border: 2px solid v.$color-yellow-text;
+  }
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+
+
+@media (max-width: 768px) {
+  .ui-form-section {
+    padding: 18px;
+    border-radius: 16px;
+  }
+
+  .ui-form-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .ui-stack-list-row {
+    grid-template-columns: 1fr;
+  }
+
+  .ui-item-card-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ui-checkbox-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+
+// login
+
+.auth-page {
+  display: flex;
+  justify-content: center;
+  padding: 40px 16px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 560px;
+}
+
+.auth-card__header {
+  margin-bottom: 20px;
+}
+
+.auth-form__section {
+  padding: 0;
+  border: none;
+  box-shadow: none;
+  background: transparent;
+}
+
+.auth-form__actions {
+  margin-top: 4px;
+}
+
+.ui-check-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  cursor: pointer;
+}
+
+.ui-check-row__input {
+  width: 18px;
+  height: 18px;
+  accent-color: v.$color-primary;
+}
+
+.ui-check-row__label {
+  font-size: 0.95rem;
+  color: v.$color-text;
+}
+
+.auth-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(v.$spacing-unit * 2) calc(v.$spacing-unit * 3);
+  border-radius: v.$radius-md;
+  font-size: v.$fontsize-md;
+  font-weight: bold;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+
+  &-login {
+    background-color: v.$color-primary-soft;
+    color: v.$color-primary-text;
+    border: 2px solid v.$color-primary  ;
+  }
+
+  &-logout {
+    background-color: v.$color-danger-soft;
+    color: v.$color-danger-text;
+    border: 2px solid v.$color-danger;
+  }
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+@media (max-width: 768px) {
+  .auth-page {
+    padding: 24px 12px;
+  }
+}

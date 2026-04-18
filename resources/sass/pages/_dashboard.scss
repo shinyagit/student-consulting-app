@@ -1,11 +1,11 @@
 @use '../abstracts/variables' as v;
 
 .dashboard {
-  &__header {
+  &-header {
     margin-bottom: 24px;
   }
 
-  &__title {
+  &-title {
     font-size: 30px;
     font-weight: 700;
     color: v.$color-text;
@@ -15,8 +15,6 @@
 }
 
 .dashboard-stats {
-  display: grid;
-  // grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: calc(v.$spacing-unit * 3);
   margin-bottom: calc(v.$spacing-unit * 3);
   display: flex;
@@ -30,52 +28,42 @@
   gap: calc(v.$spacing-unit * 3);
   border-radius: v.$radius-md;
   padding: calc(v.$spacing-unit * 3);
-  box-shadow: v.$shadow-sm;
+  // box-shadow: v.$shadow-sm;
   flex: 1;
 
   &-label {
     font-size: 14px;
     color: v.$color-text-muted;
+    width: 5.5em;
   }
 
   &-value {
-    font-size: v.$fontsize-hg;
+    font-size: v.$fontsize-lg;
     line-height: 1;
     font-weight: bold;
     color: v.$color-text;
   }
 
-  &--students {
+  &-students {
     // background: linear-gradient(180deg, #f7f1ff 0%, #fdfcff 100%);
-    background-color: #f7f1ff;
+    background-color: v.$color-primary-soft;
   }
 
-  &--teachers {
+  &-teachers {
     // background: linear-gradient(180deg, #eef8f5 0%, #fcfffe 100%);
-    background-color: #eef8f5;
+    background-color: v.$color-secondary-soft;
     
   }
 
-  &--records {
+  &-records {
     // background: linear-gradient(180deg, #eef3ff 0%, #fcfdff 100%);
-    background-color: #eef3ff;
+    background-color: v.$color-accent-soft;
   }
 }
 
-.dashboard-panel, .table-panel {
-  background: v.$color-surface;
-  border-radius: v.$radius-md;
-  box-shadow: v.$shadow-sm;
-  padding: 20px;
-
-  &__header {
-    margin-bottom: 14px;
-  }
-
-  &__title {
-    font-size: 20px;
-    font-weight: 600;
-    color: v.$color-text;
+@media screen and (max-width: 700px) {
+  .dashboard-stats {
+    flex-direction: column;
   }
 }
 
@@ -140,22 +128,22 @@
   margin-left: calc(v.$spacing-unit * 2);
 }
 
-.link-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 7px 12px;
-  border-radius: v.$radius-md;
-  background: v.$color-accent-soft;
-  color: #6f5b98;
-  font-size: 13px;
-  font-weight: 600;
-  transition: background-color 0.2s ease, transform 0.2s ease;
+// .link-button {
+//   display: inline-flex;
+//   align-items: center;
+//   justify-content: center;
+//   padding: 7px 12px;
+//   border-radius: v.$radius-md;
+//   background: v.$color-accent-soft;
+//   color: #6f5b98;
+//   font-size: 13px;
+//   font-weight: 600;
+//   transition: background-color 0.2s ease, transform 0.2s ease;
 
-  &:hover {
-    background: #ede5fa;
-  }
-}
+//   &:hover {
+//     background: #ede5fa;
+//   }
+// }
 
 .empty-state {
   padding: 28px 20px;

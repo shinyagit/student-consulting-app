@@ -1,6 +1,21 @@
 document.addEventListener('DOMContentLoaded', () => {
   initDesiredSchools();
   initTeacherAssignments();
+
+  const toggle = document.querySelector('[data-menu-toggle]');
+  const header = document.querySelector('.app-header');
+  const srText = toggle?.querySelector('.sr-only');
+
+  if (!toggle || !header) return;
+
+  toggle.addEventListener('click', () => {
+    const isOpen = header.classList.toggle('is-menu-open');
+    toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+
+    if (srText) {
+      srText.textContent = isOpen ? 'メニューを閉じる' : 'メニューを開く';
+    }
+  });
 });
 
 function initDesiredSchools() {
@@ -56,9 +71,9 @@ function initTeacherAssignments() {
     const subjectOptionsHtml = subjectOptions.map((subject) => {
       const escaped = escapeHtml(subject);
       return `
-        <label class="checkbox-label">
+        <label class="ui-checkbox-tile">
           <input type="checkbox" name="teacher_assignments[${index}][subjects][]" value="${escaped}">
-          ${escaped}
+          <span>${escaped}</span>
         </label>
       `;
     }).join('');
@@ -67,21 +82,32 @@ function initTeacherAssignments() {
     card.className = 'teacher-assignment-card';
 
     card.innerHTML = `
-      <div class="form-field">
-        <label class="form-label">講師</label>
-        <select name="teacher_assignments[${index}][teacher_id]" class="form-input">
-          ${teacherOptionsHtml}
-        </select>
-      </div>
+      <div class="ui-item-card teacher-assignment-card">
+        <div class="ui-item-card-header">
+          <span class="ui-item-card-title">担当講師${index + 1}</span>
+          <button type="button" class="table-button table-button-danger remove-assignment-button">
+            この担当を削除
+          </button>
+        </div>
 
-      <div class="form-field">
-        <label class="form-label">担当科目</label>
-        <div class="subject-checkbox-grid">
-          ${subjectOptionsHtml}
+        <div class="ui-form-grid">
+          <div class="ui-form-field">
+            <label class="form-label">講師</label>
+            <select name="teacher_assignments[${index}][teacher_id]" class="form-input">
+              ${teacherOptionsHtml}
+            </select>
+          </div>
+
+          <div class="ui-form-field ui-form-field--full">
+            <label class="form-label">担当科目</label>
+            <div class="ui-selection-panel">
+              <div class="ui-checkbox-grid">
+                ${subjectOptionsHtml}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-
-      <button type="button" class="remove-assignment-button button button--secondary">この担当を削除</button>
     `;
 
     list.appendChild(card);

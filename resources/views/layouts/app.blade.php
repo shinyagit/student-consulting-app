@@ -24,6 +24,11 @@
                     </a>
                 </div>
 
+                <button type="button" class="app-menu-toggle" aria-expanded="false" aria-controls="app-nav app-user" data-menu-toggle >
+                    <img src="/images/menu-button.png" class="app-menu-toggle__icon app-menu-toggle__icon--open" />
+                    <img src="/images/close-button.png" class="app-menu-toggle__icon app-menu-toggle__icon--close" />
+                </button>
+
                 <nav class="app-nav">
                     <a href="{{ route('dashboard') }}" class="app-nav__link">ダッシュボード</a>
 
@@ -55,10 +60,10 @@
 
                         <form method="POST" action="{{ url('/logout') }}" class="app-user__logout">
                             @csrf
-                            <button type="submit" class="button button--soft">ログアウト</button>
+                            <button type="submit" class="auth-button auth-button-logout">ログアウト</button>
                         </form>
                     @else
-                        <a href="{{ url('/login') }}" class="button button--primary">ログイン</a>
+                        <a href="{{ url('/login') }}" class="auth-button auth-button-login">ログイン</a>
                     @endauth
                 </div>
             </div>
