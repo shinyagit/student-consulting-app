@@ -11,7 +11,7 @@
             </div>
 
             @can('update', $teacher)
-                <a href="{{ route('teachers.edit', $teacher) }}" class="button button--secondary">編集</a>
+                <a href="{{ route('teachers.edit', $teacher) }}" class="link-button link-button-edit">編集</a>
             @endcan
         </div>
 

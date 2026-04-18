@@ -10,10 +10,10 @@
                 <h1 class="page-title">管理者・スタッフ一覧</h1>
                 <p class="page-subtitle">コンサルティング担当を一覧で確認できます。</p>
             </div>
+
+            <a href="{{ route('users.create') }}" class="link-button link-button-register">ユーザーを登録する</a>
         </div>
 
-        <a href="{{ route('users.create') }}" class="link-button link-button-register">ユーザーを登録する</a>
-        
 
         @if ($users->isEmpty())
             <div class="empty-state">
@@ -38,7 +38,7 @@
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->role }}</td>
                                     <td>
-                                        <div class="teachers-table__actions">
+                                        <div class="teachers-table-actions">
                                             <a href="{{ route('users.edit', $user) }}" class="table-button table-button-edit">編集</a>
                                         </div>
                                     </td>

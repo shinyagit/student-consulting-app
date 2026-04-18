@@ -12,10 +12,31 @@ class TeacherController extends Controller
     {
         $this->authorize('viewAny', Teacher::class);
 
+        // $teachers = Teacher::query()
+        //     ->withCount('students')
+        //     ->orderBy('teacher_code')
+        //     ->paginate(20);
+
         $teachers = Teacher::query()
-            ->withCount('students')
-            ->orderBy('teacher_code')
-            ->paginate(20);
+                ->withCount('students')
+                ->with('teacherSubjects')
+                ->when(request('keyword'), function ($query, $keyword) {
+                    $query->where('name', 'like', '%' . $keyword . '%');
+                })
+                ->when(request('status'), function ($query, $status) {
+                    $query->where('status', $status);
+                })
+                ->when(request('department'), function ($query, $department) {
+                    $query->where('department', 'like', '%' . $department . '%');
+                })
+                ->when(request('subject'), function ($query, $subject) {
+                    $query->whereHas('teacherSubjects', function ($q) use ($subject) {
+                        $q->where('subject', $subject);
+                    });
+                })
+                ->orderBy('teacher_code')
+                ->paginate(20)
+                ->withQueryString();
 
         return view('teachers.index', compact('teachers'));
     }

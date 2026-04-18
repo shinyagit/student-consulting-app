@@ -39,6 +39,7 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 18px 20px;
+  margin-bottom: calc(v.$spacing-unit * 3);
 }
 
 .ui-form-field--full {
@@ -239,6 +240,29 @@ textarea.form-input {
   }
 }
 
+// search 
+
+.ui-filter-form {
+  gap: 0;
+}
+
+.ui-filter-form__section {
+  padding: 20px 24px;
+}
+
+.ui-filter-form-actions {
+  margin-top: 16px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+  .ui-filter-form__section {
+    padding: 18px;
+  }
+}
+
 
 // login
 
@@ -264,7 +288,7 @@ textarea.form-input {
   background: transparent;
 }
 
-.auth-form__actions {
+.auth-form-actions {
   margin-top: 4px;
 }
 

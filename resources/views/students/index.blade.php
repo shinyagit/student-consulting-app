@@ -10,48 +10,82 @@
                 <h1 class="page-title">生徒一覧</h1>
                 <p class="page-subtitle">受講生徒を一覧で確認できます。</p>
             </div>
+
+            @can('create', \App\Models\Student::class)
+                <a href="{{ route('students.create') }}" class="link-button link-button-register">生徒を登録する</a>
+            @endcan
         </div>
 
-        @can('create', \App\Models\Student::class)
-            <a href="{{ route('students.create') }}" class="link-button link-button-register">生徒を登録する</a>
-        @endcan
 
-        <!-- <form method="GET" action="{{ route('students.index') }}" class="filter-form students-filter">
-            <div class="form-field">
-                <label for="keyword" class="form-label">生徒氏名</label>
-                <input type="text" name="keyword" id="keyword" class="form-input" value="{{ request('keyword') }}">
-            </div>
+        <form method="GET" action="{{ route('students.index') }}" class="ui-form ui-filter-form students-filter">
+            <section class="ui-form-section ui-filter-form__section">
+                <div class="ui-form-section-header">
+                    <p class="ui-form-section-eyebrow">Student Filters</p>
+                    <h2 class="ui-form-section-title">絞り込み</h2>
+                </div>
 
-            <div class="form-field">
-                <label for="grade" class="form-label">学年</label>
-                <input type="text" name="grade" id="grade" class="form-input" value="{{ request('grade') }}">
-            </div>
+                <div class="ui-form-grid">
+                    <div class="ui-form-field">
+                        <label for="keyword" class="form-label">生徒氏名</label>
+                        <input
+                            type="text"
+                            name="keyword"
+                            id="keyword"
+                            class="form-input"
+                            value="{{ request('keyword') }}"
+                            placeholder="氏名で検索"
+                        >
+                    </div>
 
-            <div class="form-field">
-                <label for="status" class="form-label">ステータス</label>
-                <select name="status" id="status" class="form-input">
-                    <option value="">すべて</option>
-                    <option value="active" @selected(request('status') === 'active')>在籍中</option>
-                    <option value="leave" @selected(request('status') === 'leave')>休会</option>
-                    <option value="graduated" @selected(request('status') === 'graduated')>卒業</option>
-                    <option value="withdrawn" @selected(request('status') === 'withdrawn')>退塾</option>
-                </select>
-            </div>
+                    <div class="ui-form-field">
+                        <label for="grade" class="form-label">学年</label>
+                        <div class="form-select-wrap">
+                            <select name="grade" id="grade" class="form-input">
+                                <option value="">すべて</option>
+                                @foreach (\App\Constants\GradeOptions::LIST as $grade)
+                                    <option value="{{ $grade }}" @selected(request('grade') === $grade)>
+                                        {{ $grade }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
 
-            <div class="form-field">
-                <label for="course_type" class="form-label">文系理系</label>
-                <select name="course_type" id="course_type" class="form-input">
-                    <option value="">すべて</option>
-                    <option value="liberal_arts" @selected(request('course_type') === 'liberal_arts')>文系</option>
-                    <option value="science" @selected(request('course_type') === 'science')>理系</option>
-                    <option value="undecided" @selected(request('course_type') === 'undecided')>未定</option>
-                </select>
-            </div>
+                    <div class="ui-form-field">
+                        <label for="status" class="form-label">ステータス</label>
+                        <div class="form-select-wrap">
+                            <select name="status" id="status" class="form-input">
+                                <option value="">すべて</option>
+                                <option value="active" @selected(request('status') === 'active')>在籍中</option>
+                                <option value="leave" @selected(request('status') === 'leave')>休会</option>
+                                <option value="graduated" @selected(request('status') === 'graduated')>卒業</option>
+                                <option value="withdrawn" @selected(request('status') === 'withdrawn')>退塾</option>
+                            </select>
+                        </div>
+                    </div>
 
-            <div class="filter-form__actions">
-                <button type="submit" class="button button--primary">検索</button>
-            </div>
-        </form> -->
+                    <div class="ui-form-field">
+                        <label for="course_type" class="form-label">文系理系</label>
+                        <div class="form-select-wrap">
+                            <select name="course_type" id="course_type" class="form-input">
+                                <option value="">すべて</option>
+                                <option value="liberal_arts" @selected(request('course_type') === 'liberal_arts')>文系</option>
+                                <option value="science" @selected(request('course_type') === 'science')>理系</option>
+                                <option value="undecided" @selected(request('course_type') === 'undecided')>未定</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions-row ui-filter-form-actions">
+                    <button type="submit" class="link-button link-button-primary">検索</button>
+
+                    @if (request()->filled('keyword') || request()->filled('grade') || request()->filled('status') || request()->filled('course_type'))
+                        <a href="{{ route('students.index') }}" class="link-button link-button-cancel">リセット</a>
+                    @endif
+                </div>
+            </section>
+        </form>
 
         @if ($students->isEmpty())
             <div class="empty-state">
