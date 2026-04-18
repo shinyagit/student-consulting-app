@@ -90,14 +90,19 @@
     font-weight: bold;
   }
 
-  // &__more {
-  //   display: inline-block;
-  //   margin-left: 6px;
-  //   color: v.$color-primary;
-  //   font-weight: 600;
-  //   font-size: 13px;
-  // }
+  &.student-name a {
+    display: inline-block;
+    border-bottom: 1px solid v.$color-text;
+  }
 }
+
+.panel-table-name.student-name a, .panel-table-name.teacher-name a {
+    display: inline-block;
+    border-bottom: 1px solid v.$color-text;
+    padding: v.$spacing-unit;
+  }
+
+
 
 .record-count-badge {
   display: inline-flex;

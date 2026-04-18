@@ -164,7 +164,7 @@
                 </div>
             </div>
         </section>
-
+    </section>
         <!-- <section class="ui-detail-section detail-card"> -->
         <section class="section-wrapper">
             <div class="page-header">

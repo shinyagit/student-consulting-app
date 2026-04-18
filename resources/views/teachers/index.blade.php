@@ -111,7 +111,7 @@
                         <tbody>
                             @foreach ($teachers as $teacher)
                                 <tr>
-                                    <td class="panel-table-name">{{ $teacher->name }}</td>
+                                    <td class="panel-table-name teacher-name"><a href="{{ route('teachers.show', $teacher) }}">{{ $teacher->name }}</a></td>
                                     <td>{{ $teacher->department ?: '-' }}</td>
                                     <td>{{ $teacher->school_year ?: '-' }}</td>
                                     <td>

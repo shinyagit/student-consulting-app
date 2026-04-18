@@ -227,7 +227,7 @@
                                 value="{{ $school }}"
                                 placeholder="志望校{{ $index + 1 }}"
                             >
-                            <button type="button" class="button button--soft remove-school-button">削除</button>
+                            <button type="button" class="table-button table-button-danger remove-button">削除</button>
                         </div>
                     @endforeach
                 </div>
@@ -250,7 +250,7 @@
                 <div class="ui-item-card teacher-assignment-card">
                     <div class="ui-item-card-header">
                         <span class="ui-item-card-title">担当講師 {{ $index + 1 }}</span>
-                        <button type="button" class="table-button table-button-danger remove-assignment-button">
+                        <button type="button" class="table-button table-button-danger remove-button">
                             この担当を削除
                         </button>
                     </div>
