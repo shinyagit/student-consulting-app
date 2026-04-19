@@ -124,7 +124,7 @@
                                                 <span class="status-badge status-badge--active">在籍中</span>
                                                 @break
                                             @case('leave')
-                                                <span class="status-badge status-badge--leave">休会</span>
+                                                <span class="status-badge status-badge--leave">休塾</span>
                                                 @break
                                             @case('graduated')
                                                 <span class="status-badge status-badge--graduated">卒業</span>
@@ -139,16 +139,16 @@
                                     <td>
                                         @switch($student->course_type)
                                             @case('liberal_arts')
-                                                文系
+                                                <span class="ui-course-chip ui-course-chip--liberal-arts">文系</span>
                                                 @break
                                             @case('science')
-                                                理系
+                                                <span class="ui-course-chip ui-course-chip--science">理系</span>
                                                 @break
                                             @case('undecided')
-                                                未定
+                                                <span class="ui-course-chip ui-course-chip--other">未定</span>
                                                 @break
                                             @default
-                                                <span class="text-muted">未設定</span>
+                                                <span class="ui-course-chip ui-course-chip--muted">未設定</span>
                                         @endswitch
                                     </td>
                                     <td>

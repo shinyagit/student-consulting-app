@@ -91,15 +91,15 @@
 }
 
 .ui-status-chip--accent {
-  background: v.$color-accent-soft;
-  color: v.$color-accent-text;
-  border-color: v.$color-accent;
+  background: v.$color-yellow-soft;
+  color: v.$color-yellow-text;
+  border-color: v.$color-yellow;
 }
 
 .ui-status-chip--muted {
-  background: #f4f6f8;
-  color: rgba(70, 83, 90, 0.72);
-  border-color: rgba(70, 83, 90, 0.08);
+  background: v.$color-danger-soft;
+  color: v.$color-danger-text;
+  border: 2px solid v.$color-danger;
 }
 
 .chip-list {
@@ -111,7 +111,7 @@
 .chip {
   display: inline-flex;
   align-items: center;
-  padding: 6px 10px;
+  padding: v.$spacing-unit calc(v.$spacing-unit * 2);
   border: 2px solid v.$color-secondary;
   border-radius: 999px;
   background: v.$color-secondary-soft;
@@ -245,13 +245,11 @@
 
 .ui-record-meta__item {
   display: flex;
-  // flex-direction: column;
   align-items: center;
   gap: 6px;
   padding: 14px 16px;
   border-radius: v.$radius-sm;
   background: #f7f8fb;
-  // border: 1px solid rgba(123, 143, 199, 0.08);
 }
 
 .ui-record-meta__label {
@@ -423,4 +421,43 @@
   .ui-record-card-actions {
     justify-content: stretch;
   }
+}
+
+// 文理選択チップ
+
+.ui-course-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1;
+  border: 1px solid transparent;
+  vertical-align: middle;
+}
+
+.ui-course-chip--liberal-arts {
+  background: v.$color-accent-soft;
+  color: v.$color-accent-text;
+  border: 2px solid v.$color-accent;
+}
+
+.ui-course-chip--science {
+  background: v.$color-secondary-soft;
+  color: v.$color-secondary-text;
+  border: 2px solid v.$color-secondary;
+}
+
+.ui-course-chip--other {
+  background: #f8f3e9;
+  color: #8a6b3f;
+  border-color: rgba(186, 156, 96, 0.22);
+}
+
+.ui-course-chip--muted {
+  background: #f4f6f8;
+  color: rgba(70, 83, 90, 0.72);
+  border-color: rgba(70, 83, 90, 0.08);
 }

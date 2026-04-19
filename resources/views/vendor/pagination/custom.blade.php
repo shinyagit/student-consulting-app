@@ -67,7 +67,7 @@
         </ul>
 
         <div class="ui-pagination__summary">
-            Showing {{ $paginator->firstItem() }} to {{ $paginator->lastItem() }} of {{ $paginator->total() }} results
+            全 {{ $paginator->total() }} 件中 {{ $paginator->firstItem() }} - {{ $paginator->lastItem() }} 件を表示
         </div>
         
     </nav>

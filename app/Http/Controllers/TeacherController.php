@@ -12,11 +12,6 @@ class TeacherController extends Controller
     {
         $this->authorize('viewAny', Teacher::class);
 
-        // $teachers = Teacher::query()
-        //     ->withCount('students')
-        //     ->orderBy('teacher_code')
-        //     ->paginate(20);
-
         $teachers = Teacher::query()
                 ->withCount('students')
                 ->with('teacherSubjects')
@@ -34,6 +29,7 @@ class TeacherController extends Controller
                         $q->where('subject', $subject);
                     });
                 })
+                ->orderByRaw("CASE WHEN status = 'active' THEN 0 ELSE 1 END")
                 ->orderBy('teacher_code')
                 ->paginate(20)
                 ->withQueryString();
@@ -107,7 +103,6 @@ class TeacherController extends Controller
         $validated = $request->validated();
 
         $teacher->update([
-            'teacher_code' => $validated['teacher_code'],
             'name' => $validated['name'],
             'department' => $validated['department'] ?? null,
             'school_year' => $validated['school_year'] ?? null,

@@ -145,12 +145,12 @@
 
         <div class="review-box">
             <span><strong>◎ 成長点</strong></span>
-            <p>{{ $record->growth_point ?: '未入力' }}</p>
+            <p>{!! nl2br(e($record->growth_point ?: '未入力' )) !!}</p>
         </div>
 
         <div class="review-box">
             <span><strong>△ 課題点</strong></span>
-            <p>{{ $record->challenge_point ?: '未入力' }}</p>
+            <p>{!! nl2br(e( $record->challenge_point ?: '未入力' )) !!}</p>
         </div>
 
         <p class="self-review">
@@ -166,7 +166,7 @@
 
         <p><strong>NOTE</strong></p>
         <div class="note-box">
-            <p>{{ $record->note ?: '未入力' }}</p>
+            <p>{!! nl2br(e( $record->note ?: '未入力' )) !!}</p>
         </div>
     </div>
 
@@ -192,25 +192,25 @@
             <tr>
                 <td>
                     <strong>科目①（{{ $record->subject1_name ?: '未設定' }}）</strong><br>
-                    {{ $record->subject1_detail ?: '未入力' }}
+                    {!! nl2br(e( $record->subject1_detail ?: '未入力' )) !!}
                 </td>
             </tr>
             <tr>
                 <td>
                     <strong>科目②（{{ $record->subject2_name ?: '未設定' }}）</strong><br>
-                    {{ $record->subject2_detail ?: '未入力' }}
+                    {!! nl2br(e( $record->subject2_detail ?: '未入力' )) !!}
                 </td>
             </tr>
             <tr>
                 <td>
                     <strong>科目③（{{ $record->subject3_name ?: '未設定' }}）</strong><br>
-                    {{ $record->subject3_detail ?: '未入力' }}
+                    {!! nl2br(e( $record->subject3_detail ?: '未入力' )) !!}
                 </td>
             </tr>
             <tr>
                 <td>
                     <strong>その他</strong><br>
-                    {{ $record->other_plan ?: '未入力' }}
+                    {!! nl2br(e( $record->other_plan ?: '未入力' )) !!}
                 </td>
             </tr>
         </table>
