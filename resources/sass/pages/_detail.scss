@@ -73,7 +73,7 @@
   min-height: 30px;
   padding: 4px 10px;
   border-radius: 999px;
-  font-size: 0.84rem;
+  font-size: v.$fontsize-sm;
   font-weight: 700;
   border: 2px solid transparent;
 }
@@ -87,13 +87,13 @@
 .ui-status-chip--secondary {
   background: v.$color-secondary-soft;
   color: v.$color-secondary-text;
-  border-color: rgba(142, 183, 176, 0.2);
+  border-color: v.$color-secondary;
 }
 
 .ui-status-chip--accent {
   background: v.$color-accent-soft;
   color: v.$color-accent-text;
-  border-color: rgba(183, 166, 217, 0.2);
+  border-color: v.$color-accent;
 }
 
 .ui-status-chip--muted {
@@ -116,7 +116,7 @@
   border-radius: 999px;
   background: v.$color-secondary-soft;
   color: #5f8d84;
-  font-size: 13px;
+  font-size: v.$fontsize-md;
   font-weight: 600;
 }
 
@@ -245,7 +245,8 @@
 
 .ui-record-meta__item {
   display: flex;
-  flex-direction: column;
+  // flex-direction: column;
+  align-items: center;
   gap: 6px;
   padding: 14px 16px;
   border-radius: v.$radius-sm;
@@ -258,6 +259,7 @@
   font-weight: 700;
   letter-spacing: 0.03em;
   color: v.$color-muted;
+  min-width: 6em;
 }
 
 .ui-record-meta__value {
@@ -399,7 +401,7 @@
   }
 
   .ui-record-card__summary {
-    flex-direction: column;
+    // flex-direction: column;
     align-items: stretch;
     padding: 18px;
   }

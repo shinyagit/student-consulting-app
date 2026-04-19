@@ -101,23 +101,27 @@
   line-height: 1;
 
   &--active {
-    background: #edf7f5;
-    color: #5f8d84;
+    background: v.$color-primary-soft;
+    color: v.$color-primary-text;
+    border: 2px solid v.$color-primary;
   }
 
   &--leave {
-    background: #fff7e8;
-    color: #b1843d;
+    background: v.$color-yellow-soft;
+    color: v.$color-yellow-text;
+    border: 2px solid v.$color-yellow;
   }
 
   &--graduated {
-    background: #eef2fb;
-    color: #6d7fb1;
+    background: v.$color-secondary-soft;
+    color: v.$color-secondary-text;
+    border: 2px solid v.$color-secondary;
   }
 
   &--withdrawn {
-    background: #f8eef2;
-    color: #a06a79;
+    background: v.$color-danger-soft;
+    color: v.$color-danger-text;
+    border: 2px solid v.$color-danger;
   }
 }
 
