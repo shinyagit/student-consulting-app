@@ -15,21 +15,6 @@
         </div>
 
         <div class="ui-form-grid">
-            <div class="ui-form-field">
-                <label for="teacher_code" class="form-label">講師コード</label>
-                <input
-                    type="text"
-                    name="teacher_code"
-                    id="teacher_code"
-                    class="form-input"
-                    value="{{ old('teacher_code', $teacher->teacher_code ?? '') }}"
-                    @if(isset($teacher)) readonly @endif
-                    required
-                >
-                @error('teacher_code')
-                    <p class="form-error">{{ $message }}</p>
-                @enderror
-            </div>
 
             <div class="ui-form-field">
                 <label for="name" class="form-label">講師名</label>
@@ -60,15 +45,25 @@
                 @enderror
             </div>
 
+            @php
+                $teacherSchoolYearOptions = \App\Constants\TeacherSchoolYearOptions::LIST;
+            @endphp
+
             <div class="ui-form-field">
                 <label for="school_year" class="form-label">学年</label>
-                <input
-                    type="text"
-                    name="school_year"
-                    id="school_year"
-                    class="form-input"
-                    value="{{ old('school_year', $teacher->school_year ?? '') }}"
-                >
+                <div class="form-select-wrap">
+                    <select name="school_year" id="school_year" class="form-input">
+                        <option value="">選択してください</option>
+                        @foreach ($teacherSchoolYearOptions as $schoolYear)
+                            <option
+                                value="{{ $schoolYear }}"
+                                @selected(old('school_year', $teacher->school_year ?? '') === $schoolYear)
+                            >
+                                {{ $schoolYear }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
                 @error('school_year')
                     <p class="form-error">{{ $message }}</p>
                 @enderror
@@ -111,7 +106,6 @@
 
         <div class="ui-form-grid">
             <div class="ui-form-field ui-form-field--full">
-                <!-- <label class="form-label">担当可能科目</label> -->
                 <div class="ui-selection-panel">
                     <div class="ui-checkbox-grid">
                         @foreach ($subjectOptions as $subject)
@@ -146,7 +140,6 @@
 
         <div class="ui-form-grid">
             <div class="ui-form-field ui-form-field--full">
-                <!-- <label for="note" class="form-label">備考</label> -->
                 <textarea
                     name="note"
                     id="note"

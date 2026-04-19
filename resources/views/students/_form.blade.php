@@ -2,6 +2,8 @@
     $subjectOptions = [
         '英語',
         '国語',
+        '現代文',
+        '古文漢文',
         '数学IA',
         '数学IIBC',
         '数学III',
@@ -155,7 +157,7 @@
                 <label for="status" class="form-label">ステータス</label>
                 <select name="status" id="status" class="form-input" required>
                     <option value="active" @selected(old('status', $student->status ?? 'active') === 'active')>在籍中</option>
-                    <option value="leave" @selected(old('status', $student->status ?? '') === 'leave')>休会</option>
+                    <option value="leave" @selected(old('status', $student->status ?? '') === 'leave')>休塾</option>
                     <option value="graduated" @selected(old('status', $student->status ?? '') === 'graduated')>卒業</option>
                     <option value="withdrawn" @selected(old('status', $student->status ?? '') === 'withdrawn')>退塾</option>
                 </select>
@@ -307,7 +309,6 @@
 
         <div class="ui-form-grid">
             <div class="ui-form-field ui-form-field--full">
-                <!-- <label for="note" class="form-label">備考</label> -->
                 <textarea
                     name="note"
                     id="note"

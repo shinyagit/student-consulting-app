@@ -38,6 +38,15 @@ class StudentController extends Controller
         }
 
         $students = $query
+            ->orderByRaw("
+                CASE status
+                    WHEN 'active' THEN 0
+                    WHEN 'leave' THEN 1
+                    WHEN 'withdrawn' THEN 2
+                    WHEN 'graduated' THEN 3
+                    ELSE 4
+                END
+            ")
             ->latest('id')
             ->paginate(20)
             ->withQueryString();

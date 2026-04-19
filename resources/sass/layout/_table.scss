@@ -113,9 +113,9 @@
   }
 
   &--graduated {
-    background: v.$color-secondary-soft;
-    color: v.$color-secondary-text;
-    border: 2px solid v.$color-secondary;
+    background: #f4f6f8;
+    color: rgba(70, 83, 90, 0.72);
+    border: 2px solid rgba(70, 83, 90, 0.08);
   }
 
   &--withdrawn {
@@ -147,7 +147,6 @@
   align-items: center;
   gap: 10px;
   margin: 0;
-  // margin-bottom: calc(v.$spacing-unit * 1);
   padding: 0;
   list-style: none;
 }

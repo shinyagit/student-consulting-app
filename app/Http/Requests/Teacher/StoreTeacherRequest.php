@@ -2,9 +2,12 @@
 
 namespace App\Http\Requests\Teacher;
 
-use App\Support\SubjectOptions;
+use App\Constants\SubjectOptions;
+use App\Constants\TeacherSchoolYearOptions;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+
+
 
 class StoreTeacherRequest extends FormRequest
 {
@@ -19,7 +22,7 @@ class StoreTeacherRequest extends FormRequest
             'teacher_code' => ['required', 'string', 'max:50', 'unique:teachers,teacher_code'],
             'name' => ['required', 'string', 'max:255'],
             'department' => ['nullable', 'string', 'max:255'],
-            'school_year' => ['nullable', 'string', 'max:50'],
+            'school_year' => ['nullable', 'string', Rule::in(TeacherSchoolYearOptions::LIST)],
             'age' => ['nullable', 'integer', 'min:18', 'max:99'],
             'status' => ['required', Rule::in(['active', 'inactive'])],
             'note' => ['nullable', 'string'],
