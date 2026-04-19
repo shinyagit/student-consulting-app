@@ -109,12 +109,12 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   border-radius: 999px;
   background: v.$color-primary-soft;
-  color: v.$color-primary;
-  font-size: v.$fontsize-sm;
+  color: v.$color-primary-text;
+  font-size: v.$fontsize-md;
   font-weight: 700;
   aspect-ratio: 1;
   line-height: 1;
