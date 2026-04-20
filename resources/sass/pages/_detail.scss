@@ -428,14 +428,12 @@
 .ui-course-chip {
   display: inline-flex;
   align-items: center;
-  min-height: 28px;
-  // padding: 4px 10px;
   border-radius: 999px;
   font-size: v.$fontsize-default;
   font-weight: bold;
   line-height: 1;
   border: 1px solid transparent;
-  vertical-align: middle;
+  vertical-align: center;
 }
 
 .ui-course-chip--liberal-arts {
@@ -452,13 +450,28 @@
 }
 
 .ui-course-chip--other {
-  // background: #f8f3e9;
   color: #8a6b3f;
-  // border-color: rgba(186, 156, 96, 0.22);
 }
 
 .ui-course-chip--muted {
-  // background: #f4f6f8;
   color: rgba(70, 83, 90, 0.72);
-  // border-color: rgba(70, 83, 90, 0.08);
+}
+
+.assigned-teacher-summary-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.assigned-teacher-summary-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 12px;
+}
+
+.assigned-teacher-summary-item__name {
+  font-weight: bold;
+  color: v.$color-text;
+  min-width: 5em;
 }
