@@ -26,11 +26,11 @@ function initDesiredSchools() {
 
   addButton.addEventListener('click', () => {
     const row = document.createElement('div');
-    row.className = 'desired-school-row';
+    row.className = 'ui-stack-list__row desired-school-row';
 
     row.innerHTML = `
       <input type="text" name="desired_schools[]" value="" placeholder="志望校" class="form-input">
-      <button type="button" class="remove-school-button">削除</button>
+      <button type="button" class="table-button table-button-danger remove-school-button">削除</button>
     `;
 
     list.appendChild(row);
@@ -38,12 +38,13 @@ function initDesiredSchools() {
 
   list.addEventListener('click', (event) => {
     const target = event.target;
-    if (!(target instanceof HTMLElement)) return;
+    if (!(target instanceof Element)) return;
 
-    if (target.classList.contains('remove-school-button')) {
-      const row = target.closest('.desired-school-row');
-      if (row) row.remove();
-    }
+    const removeButton = target.closest('.remove-school-button');
+    if (!removeButton) return;
+
+    const row = removeButton.closest('.desired-school-row');
+    if (row) row.remove();
   });
 }
 
@@ -79,31 +80,29 @@ function initTeacherAssignments() {
     }).join('');
 
     const card = document.createElement('div');
-    card.className = 'teacher-assignment-card';
+    card.className = 'ui-item-card teacher-assignment-card';
 
     card.innerHTML = `
-      <div class="ui-item-card teacher-assignment-card">
-        <div class="ui-item-card-header">
-          <span class="ui-item-card-title">担当講師${index + 1}</span>
-          <button type="button" class="table-button table-button-danger remove-assignment-button">
-            この担当を削除
-          </button>
+      <div class="ui-item-card__header">
+        <span class="ui-item-card__title">担当講師${index + 1}</span>
+        <button type="button" class="table-button table-button-danger remove-assignment-button">
+          この担当を削除
+        </button>
+      </div>
+
+      <div class="ui-form-grid">
+        <div class="ui-form-field">
+          <label class="form-label">講師</label>
+          <select name="teacher_assignments[${index}][teacher_id]" class="form-input">
+            ${teacherOptionsHtml}
+          </select>
         </div>
 
-        <div class="ui-form-grid">
-          <div class="ui-form-field">
-            <label class="form-label">講師</label>
-            <select name="teacher_assignments[${index}][teacher_id]" class="form-input">
-              ${teacherOptionsHtml}
-            </select>
-          </div>
-
-          <div class="ui-form-field ui-form-field--full">
-            <label class="form-label">担当科目</label>
-            <div class="ui-selection-panel">
-              <div class="ui-checkbox-grid">
-                ${subjectOptionsHtml}
-              </div>
+        <div class="ui-form-field ui-form-field--full">
+          <label class="form-label">担当科目</label>
+          <div class="ui-selection-panel">
+            <div class="ui-checkbox-grid">
+              ${subjectOptionsHtml}
             </div>
           </div>
         </div>
@@ -111,15 +110,31 @@ function initTeacherAssignments() {
     `;
 
     list.appendChild(card);
+    renumberTeacherAssignments(list);
   });
 
   list.addEventListener('click', (event) => {
     const target = event.target;
-    if (!(target instanceof HTMLElement)) return;
+    if (!(target instanceof Element)) return;
 
-    if (target.classList.contains('remove-assignment-button')) {
-      const card = target.closest('.teacher-assignment-card');
-      if (card) card.remove();
+    const removeButton = target.closest('.remove-assignment-button');
+    if (!removeButton) return;
+
+    const card = removeButton.closest('.teacher-assignment-card');
+    if (!card) return;
+
+    card.remove();
+    renumberTeacherAssignments(list);
+  });
+}
+
+function renumberTeacherAssignments(list) {
+  const cards = list.querySelectorAll('.teacher-assignment-card');
+
+  cards.forEach((card, index) => {
+    const title = card.querySelector('.ui-item-card__title');
+    if (title) {
+      title.textContent = `担当講師${index + 1}`;
     }
   });
 }
