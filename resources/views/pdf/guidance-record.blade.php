@@ -67,14 +67,13 @@
         .self-review {
             text-align: right;
             font-weight: bold;
-            margin-bottom: 2em;
         }
 
         .note-title {
             border-bottom: 1px solid #333;
-            border-left: 4px solid #4a4a4a;
             padding-left: 8px;
             padding-top: 0;
+            margin-top: 1em;
             font-size: 15px;
             line-height: 1.4;
             font-weight: bold;
@@ -85,7 +84,20 @@
             /* height: 240px; */
             padding: 4px 0 4px 4px;
             /* border: 2px solid #333; */
-            margin-bottom: 3em;
+        }
+
+        .next-title {
+            padding-left: 8px;
+            font-size: 15px;
+            line-height: 1.4;
+            font-weight: bold;
+        }
+
+        .next-box {
+            position: relative;
+            padding: 4px 0 2em 4px;
+            margin-bottom: 4px;
+            border: 2px solid #333;
         }
 
         .logo-box {
@@ -200,18 +212,21 @@
             @endif
             ）
         </div>
-            <p class="note-title">科目① - {{ $record->subject1_name ?: '未設定' }}</p>
-            <div class="note-box">
+            
+            <div class="next-box">
+                <p class="next-title">科目① - {{ $record->subject1_name ?: '未設定' }}</p>
                 <p>{!! nl2br(e( $record->subject1_detail ?: '未入力' )) !!}</p>
             </div>
 
-            <p class="note-title">科目② - {{ $record->subject2_name ?: '未設定' }}</p>
-            <div class="note-box">
+            
+            <div class="next-box">
+                <p class="next-title">科目② - {{ $record->subject2_name ?: '未設定' }}</p>
                 <p>{!! nl2br(e( $record->subject2_detail ?: '未入力' )) !!}</p>
             </div>
 
-            <p class="note-title">科目③ - {{ $record->subject3_name ?: '未設定' }}</p>
-            <div class="note-box">
+            
+            <div class="next-box">
+                <p class="next-title">科目③ - {{ $record->subject3_name ?: '未設定' }}</p>
                 <p>{!! nl2br(e( $record->subject3_detail ?: '未入力' )) !!}</p>
             </div>
 
