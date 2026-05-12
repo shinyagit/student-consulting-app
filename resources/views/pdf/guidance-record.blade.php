@@ -13,7 +13,7 @@
         body {
             position: relative;
             font-family: mplus1, sans-serif;
-            font-size: 14px;
+            font-size: 16px;
             line-height: 1.6;
             margin: 24px;
         }
@@ -21,6 +21,17 @@
         p {
             padding: 4px;
             margin: 0;
+            width: 100%;
+        }
+
+        .kana {
+            font-size: 10px;
+            color: #4a4a4a;
+        }
+
+        .school {
+            color: #4a4a4a;
+            font-size: 14px;
         }
 
         .title {
@@ -56,14 +67,25 @@
         .self-review {
             text-align: right;
             font-weight: bold;
+            margin-bottom: 2em;
+        }
+
+        .note-title {
+            border-bottom: 1px solid #333;
+            border-left: 4px solid #4a4a4a;
+            padding-left: 8px;
+            padding-top: 0;
+            font-size: 15px;
+            line-height: 1.4;
+            font-weight: bold;
         }
 
         .note-box {
             position: relative;
-            height: 240px;
-            padding: 8px;
-            border: 2px solid #333;
-            margin-bottom: 5px;
+            /* height: 240px; */
+            padding: 4px 0 4px 4px;
+            /* border: 2px solid #333; */
+            margin-bottom: 3em;
         }
 
         .logo-box {
@@ -84,27 +106,6 @@
             min-height: 40px;
             padding: 8px;
         }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 8px;
-        }
-
-        th,
-        td {
-            border: 2px solid #333;
-            padding: 8px;
-            vertical-align: top;
-            text-align: left;
-            height: 240px;
-            line-height: 1.6em;
-        }
-
-        th {
-            width: 20%;
-            background: #f5f5f5;
-        }
     </style>
 </head>
 <body>
@@ -123,25 +124,36 @@
 
         $logoPath = public_path('/images/hirodaiken_logo_fix.png');
         $logoBase64 = file_exists($logoPath) ? base64_encode(file_get_contents($logoPath)) : null;
+        $courseTypeLabel = match ($record->student->course_type ?? null) {
+            'liberal_arts' => '文系',
+            'science' => '理系',
+            'undecided' => '未定',
+            default => '',
+        };
     @endphp
 
     <div class="title">広大研 自習コンサルティング</div>
 
     <div class="section">
         <p class="date">
-            <strong>実施日：</strong>
+            <strong>実施日：
             @if ($record->consulted_at)
                 {{ $consultDate }} {{ $consultDay }} {{ $consultTime }}
             @else
                 未設定
             @endif
+            </strong>
         </p>
-        <p class="name"><strong>生徒名：</strong>{{ $record->student->name ?? '未設定' }}</p>
+        <p class="name">
+            <strong>生徒名：{{ $record->student->name ?? '未設定' }} </strong>
+            <small class="kana">{{ $record->student->name_kana ?? '' }}</small>
+            <span class="school">（{{ $record->student->school_name ?? '' }} {{ "/ " . $record->student->grade ?? '' }} {{ "/ " . $courseTypeLabel ?? '' }}）</span>
+        </p>
         <!-- <p class="name"><strong>記録者：</strong>{{ $record->user->name ?? '未設定' }}</p> -->
     </div>
 
     <div class="section">
-        <div class="section-title">– 前回コンサルティングから今日までの振り返り –</div>
+        <div class="section-title">– 前回コンサルティングから今回までの振り返り –</div>
 
         <div class="review-box">
             <span><strong>◎ 成長点</strong></span>
@@ -164,7 +176,7 @@
             </strong>
         </p>
 
-        <p><strong>NOTE</strong></p>
+        <p class="note-title"><strong>NOTE</strong></p>
         <div class="note-box">
             <p>{!! nl2br(e( $record->note ?: '未入力' )) !!}</p>
         </div>
@@ -180,40 +192,33 @@
 
     <div class="section">
         <div class="section-title">
-            次回までの計画：
+            次回までの計画（次回：
             @if ($record->next_plan_date)
-                {{ $nextDate }} {{ $nextDay }} {{ $nextTime }}
+                {{ $nextDate }} {{ $nextDay }} {{ $nextTime }} 〜
             @else
                 未設定
             @endif
+            ）
         </div>
+            <p class="note-title">科目① - {{ $record->subject1_name ?: '未設定' }}</p>
+            <div class="note-box">
+                <p>{!! nl2br(e( $record->subject1_detail ?: '未入力' )) !!}</p>
+            </div>
 
-        <table>
-            <tr>
-                <td>
-                    <strong>科目①（{{ $record->subject1_name ?: '未設定' }}）</strong><br>
-                    {!! nl2br(e( $record->subject1_detail ?: '未入力' )) !!}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <strong>科目②（{{ $record->subject2_name ?: '未設定' }}）</strong><br>
-                    {!! nl2br(e( $record->subject2_detail ?: '未入力' )) !!}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <strong>科目③（{{ $record->subject3_name ?: '未設定' }}）</strong><br>
-                    {!! nl2br(e( $record->subject3_detail ?: '未入力' )) !!}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <strong>その他</strong><br>
-                    {!! nl2br(e( $record->other_plan ?: '未入力' )) !!}
-                </td>
-            </tr>
-        </table>
+            <p class="note-title">科目② - {{ $record->subject2_name ?: '未設定' }}</p>
+            <div class="note-box">
+                <p>{!! nl2br(e( $record->subject2_detail ?: '未入力' )) !!}</p>
+            </div>
+
+            <p class="note-title">科目③ - {{ $record->subject3_name ?: '未設定' }}</p>
+            <div class="note-box">
+                <p>{!! nl2br(e( $record->subject3_detail ?: '未入力' )) !!}</p>
+            </div>
+
+            <p class="note-title">その他</p>
+            <div class="note-box">
+                <p>{!! nl2br(e( $record->other_plan ?: '未入力' )) !!}</p>
+            </div>
     </div>
 </body>
 </html>
