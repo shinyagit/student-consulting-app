@@ -29,7 +29,7 @@ services:
     command: --max_allowed_packet=32505856
     container_name: "l12dev-mysql"
     volumes:
-      - ./docker/mysql:/var/lib/mysql
+      - db_data:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=l12dev
@@ -41,3 +41,6 @@ services:
     container_name: "l12dev-redis"
     ports:
       - 16379:6379
+
+volumes:
+   db_data:

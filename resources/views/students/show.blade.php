@@ -204,22 +204,22 @@
                         <summary class="ui-record-card__summary">
                             <div class="ui-record-card__header-main">
                                 <h3 class="ui-record-card__title">
-                                    実施日：
-                                    @if ($record->consulted_at)
-                                        {{ $consultDate }} {{ $consultDay }} {{ $consultTime }}
-                                    @else
-                                        実施日未設定
-                                    @endif
+                                    <div class="ui-record-card__summary-side">
+                                        <span class="ui-record-card__toggle-indicator" aria-hidden="true"></span>
+                                        実施日｜
+                                        @if ($record->consulted_at)
+                                            {{ $consultDate }} {{ $consultDay }} {{ $consultTime }}
+                                        @else
+                                            実施日未設定
+                                        @endif
+                                        <span class="ui-record-card__meta">
+                                            記録者｜{{ $record->user->name ?? '未設定' }}
+                                        </span>
+                                    </div>
                                 </h3>
                 
                             </div>
 
-                            <div class="ui-record-card__summary-side">
-                                <span class="ui-record-card__toggle-indicator" aria-hidden="true"></span>
-                            </div>
-                        </summary>
-
-                        <div class="ui-record-card__body">
                             <div class="ui-record-card-actions">
                                 <a href="{{ route('guidance-records.edit', $record) }}" class="table-button table-button-edit">編集</a>
                                 <a href="{{ route('guidance-records.pdf', $record) }}" target="_blank" class="table-button table-button-accent">
@@ -227,14 +227,35 @@
                                 </a>
                             </div>
 
-                            <p class="ui-record-card__meta">
+                            
+                        </summary>
+
+                        <div class="ui-record-card__body">
+                            <!-- <div class="ui-record-card-actions">
+                                <a href="{{ route('guidance-records.edit', $record) }}" class="table-button table-button-edit">編集</a>
+                                <a href="{{ route('guidance-records.pdf', $record) }}" target="_blank" class="table-button table-button-accent">
+                                    PDF出力
+                                </a>
+                            </div> -->
+
+                            <!-- <p class="ui-record-card__meta">
                                 記録者: {{ $record->user->name ?? '未設定' }}
+                            </p> -->
+
+                            <p class="ui-record-title">
+                                今回の学習の振り返り
+                                <span class="ui-record-meta__label">　自己評価</span>
+                                <span class="ui-record-meta__value">
+                                    @if(!is_null($record->self_score))
+                                        {{ $record->self_score }} / 100 点
+                                    @else
+                                        未入力
+                                    @endif
+                                </span>
                             </p>
 
-                            <p class="ui-record-title">今回の学習の振り返り</p>
-
                             
-                            <div class="ui-record-meta__item">
+                            <!-- <div class="ui-record-meta__item">
                                 <span class="ui-record-meta__label">自己評価</span>
                                 <span class="ui-record-meta__value">
                                     @if(!is_null($record->self_score))
@@ -243,7 +264,7 @@
                                         未入力
                                     @endif
                                 </span>
-                            </div>
+                            </div> -->
 
                             <div class="ui-record-grid">
                                 <section class="ui-record-block">
@@ -266,9 +287,19 @@
 
                             <div class="ui-record-subject-list">
 
-                            <p class="ui-record-title">次回に向けた計画</p>
+                            <p class="ui-record-title">
+                                次回に向けた計画
+                                <span class="ui-record-meta__label">　次回実施日</span>
+                                <span class="ui-record-meta__value">
+                                    @if ($record->next_plan_date)
+                                        {{ $nextDate }} {{ $nextDay }} {{ $nextTime }}
+                                    @else
+                                        未設定
+                                    @endif
+                                </span>
+                            </p>
 
-                                <div class="ui-record-meta__item">
+                                <!-- <div class="ui-record-meta__item">
                                     <span class="ui-record-meta__label">次回実施日</span>
                                     <span class="ui-record-meta__value">
                                         @if ($record->next_plan_date)
@@ -277,7 +308,7 @@
                                             未設定
                                         @endif
                                     </span>
-                                </div>
+                                </div> -->
 
                                 @if ($record->subject1_name || $record->subject1_detail)
                                     <section class="ui-record-block ui-record-block--subject">

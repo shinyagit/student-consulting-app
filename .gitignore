@@ -25,6 +25,8 @@
 /storage/*.key
 /storage/pail
 
+/database/seeders/*
+
 /vendor
 
 Homestead.json
