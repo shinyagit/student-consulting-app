@@ -73,7 +73,7 @@
             border-bottom: 1px solid #333;
             padding-left: 8px;
             padding-top: 0;
-            margin-top: 1em;
+            margin-top: 2em;
             font-size: 15px;
             line-height: 1.4;
             font-weight: bold;
@@ -159,7 +159,16 @@
         <p class="name">
             <strong>生徒名：{{ $record->student->name ?? '未設定' }} </strong>
             <small class="kana">{{ $record->student->name_kana ?? '' }}</small>
-            <span class="school">（{{ $record->student->school_name ?? '' }} {{ "/ " . $record->student->grade ?? '' }} {{ "/ " . $courseTypeLabel ?? '' }}）</span>
+            <span class="school">
+                （{{ $record->student->school_name ?? '' }}
+                @if(!empty($record->student->grade))
+                    / {{ $record->student->grade }}
+                @endif
+                @if(!empty($courseTypeLabel))
+                    / {{ $courseTypeLabel }}
+                @endif
+                ）
+            </span>
         </p>
         <!-- <p class="name"><strong>記録者：</strong>{{ $record->user->name ?? '未設定' }}</p> -->
     </div>
