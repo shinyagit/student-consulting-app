@@ -31,8 +31,7 @@ class TeacherController extends Controller
                 })
                 ->orderByRaw("CASE WHEN status = 'active' THEN 0 ELSE 1 END")
                 ->orderBy('teacher_code')
-                ->paginate(20)
-                ->withQueryString();
+                ->get();
 
         return view('teachers.index', compact('teachers'));
     }

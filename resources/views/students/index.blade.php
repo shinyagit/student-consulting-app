@@ -93,7 +93,7 @@
             </div>
         @else
             <section class="students-panel table-panel">
-                <div class="table-wrap">
+                <div class="table-scroll-wrap">
                     <table class="base-table students-table">
                         <thead>
                             <tr>
@@ -177,10 +177,6 @@
                             @endforeach
                         </tbody>
                     </table>
-                </div>
-
-                <div class="pagination-nav">
-                    {{ $students->links() }}
                 </div>
             </section>
         @endif

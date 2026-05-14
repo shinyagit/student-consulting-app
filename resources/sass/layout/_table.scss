@@ -218,3 +218,27 @@
     border-radius: 12px;
   }
 }
+
+.table-scroll-wrap {
+  max-height: 520px;
+  overflow: auto;
+}
+
+.table-scroll-wrap .base-table {
+  width: 100%;
+  min-width: 960px;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.table-scroll-wrap .base-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: #f6f7fc;
+}
+
+.table-scroll-wrap .base-table th,
+.table-scroll-wrap .base-table td {
+  white-space: nowrap;
+}

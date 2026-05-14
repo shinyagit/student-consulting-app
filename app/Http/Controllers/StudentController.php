@@ -48,8 +48,7 @@ class StudentController extends Controller
                 END
             ")
             ->latest('id')
-            ->paginate(20)
-            ->withQueryString();
+            ->get();
 
         return view('students.index', compact('students'));
     }
