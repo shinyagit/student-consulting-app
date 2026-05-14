@@ -11,9 +11,12 @@
                 <p class="page-subtitle">受講生徒を一覧で確認できます。</p>
             </div>
 
-            @can('create', \App\Models\Student::class)
-                <a href="{{ route('students.create') }}" class="link-button link-button-register">生徒を登録する</a>
-            @endcan
+            
+            <div class="page-header-actions">
+                @can('create', \App\Models\Student::class)
+                    <a href="{{ route('students.create') }}" class="link-button link-button-register">生徒を登録する</a>
+                @endcan
+            </div>
         </div>
 
 
@@ -179,6 +182,12 @@
                     </table>
                 </div>
             </section>
+
+            <div class="page-header-actions">
+                <a href="{{ route('students.export.all-pdfs') }}" class="table-button table-button-accent">
+                    全生徒PDF出力
+                </a>
+            </div>
         @endif
     </section>
 @endsection
