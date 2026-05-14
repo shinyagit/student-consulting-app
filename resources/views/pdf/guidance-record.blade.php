@@ -58,7 +58,7 @@
 
         .review-box {
             position: relative;
-            height: 180px;
+            height: 140px;
             padding: 8px;
             border: 2px solid #333;
             margin-bottom: 5px;
