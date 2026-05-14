@@ -6,7 +6,7 @@ services:
     depends_on:
       - l12dev-app
     ports:
-      - 80:80
+      - "80:80"
     volumes:
       - ./:/src
 
@@ -17,7 +17,7 @@ services:
     depends_on:
       - l12dev-mysql
     ports:
-      - 5173:5173
+      - "5173:5173"
     volumes:
       - ./:/src
       - /src/node_modules
@@ -31,16 +31,16 @@ services:
     volumes:
       - db_data:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=l12dev
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: l12dev
     ports:
-      - 3306:3306
+      - "3306:3306"
 
   l12dev-redis:
     image: redis:alpine
     container_name: "l12dev-redis"
     ports:
-      - 16379:6379
+      - "16379:6379"
 
 volumes:
-   db_data:
+  db_data:
