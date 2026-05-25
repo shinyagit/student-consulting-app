@@ -75,11 +75,16 @@
         .box {
             padding: 8px 10px;
             margin-top: 8px;
+            background-color: #f7f7f7;
         }
 
         .label {
             font-weight: bold;
             margin-bottom: 4px;
+            border-left: 4px solid #4a4a4a;
+            padding-left: 6px;
+            padding-bottom: 0px;
+            letter-spacing: 1px;
         }
 
         .muted {
