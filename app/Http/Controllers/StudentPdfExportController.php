@@ -126,4 +126,69 @@ class StudentPdfExportController extends Controller
 
         return $name !== '' ? $name : 'student';
     }
+
+    public function exportStudent(Student $student)
+    {
+        $this->authorize('view', $student);
+
+        $student->load([
+            'consultant',
+            'teachers',
+            'studentTeacherSubjects',
+            'guidanceRecords' => function ($query) {
+                $query->with('user')->latest('consulted_at');
+            },
+        ]);
+
+        $mpdfTempDir = storage_path('app/mpdf-temp');
+        File::ensureDirectoryExists($mpdfTempDir);
+
+        $html = view('students.pdf.bulk', [
+            'student' => $student,
+            'records' => $student->guidanceRecords,
+        ])->render();
+
+        $tempDir = storage_path('app/mpdf-temp');
+            if (! is_dir($tempDir)) {
+                mkdir($tempDir, 0775, true);
+            }
+
+            $defaultConfig = (new ConfigVariables())->getDefaults();
+            $fontDirs = $defaultConfig['fontDir'];
+
+            $defaultFontConfig = (new FontVariables())->getDefaults();
+            $fontData = $defaultFontConfig['fontdata'];
+
+        $mpdf = new Mpdf([
+                'mode' => 'utf-8',
+                'format' => 'A4',
+                'tempDir' => $tempDir,
+                'fontDir' => array_merge($fontDirs, [
+                    resource_path('fonts'),
+                ]),
+                'fontdata' => $fontData + [
+                    'notosansjp' => [
+                        'R' => 'NotoSansJP-VariableFont_wght.ttf',
+                        'B' => 'NotoSansJP-VariableFont_wght.ttf',
+                    ],
+                    'mplus1' => [
+                        'R' => 'MPLUS1p-Regular.ttf',
+                        'B' => 'MPLUS1p-Bold.ttf',
+                    ],
+                ],
+                'default_font' => 'mplus1',
+            ]);
+
+        $mpdf->WriteHTML($html);
+
+        $fileName = $this->makeSafeFilename(
+            $student->id . '-' . ($student->name ?: 'student') . '-consulting-records'
+        ) . '.pdf';
+
+        return response($mpdf->Output('', 'S'), 200, [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="' . $fileName . '.pdf"',
+            ]
+        );
+    }
 }

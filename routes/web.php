@@ -33,4 +33,6 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/students/{student}/files/{studentFile}', [StudentFileController::class, 'destroy'])
         ->name('students.files.destroy');
+    Route::get('/students/{student}/pdf', [StudentPdfExportController::class, 'exportStudent'])
+        ->name('students.pdf');
 });

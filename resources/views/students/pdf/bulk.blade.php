@@ -13,6 +13,13 @@
             font-size: 12px;
             line-height: 1.7;
             color: #222;
+            margin: 24px;
+        }
+
+        p {
+            margin: 0;
+            padding: 4px 0;
+            width: 100%;
         }
 
         .title {
@@ -26,32 +33,12 @@
             margin-bottom: 18px;
         }
 
-        .meta-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 16px;
-        }
-
-        .meta-table th,
-        .meta-table td {
-            border: 1px solid #ccc;
-            padding: 6px 8px;
-            vertical-align: top;
-            text-align: left;
-        }
-
-        .meta-table th {
-            width: 24%;
-            background: #f5f5f5;
-        }
-
-        .record {
+        .profile-box {
             margin-bottom: 20px;
-            padding-bottom: 14px;
-            border-bottom: 1px dashed #999;
+            padding: 12px 14px;
         }
 
-        .record-title {
+        .profile-title {
             font-size: 16px;
             font-weight: bold;
             margin-bottom: 8px;
@@ -59,19 +46,46 @@
             border-bottom: 1px solid #999;
         }
 
+        .profile-row {
+            padding: 4px 0;
+        }
+
+        .profile-label {
+            font-weight: bold;
+        }
+
+        .teacher-row,
+        .school-row {
+            padding-left: 8px;
+        }
+
+        .record {
+            margin-bottom: 20px;
+            padding-bottom: 14px;
+        }
+
+        .record-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            padding-bottom: 4px;
+            /* border-bottom: 1px solid #999; */
+        }
+
         .box {
-            border: 1px solid #ccc;
-            padding: 8px 10px;
+            padding: 8px 0;
             margin-top: 8px;
         }
 
         .label {
             font-weight: bold;
             margin-bottom: 4px;
-        }
-
-        .teacher-row {
-            margin-bottom: 4px;
+            border-left: 4px solid #4a4a4a;
+            border-bottom: 1px solid #4a4a4a;
+            padding-left: 6px;
+            padding-top: 0px;
+            padding-bottom: 0px;
+            letter-spacing: 1px;
         }
 
         .muted {
@@ -95,100 +109,100 @@
             'withdrawn' => '退塾',
             default => '未設定',
         };
+
+        $schools = array_values(array_filter($student->desired_schools ?? [], fn ($v) => filled($v)));
     @endphp
 
     <div class="title">自習コンサルティング記録一覧</div>
 
     <div class="section">
-        <table class="meta-table">
-            <tr>
-                <th>生徒氏名</th>
-                <td>{{ $student->name ?: '未設定' }}</td>
-                <th>ふりがな</th>
-                <td>{{ $student->name_kana ?: '未設定' }}</td>
-            </tr>
-            <tr>
-                <th>学校名</th>
-                <td>{{ $student->school_name ?: '未設定' }}</td>
-                <th>学年</th>
-                <td>{{ $student->grade ?: '未設定' }}</td>
-            </tr>
-            <tr>
-                <th>文理</th>
-                <td>{{ $courseTypeLabel }}</td>
-                <th>ステータス</th>
-                <td>{{ $statusLabel }}</td>
-            </tr>
-            <tr>
-                <th>コンサル担当</th>
-                <td colspan="3">{{ $student->consultant?->name ?? '未設定' }}</td>
-            </tr>
-            <tr>
-                <th>担当講師 / 担当科目</th>
-                <td colspan="3">
-                    @if ($student->teachers->isNotEmpty())
-                        @foreach ($student->teachers as $teacher)
-                            @php
-                                $assignedSubjects = $student->studentTeacherSubjects
-                                    ->where('teacher_id', $teacher->id)
-                                    ->pluck('subject')
-                                    ->values()
-                                    ->all();
-                            @endphp
-                            <div class="teacher-row">
-                                {{ $teacher->name }}
-                                @if (!empty($assignedSubjects))
-                                    ：{{ implode('、', $assignedSubjects) }}
-                                @else
-                                    ：担当科目未設定
-                                @endif
-                            </div>
-                        @endforeach
-                    @else
-                        <span class="muted">未設定</span>
-                    @endif
-                </td>
-            </tr>
-            <tr>
-                <th>受験科目</th>
-                <td colspan="3">
-                    @if (!empty($student->exam_subjects))
-                        {{ implode('、', $student->exam_subjects) }}
-                    @else
-                        未設定
-                    @endif
-                </td>
-            </tr>
-            <tr>
-                <th>志望校</th>
-                <td colspan="3">
-                    @php
-                        $schools = array_values(array_filter($student->desired_schools ?? [], fn ($v) => filled($v)));
-                    @endphp
+        <div class="profile-box">
+            <div class="profile-title">– 生徒情報 –</div>
 
-                    @if (!empty($schools))
-                        {{ implode('、', $schools) }}
-                    @else
-                        未設定
-                    @endif
-                </td>
-            </tr>
-            <tr>
-                <th>備考</th>
-                <td colspan="3">{!! nl2br(e($student->note ?: '未設定')) !!}</td>
-            </tr>
-        </table>
-    </div>
+            <p class="profile-row">
+                <span class="profile-label">生徒氏名：</span>{{ $student->name ?: '未設定' }}
+                @if (!empty($student->name_kana))
+                    （{{ $student->name_kana }}）
+                @endif
+            </p>
 
-    @forelse ($records as $record)
-        <div class="record">
-            <div class="record-title">
-                実施日：{{ $record->consulted_at?->format('Y/m/d H:i') ?: '未設定' }}
+            <p class="profile-row">
+                <span class="profile-label">学校名：</span>{{ $student->school_name ?: '未設定' }}（{{ $student->grade ?: '未設定' }} / 文理選択：{{ $courseTypeLabel }}）
+            </p>
+
+            <p class="profile-row">
+                <span class="profile-label">ステータス：</span>{{ $statusLabel }}
+            </p>
+
+            <p class="profile-row">
+                <span class="profile-label">コンサル担当：</span>{{ $student->consultant?->name ?? '未設定' }}
+            </p>
+
+            <div class="profile-row">
+                <span class="profile-label">担当講師・担当科目：</span>
+                @if ($student->teachers->isNotEmpty())
+                    @foreach ($student->teachers as $teacher)
+                        @php
+                            $assignedSubjects = $student->studentTeacherSubjects
+                                ->where('teacher_id', $teacher->id)
+                                ->pluck('subject')
+                                ->values()
+                                ->all();
+                        @endphp
+                        <p class="teacher-row">
+                            ・{{ $teacher->name }}
+                            @if (!empty($assignedSubjects))
+                                → {{ implode(', ', $assignedSubjects) }}
+                            @else
+                                → 担当科目未設定
+                            @endif
+                        </p>
+                    @endforeach
+                @else
+                    <span class="muted">未設定</span>
+                @endif
             </div>
 
-            <div><strong>記録者：</strong>{{ $record->user->name ?? '未設定' }}</div>
-            <div><strong>自己評価：</strong>{{ !is_null($record->self_score) ? $record->self_score . ' / 100 点' : '未入力' }}</div>
-            <div><strong>次回実施日時：</strong>{{ $record->next_plan_date?->format('Y/m/d H:i') ?: '未設定' }}</div>
+            <p class="profile-row">
+                <span class="profile-label">受験科目：</span>
+                @if (!empty($student->exam_subjects))
+                    {{ implode('・', $student->exam_subjects) }}
+                @else
+                    未設定
+                @endif
+            </p>
+
+            <div class="profile-row">
+                <span class="profile-label">志望校：</span>
+                @if (!empty($schools))
+                    @foreach ($schools as $school)
+                        <p class="school-row">・{{ $school }}</p>
+                    @endforeach
+                @else
+                    <span class="muted">未設定</span>
+                @endif
+            </div>
+
+            <div class="profile-row">
+                <span class="profile-label">備考：</span>
+                <p>{!! nl2br(e($student->note ?: '未設定')) !!}</p>
+            </div>
+        </div>
+    </div>
+
+    <pagebreak />
+
+    @forelse ($records as $record)
+        <pagebreak />
+
+        <div class="record">
+            <div class="record-title">
+                実施日：{{ $record->consulted_at?->format('Y/m/d H:i') ?: '未設定' }} ▶︎ 次回実施日：{{ $record->next_plan_date?->format('Y/m/d H:i') ?: '未設定' }}
+            </div>
+
+            <div>
+                <strong>記録者：</strong>{{ $record->user->name ?? '未設定' }}　<strong>自己評価：</strong>{{ !is_null($record->self_score) ? $record->self_score . ' / 100 点' : '未入力' }}
+            </div>
 
             <div class="box">
                 <div class="label">成長点</div>
@@ -203,6 +217,12 @@
             <div class="box">
                 <div class="label">NOTE</div>
                 {!! nl2br(e($record->note ?: '未入力')) !!}
+            </div>
+
+            <pagebreak />
+
+            <div class="record-title">
+                次回までの計画
             </div>
 
             @if ($record->subject1_name || $record->subject1_detail)
