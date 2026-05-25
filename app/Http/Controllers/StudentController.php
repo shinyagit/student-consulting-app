@@ -98,6 +98,7 @@ class StudentController extends Controller
             'consultant',
             'teachers.teacherSubjects',
             'studentTeacherSubjects',
+            'files.uploader',
         ]);
 
         $records = $student->guidanceRecords()

@@ -7,6 +7,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\StudentPdfExportController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\StudentFileController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
@@ -23,4 +24,13 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/students/export/all-pdfs', [StudentPdfExportController::class, 'exportAll'])
         ->name('students.export.all-pdfs');
+
+    Route::post('/students/{student}/files', [StudentFileController::class, 'store'])
+        ->name('students.files.store');
+
+    Route::get('/students/{student}/files/{studentFile}', [StudentFileController::class, 'show'])
+        ->name('students.files.show');
+
+    Route::delete('/students/{student}/files/{studentFile}', [StudentFileController::class, 'destroy'])
+        ->name('students.files.destroy');
 });

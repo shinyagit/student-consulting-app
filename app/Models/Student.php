@@ -46,4 +46,9 @@ class Student extends Model
     {
         return $this->hasMany(StudentTeacherSubject::class);
     }
+
+    public function files()
+    {
+        return $this->hasMany(StudentFile::class)->latest();
+    }
 }
