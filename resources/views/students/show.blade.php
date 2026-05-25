@@ -159,7 +159,87 @@
                 </div>
             </div>
         </section>
-    </section>   
+    </section>
+
+    <section class="section-wrapper">
+        <div class="page-header">
+            <div>
+                <p class="page-eyebrow">Student Files</p>
+                <h1 class="page-title">PDFファイル</h1>
+            </div>
+        </div>
+
+        <section class="ui-detail-section detail-card">
+            @can('update', $student)
+                <form method="POST" action="{{ route('students.files.store', $student) }}" enctype="multipart/form-data" class="ui-form">
+                    @csrf
+
+                    <div class="ui-form-grid">
+                        <div class="ui-form-field ui-form-field--full">
+                            <label for="pdf_file" class="form-label">PDFアップロード</label>
+                            <input type="file" name="pdf_file" id="pdf_file" class="form-input" accept="application/pdf" required>
+                            @error('pdf_file')
+                                <p class="form-error">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-actions-row">
+                        <button type="submit" class="table-button table-button-register">アップロード</button>
+                    </div>
+                </form>
+            @endcan
+
+            <div class="table-scroll-wrap" style="margin-top: 16px;">
+                <table class="base-table">
+                    <thead>
+                        <tr>
+                            <th>ファイル名</th>
+                            <th>サイズ</th>
+                            <th>登録者</th>
+                            <th>登録日時</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($student->files as $file)
+                            <tr>
+                                <td>{{ $file->original_name }}</td>
+                                <td>
+                                    @if ($file->file_size)
+                                        {{ number_format($file->file_size / 1024, 1) }} KB
+                                    @else
+                                        -
+                                    @endif
+                                </td>
+                                <td>{{ $file->uploader?->name ?? '不明' }}</td>
+                                <td>{{ $file->created_at?->format('Y/m/d H:i') }}</td>
+                                <td style="white-space: nowrap;">
+                                    <a href="{{ route('students.files.show', [$student, $file]) }}" target="_blank" class="table-button table-button-accent">
+                                        閲覧
+                                    </a>
+
+                                    @can('update', $student)
+                                        <form method="POST" action="{{ route('students.files.destroy', [$student, $file]) }}" style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="table-button table-button-danger" onclick="return confirm('このPDFを削除しますか？')">
+                                                削除
+                                            </button>
+                                        </form>
+                                    @endcan
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="5">PDFファイルはまだありません。</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </section>
         
     <section class="section-wrapper">
         <div class="page-header">
