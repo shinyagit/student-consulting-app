@@ -23,4 +23,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/students/export/all-pdfs', [StudentPdfExportController::class, 'exportAll'])
         ->name('students.export.all-pdfs');
+
+    Route::get('/students/{student}/pdf', [StudentPdfExportController::class, 'exportStudent'])
+        ->name('students.pdf');
 });

@@ -173,6 +173,10 @@
                     <a href="{{ route('guidance-records.create', ['student_id' => $student->id]) }}" class="table-button table-button-register">
                         記録を追加
                     </a>
+
+                    <a href="{{ route('students.pdf', $student) }}" target="_blank" class="table-button table-button-accent">
+                        PDF一括出力
+                    </a>
                 @endcan
 
             </div>
