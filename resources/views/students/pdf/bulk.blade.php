@@ -69,20 +69,21 @@
             font-weight: bold;
             margin-bottom: 8px;
             padding-bottom: 4px;
-            border-bottom: 1px solid #999;
+            /* border-bottom: 1px solid #999; */
         }
 
         .box {
-            padding: 8px 10px;
+            padding: 8px 0;
             margin-top: 8px;
-            background-color: #f7f7f7;
         }
 
         .label {
             font-weight: bold;
             margin-bottom: 4px;
             border-left: 4px solid #4a4a4a;
+            border-bottom: 1px solid #4a4a4a;
             padding-left: 6px;
+            padding-top: 0px;
             padding-bottom: 0px;
             letter-spacing: 1px;
         }
@@ -116,7 +117,7 @@
 
     <div class="section">
         <div class="profile-box">
-            <div class="profile-title">生徒情報</div>
+            <div class="profile-title">– 生徒情報 –</div>
 
             <p class="profile-row">
                 <span class="profile-label">生徒氏名：</span>{{ $student->name ?: '未設定' }}
@@ -189,6 +190,8 @@
         </div>
     </div>
 
+    <pagebreak />
+
     @forelse ($records as $record)
         <pagebreak />
 
@@ -214,6 +217,12 @@
             <div class="box">
                 <div class="label">NOTE</div>
                 {!! nl2br(e($record->note ?: '未入力')) !!}
+            </div>
+
+            <pagebreak />
+
+            <div class="record-title">
+                次回までの計画
             </div>
 
             @if ($record->subject1_name || $record->subject1_detail)
