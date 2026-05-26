@@ -29,8 +29,10 @@ function initDesiredSchools() {
     row.className = 'ui-stack-list__row desired-school-row';
 
     row.innerHTML = `
-      <input type="text" name="desired_schools[]" value="" placeholder="志望校" class="form-input">
-      <button type="button" class="table-button table-button-danger remove-school-button">削除</button>
+      <div class="ui-stack-list-row desired-school-row">
+          <input type="text" name="desired_schools[]" value="" placeholder="志望校" class="form-input">
+          <button type="button" class="table-button table-button-danger remove-school-button">削除</button>
+      </div>
     `;
 
     list.appendChild(row);
