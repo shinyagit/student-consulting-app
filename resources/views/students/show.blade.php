@@ -239,7 +239,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5">PDFファイルはまだありません。</td>
+                                <td colspan="5">ファイルはまだありません。</td>
                             </tr>
                         @endforelse
                     </tbody>
