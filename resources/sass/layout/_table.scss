@@ -219,10 +219,10 @@
   }
 }
 
-// .table-scroll-wrap {
-//   max-height: 520px;
-//   overflow: auto;
-// }
+.table-scroll-wrap {
+  // max-height: 520px;
+  overflow-x: scroll;
+}
 
 .table-scroll-wrap .base-table {
   width: 100%;
