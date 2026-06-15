@@ -24,7 +24,7 @@
         <header class="app-header">
             <div class="app-header__inner">
                 <div class="app-brand">
-                    <a href="{{ route('dashboard') }}" class="app-brand__logo">
+                    <a href="{{ route('home') }}" class="app-brand__logo">
                         自習コンサルティング
                     </a>
                 </div>
@@ -35,7 +35,7 @@
                 </button>
 
                 <nav class="app-nav">
-                    <a href="{{ route('dashboard') }}" class="app-nav__link">ダッシュボード</a>
+                    {{-- <a href="{{ route('dashboard') }}" class="app-nav__link">ダッシュボード</a> --}}
 
                     @auth
                         <a href="{{ route('students.index') }}" class="app-nav__link">生徒一覧</a>

@@ -13,6 +13,10 @@
 
             
             <div class="page-header-actions">
+                <a href="{{ route('students.export.all-pdfs') }}" class="link-button link-button-primary">
+                    全生徒PDF出力
+                </a>
+
                 @can('create', \App\Models\Student::class)
                     <a href="{{ route('students.create') }}" class="link-button link-button-register">生徒を登録する</a>
                 @endcan
@@ -117,8 +121,10 @@
                                     $schools = array_values(array_filter($student->desired_schools ?? [], fn ($v) => filled($v)));
                                 @endphp
 
-                                <tr>
-                                    <td class="panel-table-name student-name"><a href="{{ route('students.show', $student) }}">{{ $student->name }}</a></td>
+                                <tr class="clickable-table-row" data-href="{{ route('students.show', $student) }}">
+                                    <td class="student-name">
+                                        {{ $student->name }}
+                                    </td>
                                     <td>{{ $student->grade ?: '-' }}</td>
                                     <td>{{ $student->school_name ?: '-' }}</td>
                                     <td>
@@ -158,7 +164,7 @@
                                         @if (!empty($schools))
                                             <span>{{ $schools[0] }}</span>
                                             @if (count($schools) > 1)
-                                                <span class="school-more-badge">＋{{ count($schools) - 1 }}</span>
+                                                <span class="school-more-badge">+{{ count($schools) - 1 }}</span>
                                             @endif
                                         @else
                                             <span class="text-muted">未設定</span>
@@ -168,11 +174,13 @@
                                     <td>
                                         <span class="record-count-badge">{{ $student->guidance_records_count }}</span>
                                     </td>
+                                
                                     <td>
                                         <div class="table-actions">
-                                            <a href="{{ route('students.show', $student) }}" class="table-button table-button-detail">詳細</a>
                                             @can('update', $student)
-                                                <a href="{{ route('students.edit', $student) }}" class="table-button table-button-edit">編集</a>
+                                                <a href="{{ route('students.edit', $student) }}" class="table-button table-button-edit">
+                                                    編集
+                                                </a>
                                             @endcan
                                         </div>
                                     </td>
@@ -182,12 +190,6 @@
                     </table>
                 </div>
             </section>
-
-            <div class="page-header-actions">
-                <a href="{{ route('students.export.all-pdfs') }}" class="table-button table-button-accent">
-                    全生徒PDF出力
-                </a>
-            </div>
         @endif
     </section>
 @endsection

@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   initDesiredSchools();
   initTeacherAssignments();
+  initClickableTableRows();
 
   const toggle = document.querySelector('[data-menu-toggle]');
   const header = document.querySelector('.app-header');
@@ -163,4 +164,24 @@ function escapeHtml(value) {
     .replaceAll('>', '&gt;')
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#039;');
+}
+
+
+function initClickableTableRows() {
+  document.querySelectorAll('.clickable-table-row').forEach((row) => {
+    row.addEventListener('click', (event) => {
+      const target = event.target;
+
+      if (!(target instanceof Element)) return;
+
+      if (target.closest('a, button, input, select, textarea, form')) {
+        return;
+      }
+
+      const href = row.dataset.href;
+      if (href) {
+        window.location.href = href;
+      }
+    });
+  });
 }
