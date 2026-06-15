@@ -11,9 +11,11 @@
                 <p class="page-subtitle">指導講師を一覧で確認できます。</p>
             </div>
 
-            @can('create', \App\Models\Teacher::class)
-                <a href="{{ route('teachers.create') }}" class="link-button link-button-register">講師を登録する</a>
-            @endcan
+            <div class="page-header-actions">
+                @can('create', \App\Models\Teacher::class)
+                    <a href="{{ route('teachers.create') }}" class="link-button link-button-register">講師を登録する</a>
+                @endcan
+            </div>
         </div>
 
         <form method="GET" action="{{ route('teachers.index') }}" class="ui-form ui-filter-form teachers-filter">
