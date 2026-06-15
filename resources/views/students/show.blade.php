@@ -165,7 +165,7 @@
         <div class="page-header">
             <div>
                 <p class="page-eyebrow">Student Files</p>
-                <h1 class="page-title">PDFファイル</h1>
+                <h1 class="page-title">添付ファイル</h1>
             </div>
         </div>
 
@@ -176,8 +176,15 @@
 
                     <div class="ui-form-grid">
                         <div class="ui-form-field ui-form-field--full">
-                            <label for="pdf_file" class="form-label">PDFアップロード</label>
-                            <input type="file" name="pdf_file" id="pdf_file" class="form-input" accept="application/pdf" required>
+                            <label for="file" class="form-label">ファイルアップロード</label>
+                            <input
+                                type="file"
+                                name="file"
+                                id="file"
+                                class="form-input"
+                                accept="application/pdf,image/png,image/jpeg"
+                                required
+                            >
                             @error('pdf_file')
                                 <p class="form-error">{{ $message }}</p>
                             @enderror
