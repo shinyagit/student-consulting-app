@@ -18,7 +18,7 @@
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
   max-width: 1280px;
   min-height: 60px;
   margin: 0 auto;
@@ -93,6 +93,8 @@
 
   .app-brand {
     text-align: center;
+    height: 36px;
+    line-height: 36px;
   }
 
   .app-nav {
@@ -177,5 +179,9 @@
   .app-header.is-menu-open .app-nav,
   .app-header.is-menu-open .app-user {
     display: flex;
+  }
+
+  .app-header.app-header.is-menu-open .app-header__inner {
+    padding-bottom: 20px;
   }
 }

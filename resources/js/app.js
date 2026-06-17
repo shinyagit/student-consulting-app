@@ -187,24 +187,24 @@ function initClickableTableRows() {
       }
     });
   });
+}
 
-  function initSubmitGuard() {
-    document.querySelectorAll('form[data-submit-guard]').forEach((form) => {
-      form.addEventListener('submit', () => {
-        if (form.dataset.submitted === 'true') {
-          return false;
-        }
+function initSubmitGuard() {
+  document.querySelectorAll('form[data-submit-guard]').forEach((form) => {
+    form.addEventListener('submit', () => {
+      if (form.dataset.submitted === 'true') {
+        return false;
+      }
 
-        form.dataset.submitted = 'true';
+      form.dataset.submitted = 'true';
 
-        const submitButtons = form.querySelectorAll('button[type="submit"]');
+      const submitButtons = form.querySelectorAll('button[type="submit"]');
 
-        submitButtons.forEach((button) => {
-          button.disabled = true;
-          button.dataset.originalText = button.textContent || '';
-          button.textContent = '送信中...';
-        });
+      submitButtons.forEach((button) => {
+        button.disabled = true;
+        button.dataset.originalText = button.textContent || '';
+        button.textContent = '送信中...';
       });
     });
-  }
+  });
 }
