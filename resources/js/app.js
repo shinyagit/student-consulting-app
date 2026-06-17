@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initDesiredSchools();
   initTeacherAssignments();
   initClickableTableRows();
+  initSubmitGuard();
 
   const toggle = document.querySelector('[data-menu-toggle]');
   const header = document.querySelector('.app-header');
@@ -186,4 +187,24 @@ function initClickableTableRows() {
       }
     });
   });
+
+  function initSubmitGuard() {
+    document.querySelectorAll('form[data-submit-guard]').forEach((form) => {
+      form.addEventListener('submit', () => {
+        if (form.dataset.submitted === 'true') {
+          return false;
+        }
+
+        form.dataset.submitted = 'true';
+
+        const submitButtons = form.querySelectorAll('button[type="submit"]');
+
+        submitButtons.forEach((button) => {
+          button.disabled = true;
+          button.dataset.originalText = button.textContent || '';
+          button.textContent = '送信中...';
+        });
+      });
+    });
+  }
 }

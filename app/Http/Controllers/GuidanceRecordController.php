@@ -6,6 +6,8 @@ use App\Http\Requests\GuidanceRecord\StoreGuidanceRecordRequest;
 use App\Http\Requests\GuidanceRecord\UpdateGuidanceRecordRequest;
 use App\Models\GuidanceRecord;
 use App\Models\Student;
+use Illuminate\Database\QueryException;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class GuidanceRecordController extends Controller
@@ -25,7 +27,7 @@ class GuidanceRecordController extends Controller
         return view('guidance-records.create', compact('student'));
     }
 
-    public function store(StoreGuidanceRecordRequest $request)
+    public function store(StoreGuidanceRecordRequest $request): RedirectResponse
     {
         $this->authorize('create', GuidanceRecord::class);
 
@@ -34,9 +36,20 @@ class GuidanceRecordController extends Controller
         $validated = $request->validated();
         $validated['user_id'] = auth()->id();
 
-        GuidanceRecord::create($validated);
+        try {
+            GuidanceRecord::create($validated);
+        } catch (QueryException $e) {
+            if (($e->errorInfo[1] ?? null) === 1062) {
+                return redirect()
+                    ->route('students.show', $student)
+                    ->with('success', '学習記録はすでに登録済みです。');
+            }
 
-        return redirect()->route('students.show', $student)
+            throw $e;
+        }
+
+        return redirect()
+            ->route('students.show', $student)
             ->with('success', '学習記録を登録しました。');
     }
 
@@ -44,16 +57,16 @@ class GuidanceRecordController extends Controller
     {
         $this->authorize('update', $guidanceRecord);
 
-        $student = $guidanceRecord->student;
-
         return view('guidance-records.edit', [
             'record' => $guidanceRecord,
-            'student' => $student,
+            'student' => $guidanceRecord->student,
         ]);
     }
 
-    public function update(UpdateGuidanceRecordRequest $request, GuidanceRecord $guidanceRecord)
-    {
+    public function update(
+        UpdateGuidanceRecordRequest $request,
+        GuidanceRecord $guidanceRecord
+    ): RedirectResponse {
         $this->authorize('update', $guidanceRecord);
 
         $student = $guidanceRecord->student;
@@ -63,7 +76,21 @@ class GuidanceRecordController extends Controller
 
         $guidanceRecord->update($validated);
 
-        return redirect()->route('students.show', $student)
+        return redirect()
+            ->route('students.show', $student)
             ->with('success', '学習記録を更新しました。');
+    }
+
+    public function destroy(GuidanceRecord $guidanceRecord): RedirectResponse
+    {
+        $this->authorize('delete', $guidanceRecord);
+
+        $student = $guidanceRecord->student;
+
+        $guidanceRecord->delete();
+
+        return redirect()
+            ->route('students.show', $student)
+            ->with('success', '学習記録を削除しました。');
     }
 }

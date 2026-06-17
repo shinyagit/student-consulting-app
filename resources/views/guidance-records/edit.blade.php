@@ -65,7 +65,7 @@
             </div>
         </section>
 
-        <form method="POST" action="{{ route('guidance-records.update', $record) }}" class="guidance-edit-form">
+        <form method="POST" action="{{ route('guidance-records.update', $record) }}" class="guidance-edit-form" data-submit-guard>
             @csrf
             @method('PUT')
 

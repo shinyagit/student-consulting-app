@@ -35,7 +35,7 @@
             </div>
         </section>
 
-        <form method="POST" action="{{ route('guidance-records.store') }}" class="guidance-edit-form">
+        <form method="POST" action="{{ route('guidance-records.store') }}" class="guidance-edit-form" data-submit-guard>
             @csrf
             @include('guidance-records._form', ['student' => $student])
 

@@ -28,6 +28,10 @@ class StoreGuidanceRecordRequest extends FormRequest
             'subject3_name' => ['nullable', 'string', 'max:255'],
             'subject3_detail' => ['nullable', 'string'],
             'other_plan' => ['nullable', 'string'],
+            'submission_token' => [
+                'required',
+                'uuid',
+            ],
         ];
     }
 }

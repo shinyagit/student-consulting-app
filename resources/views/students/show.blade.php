@@ -265,7 +265,6 @@
                         PDF一括出力
                     </a>
                 @endcan
-
             </div>
         </div>
 
@@ -316,6 +315,21 @@
                                 <a href="{{ route('guidance-records.pdf', $record) }}" target="_blank" class="table-button table-button-accent">
                                     PDF出力
                                 </a>
+
+                                @can('delete', $record)
+                                    <form
+                                        method="POST"
+                                        action="{{ route('guidance-records.destroy', $record) }}"
+                                        class="inline-delete-form"
+                                        onsubmit="return confirm('この学習記録を削除しますか？この操作は元に戻せません。');"
+                                    >
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="table-button table-button-danger">
+                                            削除
+                                        </button>
+                                    </form>
+                                @endcan
                             </div>
 
                             

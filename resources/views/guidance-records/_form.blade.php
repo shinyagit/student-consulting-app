@@ -1,3 +1,8 @@
+@php
+    use Illuminate\Support\Str;
+@endphp
+
+<input type="hidden" name="submission_token" value="{{ (string) Str::uuid() }}">
 <input type="hidden" name="student_id" value="{{ old('student_id', $student->id) }}">
 
 <div class="ui-form">

@@ -22,6 +22,7 @@ class GuidanceRecord extends Model
         'subject3_name',
         'subject3_detail',
         'other_plan',
+        'submission_token',
     ];
 
     protected function casts(): array

@@ -17,7 +17,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('students', StudentController::class)->except(['destroy']);
     Route::resource('teachers', TeacherController::class)->except(['destroy']);
     Route::resource('guidance-records', GuidanceRecordController::class)
-        ->except(['index', 'show', 'destroy']);
+        ->except(['index', 'show']);
 
     Route::get('/guidance-records/{guidanceRecord}/pdf', [GuidanceRecordPdfController::class, 'show'])
         ->name('guidance-records.pdf');
