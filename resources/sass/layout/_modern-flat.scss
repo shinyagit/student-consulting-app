@@ -345,6 +345,24 @@ textarea.form-input {
   border-bottom-right-radius: 12px;
 }
 
+.base-table.user-table {
+  width: 100%;
+
+  tbody tr {
+    cursor: default;
+
+    td, &:hover {
+      border: none;
+      background: none;
+
+      td:first-child, td:last-child {
+        border: none;
+        background: none;
+      }
+    }
+  }
+}
+
 .panel-table-name a,
 .student-name a,
 .teacher-name a {

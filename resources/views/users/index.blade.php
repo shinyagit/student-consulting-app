@@ -22,7 +22,7 @@
         @else
             <section class=" table-panel">
                 <div class="table-wrap">
-                    <table class="base-table">
+                    <table class="base-table user-table">
                         <thead>
                             <tr>
                                 <th>氏名</th>
@@ -48,9 +48,9 @@
                     </table>
                 </div>
 
-                <div class="pagination-nav">
+                {{-- <div class="pagination-nav">
                     {{ $users->links() }}
-                </div>
+                </div> --}}
             </section>
         @endif
     </section>
