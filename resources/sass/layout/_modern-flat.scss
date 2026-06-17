@@ -281,7 +281,7 @@ textarea.form-input {
 }
 
 .base-table tbody td {
-  padding: 15px 16px;
+  padding: 8px 16px;
   border-bottom: 1px solid #eef2f7;
   color: var(--ui-text);
   font-size: 13px;
@@ -311,10 +311,10 @@ textarea.form-input {
   background: #fff;
   border-top: 3px solid transparent;
   border-bottom: 3px solid transparent;
-  // transition:
-  //   background-color 0.18s ease,
-  //   border-color 0.18s ease,
-  //   box-shadow 0.18s ease;
+  transition:
+    background-color 0.1s ease,
+    border-color 0.1s ease,
+    box-shadow 0.1s ease;
 }
 
 .base-table tbody tr:hover td {
