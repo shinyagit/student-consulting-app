@@ -112,8 +112,10 @@
                         </thead>
                         <tbody>
                             @foreach ($teachers as $teacher)
-                                <tr>
-                                    <td class="panel-table-name teacher-name"><a href="{{ route('teachers.show', $teacher) }}">{{ $teacher->name }}</a></td>
+                                <tr class="clickable-table-row" data-href="{{ route('teachers.show', $teacher) }}">
+                                    <td class="panel-table-name teacher-name">
+                                        {{ $teacher->name }}
+                                    </td>
                                     <td>{{ $teacher->department ?: '-' }}</td>
                                     <td>{{ $teacher->school_year ?: '-' }}</td>
                                     <td>
@@ -133,7 +135,6 @@
                                     </td>
                                     <td>
                                         <div class="table-actions">
-                                            <a href="{{ route('teachers.show', $teacher) }}" class="table-button table-button-detail">詳細</a>
 
                                             @can('update', $teacher)
                                                 <a href="{{ route('teachers.edit', $teacher) }}" class="table-button table-button-edit">編集</a>

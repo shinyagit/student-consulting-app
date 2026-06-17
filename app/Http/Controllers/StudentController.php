@@ -42,12 +42,32 @@ class StudentController extends Controller
                 CASE status
                     WHEN 'active' THEN 0
                     WHEN 'leave' THEN 1
-                    WHEN 'withdrawn' THEN 2
-                    WHEN 'graduated' THEN 3
+                    WHEN 'graduated' THEN 2
+                    WHEN 'withdrawn' THEN 3
                     ELSE 4
                 END
             ")
-            ->latest('id')
+            ->orderByRaw("
+                CASE grade
+                    WHEN '既卒' THEN 0
+                    WHEN '高校3年生' THEN 1
+                    WHEN '高校2年生' THEN 2
+                    WHEN '高校1年生' THEN 3
+                    WHEN '中学3年生' THEN 4
+                    WHEN '中学2年生' THEN 5
+                    WHEN '中学1年生' THEN 6
+                    WHEN '小学6年生' THEN 7
+                    WHEN '小学5年生' THEN 8
+                    WHEN '小学4年生' THEN 9
+                    WHEN '小学3年生' THEN 10
+                    WHEN '小学2年生' THEN 11
+                    WHEN '小学1年生' THEN 12
+                    WHEN '社会人' THEN 13
+                    WHEN 'その他' THEN 14
+                    ELSE 99
+                END
+            ")
+            ->orderBy('name')
             ->get();
 
         return view('students.index', compact('students'));
